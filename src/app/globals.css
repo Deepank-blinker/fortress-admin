@@ -1,0 +1,194 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import url('https://fonts.cdnfonts.com/css/neue-haas-grotesk-display-pro'); */
+@import url('https://use.typekit.net/dez1jre.css');
+body {
+  font-family: 'neue-haas-grotesk-display', Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --primary-txt: 203, 56%, 13%, 1;
+    --secondary-txt: 202, 8%, 53%, 1;
+    --btn-primary: 87, 100%, 69%, 1;
+    --btn-secondary: 220, 9%, 93%, 1;
+    --input-background: 210, 11%, 96%, 1;
+    --input-border: 195, 7%, 89%, 1;
+    --carousel-background: 203, 40%, 17%, 1;
+
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+
+    --primary-50: 86, 100%, 97%, 1;
+    --primary-75: 87, 100%, 87%, 1;
+    --primary-100: 87, 100%, 82%, 1;
+    --primary-200: 87, 100%, 74%, 1;
+    --primary-300: 87, 100%, 69%, 1;
+    --primary-400: 87, 100%, 69%, 1;
+    --primary-500: 87, 45%, 42%, 1;
+
+    --neutral-0: 0, 0%, 100%, 1;
+    --neutral-10: 180, 11%, 98%, 1;
+    --neutral-20: 210, 11%, 96%, 1;
+    --neutral-30: 220, 9%, 93%, 1;
+    --neutral-40: 195, 7%, 89%, 1;
+    --neutral-50: 207, 8%, 78%, 1;
+    --neutral-60: 202, 8%, 73%, 1;
+    --neutral-70: 203, 8%, 68%, 1;
+    --neutral-80: 204, 8%, 63%, 1;
+    --neutral-90: 203, 8%, 58%, 1;
+    --neutral-100: 202, 8%, 53%, 1;
+    --neutral-200: 202, 9%, 47%, 1;
+    --neutral-300: 205, 11%, 42%, 1;
+    --neutral-400: 202, 13%, 38%, 1;
+    --neutral-500: 204, 17%, 33%, 1;
+    --neutral-600: 204, 21%, 28%, 1;
+    --neutral-700: 204, 28%, 22%, 1;
+    --neutral-800: 203, 40%, 17%, 1;
+    --neutral-900: 203, 56%, 13%, 1;
+
+    --success-100: 109, 45%, 73%, 1;
+    --success-200: 109, 45%, 61%, 1;
+    --success-300: 108, 45%, 53%, 1;
+
+    --warning-100: 43, 80%, 77%, 1;
+    --warning-200: 43, 80%, 66%, 1;
+    --warning-300: 43, 80%, 60%, 1;
+
+    --error-100: 0, 86%, 70%, 1;
+    --error-200: 0, 85%, 57%, 1;
+    --error-300: 0, 93%, 48%, 1;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Hide the default calendar picker and spin button */
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* Hide the default date value placeholder */
+input[type='date']::-webkit-datetime-edit {
+  color: transparent !important;
+}
+
+/* Optional: Add styles to handle focus and appearance */
+input:focus::-webkit-datetime-edit {
+  color: transparent !important;
+}
+
+.no-scrollbar {
+  overflow: scroll; /* Enables scrolling */
+}
+
+/* Hide the scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide the scrollbar for Firefox */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* Hide the scrollbar for IE and Edge */
+.no-scrollbar {
+  -ms-overflow-style: none;
+}
+
+/* Hide the number input spinner on all browsers */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield; /* Firefox */
+}
+
+@keyframes spin-loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(180deg);
+  }
+  50% {
+    transform: rotate(270deg);
+    animation-timing-function: ease-in; /* Slow */
+  }
+  75% {
+    transform: rotate(365deg);
+    animation-timing-function: linear; /* Fast */
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.image-antialiased {
+  image-rendering: auto;
+}
