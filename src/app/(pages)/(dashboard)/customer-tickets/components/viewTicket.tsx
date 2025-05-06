@@ -12,7 +12,7 @@ export default function ViewTicketModal({
   const { data: ticket, isLoading } = useGetCustomerTicketById(ticketId);
   const card = ticket?.data;
 
-  const renderField = (label: string, value: any) => (
+  const renderField = (label: string, value: undefined | null | string) => (
     <p>
       <strong>{label}:</strong>{' '}
       {value !== undefined && value !== null && value !== ''
