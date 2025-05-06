@@ -263,7 +263,6 @@ export interface TrelloCard {
   name: string;
   id?: string;
   badges?: TrelloBadges;
-  checkItemStates?: any[]; // refine if you know structure
   closed?: boolean;
   dueComplete?: boolean;
   dateLastActivity?: string;

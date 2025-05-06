@@ -11,7 +11,7 @@ export default function CreateTicketModal({
   isOpen,
   onClose,
 }: CreateTicketModalProps) {
-  const { mutate: createTicket, isPending } = useCreateCustomerTicket();
+  const { mutate: createTicket } = useCreateCustomerTicket();
 
   const [ticket, setTicket] = useState({ name: '', description: '' });
 
@@ -32,7 +32,6 @@ export default function CreateTicketModal({
       idList: '67502c7ba0931674e45ae91d',
       url: '',
       shortUrl: '',
-      checkItemStates: [],
       dueComplete: false,
       due: null,
       dueReminder: null,

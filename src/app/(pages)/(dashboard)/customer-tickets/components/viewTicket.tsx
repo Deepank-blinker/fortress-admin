@@ -1,8 +1,6 @@
 import { useGetCustomerTicketById } from '@/hooks/tickets';
-import { Loader } from 'lucide-react';
 
 export default function ViewTicketModal({
-  isOpen,
   ticketId,
   onClose,
 }: {
@@ -10,7 +8,6 @@ export default function ViewTicketModal({
   ticketId: string;
   onClose: () => void;
 }) {
-  if (!isOpen || !ticketId) return null;
   const { data: ticket, isLoading } = useGetCustomerTicketById(ticketId);
 
   return (

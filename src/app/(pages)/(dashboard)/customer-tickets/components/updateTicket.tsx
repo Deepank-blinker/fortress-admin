@@ -8,11 +8,9 @@ export default function UpdateTicketModal({
   onClose,
 }: {
   isOpen: boolean;
-  ticket: TrelloCard | null;
+  ticket: TrelloCard;
   onClose: () => void;
 }) {
-  if (!ticket) return null;
-
   const [name, setName] = useState(ticket.name);
   const [desc, setDesc] = useState(ticket.desc);
   const [nameError, setNameError] = useState('');
@@ -35,8 +33,8 @@ export default function UpdateTicketModal({
         onSuccess: () => {
           onClose();
         },
-        onError: (err: any) => {
-          console.error('Error updating ticket:', err);
+        onError: () => {
+          console.error('Error updating ticket:');
         },
       }
     );

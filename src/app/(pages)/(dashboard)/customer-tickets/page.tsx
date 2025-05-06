@@ -90,16 +90,20 @@ export default function CustomerTickets() {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
       />
-      <ViewTicketModal
-        isOpen={!!selectedTicket && !updateMode}
-        ticketId={selectedTicket?.id!}
-        onClose={() => setSelectedTicket(null)}
-      />
-      <UpdateTicketModal
-        isOpen={!!selectedTicket && updateMode}
-        ticket={selectedTicket}
-        onClose={() => setSelectedTicket(null)}
-      />
+      {selectedTicket && selectedTicket.id && (
+        <ViewTicketModal
+          isOpen={!!selectedTicket && !updateMode}
+          ticketId={selectedTicket.id}
+          onClose={() => setSelectedTicket(null)}
+        />
+      )}
+      {selectedTicket && (
+        <UpdateTicketModal
+          isOpen={!!selectedTicket && updateMode}
+          ticket={selectedTicket}
+          onClose={() => setSelectedTicket(null)}
+        />
+      )}
     </div>
   );
 }
