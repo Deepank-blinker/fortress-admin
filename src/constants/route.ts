@@ -27,4 +27,8 @@ export const ROUTES: Routes = {
     path: '/crypto-tokens',
     isProtectedRoute: true,
   },
+  CUSTOMER_TICKETS: {
+    path: '/customer-tickets',
+    isProtectedRoute: true,
+  },
 };
