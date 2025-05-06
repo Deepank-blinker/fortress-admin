@@ -39,9 +39,9 @@ export default function CustomerTickets() {
 
       {!isLoading && tickets && tickets.data.cards.length > 0 ? (
         <div className="mt-4">
-          <table className="min-w-full bg-white border border-gray-200">
-            <thead>
-              <tr>
+          <table className="min-w-full bg-white shadow-md rounded-xl">
+            <thead className="border-b-[1px]">
+              <tr className="">
                 <th className="px-4 py-2 text-left">Ticket ID</th>
                 <th className="px-4 py-2 text-left">Customer Name</th>
                 <th className="px-4 py-2 text-left">Last Activity</th>
@@ -50,10 +50,13 @@ export default function CustomerTickets() {
             </thead>
             <tbody>
               {tickets.data.cards.map((ticket: TrelloCard) => (
-                <tr key={ticket.id}>
-                  <td className="border px-4 py-2">{ticket.id}</td>
-                  <td className="border px-4 py-2">{ticket.name}</td>
-                  <td className="border px-4 py-2">
+                <tr
+                  key={ticket.id}
+                  className="border-b-[1px] cursor-pointer hover:bg-gray-200"
+                >
+                  <td className="px-4 py-2">{ticket.id}</td>
+                  <td className="px-4 py-2">{ticket.name}</td>
+                  <td className="px-4 py-2">
                     {new Date(ticket.dateLastActivity ?? '').toLocaleDateString(
                       'en-GB',
                       {
@@ -63,7 +66,7 @@ export default function CustomerTickets() {
                       }
                     )}
                   </td>
-                  <td className="border px-4 py-2 space-x-2">
+                  <td className="px-4 py-2 space-x-2">
                     <button
                       onClick={() => handleView(ticket)}
                       className="text-blue-500 hover:underline"
@@ -90,14 +93,14 @@ export default function CustomerTickets() {
         isOpen={showModal}
         onClose={() => setShowModal(false)}
       />
-      {selectedTicket && selectedTicket.id && (
+      {selectedTicket && selectedTicket.id && !updateMode && (
         <ViewTicketModal
           isOpen={!!selectedTicket && !updateMode}
           ticketId={selectedTicket.id}
           onClose={() => setSelectedTicket(null)}
         />
       )}
-      {selectedTicket && (
+      {selectedTicket && updateMode && (
         <UpdateTicketModal
           isOpen={!!selectedTicket && updateMode}
           ticket={selectedTicket}

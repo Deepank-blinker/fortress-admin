@@ -12,7 +12,7 @@ export default function UpdateTicketModal({
   onClose: () => void;
 }) {
   const [name, setName] = useState(ticket.name);
-  const [desc, setDesc] = useState(ticket.desc);
+  const [desc, setDesc] = useState(ticket.desc || '');
   const [nameError, setNameError] = useState('');
 
   const { mutate: editTicket, isPending } = useEditCustomerTicketById(
@@ -28,13 +28,17 @@ export default function UpdateTicketModal({
     }
 
     editTicket(
-      { ...ticket, name, desc },
+      {
+        ...ticket,
+        name,
+        desc,
+      },
       {
         onSuccess: () => {
           onClose();
         },
         onError: () => {
-          console.error('Error updating ticket:');
+          console.error('Error updating ticket');
         },
       }
     );
@@ -42,8 +46,9 @@ export default function UpdateTicketModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-      <div className="bg-white p-6 rounded shadow-lg w-[90%] max-w-lg">
+      <div className="bg-white p-6 rounded shadow-lg w-[90%] max-w-lg overflow-y-auto max-h-[90vh]">
         <h2 className="text-xl font-bold mb-4">Edit Ticket</h2>
+
         <input
           className="w-full mb-2 border px-3 py-2 rounded"
           value={name}
@@ -51,12 +56,14 @@ export default function UpdateTicketModal({
           placeholder="Ticket Name"
         />
         {nameError && <p className="text-red-500 text-sm">{nameError}</p>}
+
         <textarea
           className="w-full mb-2 border px-3 py-2 rounded"
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
           placeholder="Description"
         />
+
         <div className="flex justify-end space-x-2">
           <button className="px-4 py-2 bg-gray-200 rounded" onClick={onClose}>
             Cancel
