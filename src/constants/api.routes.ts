@@ -65,4 +65,22 @@ export const API_ROUTES = {
       queryKey: 'remove-country-from-whitelist',
     },
   },
+  tickets: {
+    getCustomerTickets: {
+      url: '/trello/all',
+      queryKey: 'get-customer-tickets',
+    },
+    getCustomerTicketDetails: {
+      url: '/trello/:id',
+      queryKey: 'get-customer-ticket-details',
+    },
+    createCustomerTicket: {
+      url: '/trello/create',
+      queryKey: 'create-customer-ticket',
+    },
+    updateCustomerTicket: {
+      url: '/trello/:id',
+      queryKey: 'update-customer-ticket',
+    },
+  },
 };
