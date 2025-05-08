@@ -4,7 +4,7 @@ import TextEditor from '@/components/custom/text-editor';
 import Typography from '@/components/custom/typography';
 import { Button } from '@/components/ui/button';
 import { createFaq, updateFaq, UpdateFaqPayload } from '@/services/faqs.api';
-import { getErrorMessage } from '@/utils';
+import { getErrorMessage, unescapeHtml } from '@/utils';
 import {
   ArrowLeftIcon,
   PencilIcon,
@@ -108,9 +108,7 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
             validationSchema={validationSchema}
             onSubmit={handleFormSubmit}
           >
-            {({ setFieldValue, errors, values }) => {
-              console.log(errors);
-
+            {({ setFieldValue, values }) => {
               return (
                 <Form className="space-y-4 w-full">
                   <FormField
@@ -120,16 +118,15 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
                     required
                   />
 
+                  <Typography variant="base" weight="bold" className="mb-2">
+                    Answer
+                  </Typography>
                   <div>
-                    <Typography variant="base" weight="bold" className="mb-2">
-                      Answer
-                    </Typography>
                     <TextEditor
-                      content={values.answer}
+                      content={unescapeHtml(values.answer)}
                       onChange={(html) => setFieldValue('answer', html)}
                     />
                   </div>
-
                   <Button
                     type="submit"
                     variant="default"

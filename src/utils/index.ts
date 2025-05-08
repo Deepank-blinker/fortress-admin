@@ -136,3 +136,8 @@ export const getChainColor = (chain: keyof typeof CHAIN_COLORS | string) => {
 export const getDisplayChainName = (chain: keyof typeof CHAINS): string => {
   return chain === CHAINS.UTXO ? CHAINS.BITCOIN : chain;
 };
+
+export const unescapeHtml = (escaped: string) => {
+  const doc = new DOMParser().parseFromString(escaped, 'text/html');
+  return doc.body.textContent || '';
+};

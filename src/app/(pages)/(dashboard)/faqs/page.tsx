@@ -12,6 +12,12 @@ import { fetchFaqs } from '@/services/faqs.api';
 import { useQuery } from '@tanstack/react-query';
 import CreateUpdateFaqModal from './components/create-update-faq-modal';
 
+function decodeHtml(html: string) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = html;
+  return txt.value;
+}
+
 const Page = () => {
   const { data: faqs, isPending } = useQuery({
     queryKey: [API_ROUTES.faqs.fetchFaqs.queryKey],
@@ -83,10 +89,12 @@ const Page = () => {
                       />
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent>
+                  <AccordionContent className="bg-neutral-20 p-2 rounded-md">
                     <div
-                      className="prose prose-sm text-neutral-100 text-xl leading-[1.4rem] pt-3"
-                      dangerouslySetInnerHTML={{ __html: item.answer }}
+                      className="prose prose-sm text-neutral-400 text-xl leading-[1.4rem] pt-3"
+                      dangerouslySetInnerHTML={{
+                        __html: decodeHtml(item.answer),
+                      }}
                     />
                   </AccordionContent>
                 </AccordionItem>
