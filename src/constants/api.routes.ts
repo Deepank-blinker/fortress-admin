@@ -83,4 +83,18 @@ export const API_ROUTES = {
       queryKey: 'update-customer-ticket',
     },
   },
+  faqs: {
+    fetchFaqs: {
+      url: '/faqs',
+      queryKey: 'get-faqs',
+    },
+    createFaq: {
+      url: '/faqs',
+      queryKey: 'create-faq',
+    },
+    updateFaq: {
+      url: '/faqs',
+      queryKey: 'update-faq',
+    },
+  },
 };
