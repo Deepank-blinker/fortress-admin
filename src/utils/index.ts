@@ -136,3 +136,42 @@ export const getChainColor = (chain: keyof typeof CHAIN_COLORS | string) => {
 export const getDisplayChainName = (chain: keyof typeof CHAINS): string => {
   return chain === CHAINS.UTXO ? CHAINS.BITCOIN : chain;
 };
+
+export const getUserInitials = (
+  firstName?: string,
+  lastName?: string
+): string => {
+  if (!firstName) return 'N/A';
+  return firstName[0] + (lastName?.[0] || '');
+};
+export const getFullName = (...arg: (string | undefined)[]) => {
+  let entityName: string[] = [];
+  entityName = arg.map((item) => {
+    if (!item) return '';
+    return item;
+  });
+  return entityName.length > 0 ? entityName.join(' ') : 'N/A';
+};
+
+export function toSentenceCase(
+  input: string,
+  capitalizeFirstLetter: boolean = false
+) {
+  // Insert a space before all caps and convert the string to lowercase
+  const spaced = input
+    .replace(/([a-z])([A-Z])/g, '$1 $2') // camelCase and PascalCase
+    .replace(/[_\s]+/g, ' ') // snake_case and other underscores/spaces
+    .trim()
+    .toLowerCase();
+
+  // Capitalize the first letter of each word if capitalizeFirstLetter is true
+  if (capitalizeFirstLetter) {
+    return spaced
+      .split(' ')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
+  // Capitalize only the first letter and return the result
+  return spaced.charAt(0)?.toUpperCase() + spaced?.slice(1);
+}

@@ -53,6 +53,13 @@ const handleHomeRoute = (req: NextRequest, isAuthenticated: boolean) => {
 };
 
 export async function middleware(req: NextRequest) {
+  // const { pathname } = new URL(req.url);
+  // const route = ROUTES.INDIVIDUAL.path;
+  // const actualPath = `${ROUTES.INDIVIDUAL.path}/jsbfjksdknf?currency=USD&token=BTC&chain=UTXO&step=1`;
+  // if (!pathname.startsWith(route)) {
+  //   return NextResponse.redirect(new URL(actualPath, req.url));
+  // }
+  // return NextResponse.next();
   const token = req.cookies.get(LOCAL_STORAGE_KEYS.REFRESH_TOKEN_KEY)?.value;
   const isAuthenticated = Boolean(token);
 

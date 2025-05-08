@@ -34,6 +34,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             title: 'Crypto Tokens',
             path: ROUTES.CRYPTO_TOKENS.path,
           },
+          {
+            title: 'Individual',
+            path: ROUTES.INDIVIDUAL.path,
+          },
+          {
+            title: 'Corporate',
+            path: ROUTES.CORPORATE.path,
+          },
         ]}
         currentSelected={currentTab}
         onTabClick={changeActiveTab}
