@@ -119,7 +119,7 @@ const VerificationCode: React.FC<VerificationCodeProps> = ({
         handlePrevious();
         return;
       }
-      return mutate({ otp, email: email });
+      return mutate({ otp, emailOrUsername: email });
     }
     if (!canResend) return;
     if (phoneNumber) {

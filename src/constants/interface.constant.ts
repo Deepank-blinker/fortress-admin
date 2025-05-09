@@ -1,5 +1,5 @@
 import { UserStats } from '@/services/auth.api';
-import { USER_PROFILE } from '@/types';
+import { USER, USER_PROFILE } from '@/types';
 
 export interface Tokens {
   access: {
@@ -303,4 +303,17 @@ export interface Faqs {
   answer: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CustomerTicket {
+  id?: string;
+  name: string;
+  description: string;
+  status: string;
+  userId?: string;
+  ticketId?: string;
+  trelloTicketId?: string;
+  createdAt: string;
+  updatedAt: string;
+  user?: USER;
 }

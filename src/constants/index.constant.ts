@@ -57,6 +57,7 @@ export enum CHAINS {
   TEZOS = 'TEZOS',
   USDT = 'USDT',
   BITCOIN = 'BITCOIN',
+  CRONOS = 'CRONOS',
 }
 
 // Comprehensive color mapping for all blockchain chains

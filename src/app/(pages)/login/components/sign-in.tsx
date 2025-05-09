@@ -68,7 +68,7 @@ const Signin: React.FC<SigninProps> = ({ handleNext, handlePrevious }) => {
       handlePrevious();
       return;
     }
-    mutate({ email: email, password: password });
+    mutate({ emailOrUsername: email, password: password });
   };
 
   return (
