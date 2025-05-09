@@ -1,4 +1,4 @@
-import { Response, USER,USER_PROFILE } from '@/types';
+import { Response, USER, USER_PROFILE } from '@/types';
 
 import { API_ROUTES } from '@/constants/api.routes';
 import { Tokens } from '@/constants/interface.constant';
@@ -79,7 +79,7 @@ export interface SignupUserWithMobilePayload {
 }
 
 export interface loginTypePasswordPayload {
-  email: string;
+  emailOrUsername: string;
   password: string;
 }
 export interface loginTypePasswordResponseData {
@@ -95,7 +95,7 @@ export const loginTypePassword = async (
 };
 
 export interface loginTypeOtpPayload {
-  email: string;
+  emailOrUsername: string;
   otp: string;
 }
 
@@ -114,4 +114,3 @@ export interface UserStats {
   isProfileComplete: boolean;
   isOnboardingComplete: boolean;
 }
-
