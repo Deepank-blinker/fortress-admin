@@ -20,7 +20,7 @@ function ModalLayout({
         <DialogDescription aria-describedby="" />
       </DialogHeader>
       <DialogContent
-        className={`[&>button]:hidden md:w-[32.5rem]  p-10 rounded-2xl border border-neutral-40 overflow-auto max-h-[80vh] no-scrollbar ${className}`}
+        className={`[&>button]:hidden md:w-[32.5rem]  p-10 rounded-2xl border border-neutral-40 overflow-auto max-h-[80vh] no-scrollbar ${className} overflow-x-hidden`}
       >
         {children}
       </DialogContent>

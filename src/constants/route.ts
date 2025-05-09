@@ -31,4 +31,8 @@ export const ROUTES: Routes = {
     path: '/customer-tickets',
     isProtectedRoute: true,
   },
+  FAQS: {
+    path: '/faqs',
+    isProtectedRoute: true,
+  },
 };

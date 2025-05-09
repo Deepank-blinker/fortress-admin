@@ -297,6 +297,14 @@ export interface TrelloCard {
   mirrorSourceId?: string | null;
 }
 
+export interface Faqs {
+  id: string;
+  question: string;
+  answer: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface CustomerTicket {
   id?: string;
   name: string;
