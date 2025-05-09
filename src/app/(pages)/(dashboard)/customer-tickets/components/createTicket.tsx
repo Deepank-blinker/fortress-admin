@@ -1,4 +1,4 @@
-import { TrelloCard } from '@/constants/interface.constant';
+import { CustomerTicket } from '@/constants/interface.constant';
 import { useCreateCustomerTicket } from '@/hooks/tickets';
 import { useState } from 'react';
 
@@ -21,37 +21,12 @@ export default function CreateTicketModal({
     name: string;
     description: string;
   }) => {
-    const ticketPayload: TrelloCard = {
-      id: '',
+    const ticketPayload: CustomerTicket = {
       name: newTicket.name,
-      desc: newTicket.description,
-      closed: false,
-      dateLastActivity: new Date().toISOString(),
-      labels: [],
-      idLabels: ['6814905ae4a062b155021136'],
-      idList: '67502c7ba0931674e45ae91d',
-      url: '',
-      shortUrl: '',
-      dueComplete: false,
-      due: null,
-      dueReminder: null,
-      email: null,
-      idChecklists: [],
-      idMembers: [],
-      idMembersVoted: [],
-      idShort: 0,
-      idAttachmentCover: null,
-      manualCoverAttachment: false,
-      nodeId: '',
-      pinned: false,
-      pos: 0,
-      shortLink: '',
-      start: null,
-      subscribed: false,
-      cover: null,
-      isTemplate: false,
-      cardRole: null,
-      mirrorSourceId: null,
+      description: newTicket.description,
+      status: 'OPEN',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     createTicket(ticketPayload, {

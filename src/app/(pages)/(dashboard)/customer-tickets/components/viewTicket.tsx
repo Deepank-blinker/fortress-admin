@@ -98,7 +98,7 @@ export default function ViewTicketModal({
               <div className="space-y-3">
                 <div className="space-y-1">
                   <p className="text-xs text-gray-500">User</p>
-                  <p className="text-sm font-medium">{card.user.email}</p>
+                  <p className="text-sm font-medium">{card.user?.email}</p>
                 </div>
               </div>
 
