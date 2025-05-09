@@ -222,3 +222,77 @@ export interface Pagination {
   page: number;
   limit: number;
 }
+
+interface TrelloLabel {
+  id: string;
+  idBoard: string;
+  idOrganization: string;
+  name: string;
+  nodeId: string;
+  color: string;
+  uses: number;
+}
+
+interface TrelloBadges {
+  attachments: number;
+  fogbugz: string;
+  checkItems: number;
+  checkItemsChecked: number;
+  checkItemsEarliestDue: string | null;
+  comments: number;
+  description: boolean;
+  due: string | null;
+  dueComplete: boolean;
+  lastUpdatedByAi: boolean;
+  start: string | null;
+  externalSource: string | null;
+  attachmentsByType: {
+    trello: {
+      board: number;
+      card: number;
+    };
+  };
+  location: boolean;
+  votes: number;
+  maliciousAttachments: number;
+  viewingMemberVoted: boolean;
+  subscribed: boolean;
+}
+
+export interface TrelloCard {
+  name: string;
+  id?: string;
+  badges?: TrelloBadges;
+  closed?: boolean;
+  dueComplete?: boolean;
+  dateLastActivity?: string;
+  desc?: string;
+  descData?: {
+    emoji: Record<string, unknown>;
+  };
+  due?: string | null;
+  dueReminder?: string | null;
+  email?: string | null;
+  idBoard?: string;
+  idChecklists?: string[];
+  idList?: string;
+  idMembers?: string[];
+  idMembersVoted?: string[];
+  idShort?: number;
+  idAttachmentCover?: string | null;
+  labels?: TrelloLabel[];
+  idLabels?: string[];
+  manualCoverAttachment?: boolean;
+  nodeId?: string;
+  pinned?: boolean;
+  pos?: number;
+  shortLink?: string;
+  shortUrl?: string;
+  start?: string | null;
+  subscribed?: boolean;
+  url?: string;
+  cover?: string | null;
+  isTemplate?: boolean;
+  cardRole?: string | null;
+  mirrorSourceId?: string | null;
+}
