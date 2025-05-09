@@ -6,7 +6,7 @@ import {
   updateTicketById,
 } from '@/services/tickets.api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { TrelloCard } from '@/constants/interface.constant';
+import { CustomerTicket } from '@/constants/interface.constant';
 
 export const useGetCustomerTickets = () => {
   return useQuery({
@@ -26,10 +26,12 @@ export const useEditCustomerTicketById = (id: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (updatedTicket: TrelloCard) =>
+    mutationFn: (updatedTicket: CustomerTicket) =>
       updateTicketById(id, updatedTicket),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['getCustomerTickets'] });
+      queryClient.invalidateQueries({
+        queryKey: [API_ROUTES.tickets.getCustomerTickets.queryKey],
+      });
     },
   });
 };
@@ -38,9 +40,11 @@ export const useCreateCustomerTicket = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (newTicket: TrelloCard) => createCustomerTicket(newTicket),
+    mutationFn: (newTicket: CustomerTicket) => createCustomerTicket(newTicket),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['getCustomerTickets'] });
+      queryClient.invalidateQueries({
+        queryKey: [API_ROUTES.tickets.getCustomerTickets.queryKey],
+      });
     },
   });
 };
