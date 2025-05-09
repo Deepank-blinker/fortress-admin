@@ -26,7 +26,7 @@ export const updateCryptoToken = async (
   token: Omit<CryptoToken, 'id' | 'createdAt' | 'updatedAt'>
 ): Promise<Response<CryptoToken>> => {
   const response = await http.patch(`/crypto/token/${tokenId}`, token);
-  return response.data.data;
+  return response.data;
 };
 
 // Delete token
