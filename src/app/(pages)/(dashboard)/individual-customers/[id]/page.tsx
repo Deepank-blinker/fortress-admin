@@ -14,10 +14,9 @@ import { toast } from 'sonner';
 import ArrayForm from '../../components/array-form';
 import ProfileImageFormField from '../../components/profile-image-form-field';
 import { getWalletFormFields, idFormFields } from '../../constants/form-fields';
-import { OrganizationFormValues } from '../../corporate-customers/constants/interface.constansts';
 import { subformsIndividualCustomer } from '../constants/form-fields';
-import { getIndividualInitialvalues } from '../helpers/map-form-values';
 import { IndividualFormValues } from '../constants/interface.constants';
+import { getIndividualInitialvalues } from '../helpers/map-form-values';
 
 interface PageProps {
   params: {
@@ -26,7 +25,7 @@ interface PageProps {
 }
 
 const Page = ({ params }: PageProps) => {
-  const { id } = React.use(params);
+  const { id } = params;
   console.log(id);
   const searchParams = useSearchParams();
   const { customers } = useAppSelector((state) => state.individualCustomer);
@@ -72,7 +71,6 @@ const Page = ({ params }: PageProps) => {
     () => getIndividualInitialvalues(customer),
     [customer]
   );
-  console.log(initialValues);
 
   const tokenOptions = useMemo(() => {
     return tokens.map((token) => ({
@@ -96,8 +94,16 @@ const Page = ({ params }: PageProps) => {
         fields: idFormFields,
       },
       {
-        title: 'Wallets',
-        name: 'wallets',
+        title: 'Whitelisted Wallets',
+        name: 'whitelistedWallets',
+        fields: getWalletFormFields(
+          tokenOptions as FormOption[],
+          evmChainOptions as FormOption[]
+        ),
+      },
+      {
+        title: 'Vault Wallets',
+        name: 'vaultWallets',
         fields: getWalletFormFields(
           tokenOptions as FormOption[],
           evmChainOptions as FormOption[]
@@ -136,17 +142,21 @@ const Page = ({ params }: PageProps) => {
                 saveButton={editing}
               />
             </div>
-            <div className="p-4 w-full flex items-center justify-center">
-              <ProfileImageFormField
-                previewUrl={initialValues.profilePicture}
-                edit={editing}
-              />
-            </div>
+
             <FormSection
               sections={subformsIndividualCustomer}
               edit={editing}
-            ></FormSection>
-            <ArrayForm<OrganizationFormValues>
+              childrenPosition="start"
+              childrenSection={0}
+            >
+              <div className="p-4 w-full flex items-center justify-center">
+                <ProfileImageFormField
+                  previewUrl={initialValues.profilePicture}
+                  edit={editing}
+                />
+              </div>
+            </FormSection>
+            <ArrayForm<IndividualFormValues>
               sections={arraySubFormsIndividualCustomer}
               edit={editing}
             />

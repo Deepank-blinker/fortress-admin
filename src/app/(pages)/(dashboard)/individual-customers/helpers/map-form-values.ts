@@ -1,4 +1,4 @@
-import { USER_PROFILE } from '@/types';
+import { USER_PROFILE, WALLET_TYPE } from '@/types';
 import { mapDocumentsToIds, mapDocumentsToKeys, mapWallets } from '../../utils';
 import { IndividualFormValues } from '../constants/interface.constants';
 
@@ -22,6 +22,14 @@ export const getIndividualInitialvalues = (
     Document,
     profilePicture,
   } = customer;
+
+  const wallets = mapWallets(Wallet);
+  const whitelistedWallets = wallets.filter(
+    (wallet) => wallet.walletType === WALLET_TYPE.WHITELISTED
+  );
+  const vaultWallets = wallets.filter(
+    (wallet) => wallet.walletType === WALLET_TYPE.VAULT
+  );
 
   return {
     firstName: firstName || '',
@@ -57,6 +65,9 @@ export const getIndividualInitialvalues = (
     taxRegistrationCountry: financialDetails?.taxRegistrationCountry || '',
     ...mapDocumentsToKeys(Document || []),
     ids: mapDocumentsToIds(Document || []),
-    wallets: mapWallets(Wallet),
+
+    // wallets
+    whitelistedWallets,
+    vaultWallets,
   };
 };

@@ -27,7 +27,7 @@ interface PageProps {
 }
 
 const Page = ({ params }: PageProps) => {
-  const { id } = React.use(params);
+  const { id } = params;
   console.log(id);
   const searchParams = useSearchParams();
   const { organizations } = useAppSelector((state) => state.organizations);
@@ -109,9 +109,16 @@ const Page = ({ params }: PageProps) => {
         hideFields: ['title', 'percentageShareInCompany'],
       },
       {
-        title: 'Wallets',
-        name: 'wallets',
-        count: initialValues?.wallets?.length || 0,
+        title: 'Whitelisted Wallets',
+        name: 'whitelistedWallets',
+        fields: getWalletFormFields(
+          tokenOptions as FormOption[],
+          evmChainOptions as FormOption[]
+        ),
+      },
+      {
+        title: 'Vault Wallets',
+        name: 'vaultWallets',
         fields: getWalletFormFields(
           tokenOptions as FormOption[],
           evmChainOptions as FormOption[]
@@ -127,8 +134,7 @@ const Page = ({ params }: PageProps) => {
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({ values }) => {
-          console.log(values);
+        {({}) => {
           return (
             <Form className="[&>*]:p-4 [&>*]:rounded-lg [&>*]:bg-neutral-0 space-y-4">
               <div className=" flex items-center justify-between ">

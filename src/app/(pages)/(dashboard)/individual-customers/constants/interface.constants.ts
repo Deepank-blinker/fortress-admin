@@ -39,5 +39,6 @@ export interface IndividualFormValues extends AddressFormValues {
   kycSelfie: string;
 
   ids: IdFormValues[];
-  wallets: WalletFormvalues[];
+  whitelistedWallets: WalletFormvalues[];
+  vaultWallets: WalletFormvalues[];
 }

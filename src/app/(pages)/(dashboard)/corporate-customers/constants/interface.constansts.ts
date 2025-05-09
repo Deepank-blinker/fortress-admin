@@ -61,7 +61,8 @@ export interface OrganizationFormValues extends AddressFormValues {
   shareholdersStructure: string;
 
   // wallets
-  wallets: WalletFormvalues[];
+  whitelistedWallets: WalletFormvalues[];
+  vaultWallets: WalletFormvalues[];
 
   // authorized users
   authorizedPersons: OrganizationMemberFormValues[];

@@ -8,6 +8,7 @@ interface FormSectionProps {
   edit?: boolean;
   children?: React.ReactNode;
   childrenPosition?: 'start' | 'end';
+  childrenSection?: number;
 }
 
 const FormSection: React.FC<FormSectionProps> = ({
@@ -15,6 +16,7 @@ const FormSection: React.FC<FormSectionProps> = ({
   edit,
   children,
   childrenPosition = 'start',
+  childrenSection = 0,
 }) => {
   if (!sections || sections.length === 0) return null;
 
@@ -24,13 +26,26 @@ const FormSection: React.FC<FormSectionProps> = ({
         {section.title}
       </Typography>
       <div>
-        {childrenPosition === 'start' && children}
+        {children &&
+          childrenSection === index &&
+          childrenPosition === 'start' &&
+          children}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
           {section.fields.map((fields, index) => (
-            <FormField key={index} {...fields} disabled={!edit} />
+            <>
+              <FormField
+                key={index}
+                {...fields}
+                disabled={!edit}
+                className={`${!edit ? '!bg-neutral-0 !disabled:opacity-100  !opacity-100 !cursor-default !disabled:cursor-default' : ''}`}
+              />
+            </>
           ))}
         </div>
-        {childrenPosition === 'end' && children}
+        {children &&
+          childrenSection === index &&
+          childrenPosition === 'end' &&
+          children}
       </div>
     </div>
   ));

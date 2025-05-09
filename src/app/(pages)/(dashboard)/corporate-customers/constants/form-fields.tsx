@@ -307,17 +307,17 @@ export const organizationMembersFields: FormFields[] = [
   },
 
   {
-    name: 'ids', // This will be an array of ID objects
-    label: 'Identification Documents',
-    type: 'array',
-    arrayFields: idFormFields, // Use your existing ID fields
-  },
-  {
     name: 'proofOfAddress',
     label: 'Proof Of Address',
     as: 'file',
     required: true,
     placeholder: 'https://example.com/proof-of-address.png',
+  },
+  {
+    name: 'ids', // This will be an array of ID objects
+    label: 'Identification Documents',
+    type: 'array',
+    arrayFields: idFormFields, // Use your existing ID fields
   },
 ];
 

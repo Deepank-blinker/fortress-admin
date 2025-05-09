@@ -171,7 +171,7 @@ const FormField: React.FC<FormFieldProps> = ({
                     form.setFieldValue(name, value); // Otherwise, update the form value
                   }
                 }}
-                className="p-2 border rounded capitalize"
+                className={`p-2 border rounded capitalize ${props.className}`}
               />
             );
           }
@@ -285,17 +285,27 @@ const FormField: React.FC<FormFieldProps> = ({
                   value={field.value}
                   dateProps={dateProps}
                   disabled={props.disabled}
+                  className={props.className}
                 />
               </div>
             );
           }
 
           if (as === 'file') {
+            const uploadedFileProps =
+              typeof field.value === 'string'
+                ? {
+                    uploadedFileUrl: field.value,
+                    showUploadedUrlPreview: true,
+                  }
+                : {};
             return (
               <>
                 <FileUpload
                   files={field.value}
                   {...fileProps}
+                  {...uploadedFileProps}
+                  className={`${props.className}`}
                   onFileDrop={(file: File[]) => form.setFieldValue(name, file)}
                   onFileRemove={() => form.setFieldValue(name, null)}
                   disabled={props.disabled}

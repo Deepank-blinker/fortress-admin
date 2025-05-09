@@ -1,19 +1,21 @@
 import FormField from '@/components/custom/form-field';
 import Typography from '@/components/custom/typography';
 import { FormFieldsSection, FormOption } from '@/types';
-import { FieldArray, useFormikContext } from 'formik';
-import React from 'react';
+import { FieldArray } from 'formik';
 import MultiSelect from './multi-select';
 
 interface ArrayFormProps<T> {
   sections: FormFieldsSection[];
   edit?: boolean;
   values?: T;
+  count?: number;
 }
 
-const ArrayForm = <T,>({ sections, edit = false }: ArrayFormProps<T>) => {
-  const { values } = useFormikContext<T>();
-
+const ArrayForm = <T,>({
+  sections,
+  edit = false,
+  count,
+}: ArrayFormProps<T>) => {
   return sections.map((section, sectionIndex) => (
     <div key={sectionIndex} className="flex flex-col gap-6">
       <Typography variant="large" weight="bold" className="mb-4">
@@ -21,14 +23,32 @@ const ArrayForm = <T,>({ sections, edit = false }: ArrayFormProps<T>) => {
       </Typography>
 
       <FieldArray name={section.name || ''}>
-        {() => {
-          const sectionArray =
-            (values as Record<string, T[]>)?.[section.name || ''] || [];
+        {({ form }) => {
+          const fielArrayvalues = form.values[section.name || ''] as T[];
+          // console.log('field array values', section.name, fielArrayvalues);
+          // const sectionArray =
+          //   (values as Record<string, T[]>)?.[section.name || ''] || [];
+          // console.log(section.name, values, sectionArray);
+          const valueArray = Array.from({
+            length: count || fielArrayvalues?.length || 0,
+          });
 
-          return sectionArray.map((_, groupIndex: number) => (
+          if (valueArray?.length === 0) {
+            return (
+              <Typography
+                variant="small"
+                className="text-sm text-neutral-900 italic p-4 border rounded-xl bg-neutral-50"
+              >
+                No entries yet for{' '}
+                <strong>{section.title || 'this section'}</strong>.
+              </Typography>
+            );
+          }
+
+          return valueArray.map((_, groupIndex: number) => (
             <div
               key={groupIndex}
-              className="border rounded-2xl p-6 space-y-6 bg-neutral-100/30 dark:bg-neutral-800/30"
+              className="border rounded-2xl p-6 space-y-6 bg-neutral-0"
             >
               <Typography variant="base" weight="semibold" className="mb-2">
                 {section.title
@@ -39,25 +59,48 @@ const ArrayForm = <T,>({ sections, edit = false }: ArrayFormProps<T>) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {section.fields
                   ?.filter((field) => !section.hideFields?.includes(field.name))
-                  .map((field) => (
-                    <div key={field.name} className="flex flex-col">
-                      {field.multiSelect ? (
-                        <MultiSelect
-                          options={field.options as FormOption[]}
-                          name={`${section.name}.${groupIndex}.${field.name}`}
-                          label={field.label}
-                          required={field.required}
-                        />
-                      ) : (
-                        <FormField
-                          {...field}
-                          hideLabel={false}
-                          name={`${section.name}.${groupIndex}.${field.name}`}
-                          disabled={!edit}
-                        />
-                      )}
-                    </div>
-                  ))}
+                  .map((field, index) => {
+                    return (
+                      <div
+                        key={field.name}
+                        className={`flex flex-col ${field.arrayFields ? 'md:col-span-2 ' : ''}`}
+                      >
+                        {field.arrayFields ? (
+                          <ArrayForm
+                            sections={[
+                              {
+                                title: field.label,
+                                fields: field.arrayFields,
+                                name: `${section.name}.${groupIndex}.${field.name}`,
+                              },
+                            ]}
+                            edit={edit}
+                            key={index}
+                            count={
+                              fielArrayvalues[groupIndex]?.[field.name]
+                                ?.length || 0
+                            }
+                          />
+                        ) : field.multiSelect ? (
+                          <MultiSelect
+                            options={field.options as FormOption[]}
+                            name={`${section.name}.${groupIndex}.${field.name}`}
+                            label={field.label}
+                            required={field.required}
+                            edit={edit}
+                          />
+                        ) : (
+                          <FormField
+                            {...field}
+                            hideLabel={false}
+                            name={`${section.name}.${groupIndex}.${field.name}`}
+                            disabled={!edit}
+                            className={`${!edit ? '!bg-neutral-0 !disabled:opacity-100  !opacity-100 !cursor-default !disabled:cursor-default' : ''}`}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           ));

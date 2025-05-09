@@ -2,7 +2,7 @@ import {
   DOCUMENTS_TYPE,
   ORGANIZATION_MEMBER_TYPE,
 } from '@/constants/interface.constant';
-import { ORGANIZATION, USER_PROFILE } from '@/types';
+import { ORGANIZATION, USER_PROFILE, WALLET_TYPE } from '@/types';
 import { mapDocumentsToIds, mapWallets } from '../../utils';
 import {
   OrganizationFormValues,
@@ -13,9 +13,15 @@ import { AddressFormValues } from '../../constants/interface.constants';
 export const getInitialValuesOrganization = (
   organization: ORGANIZATION
 ): OrganizationFormValues => {
-  const wallets = mapWallets(organization.Wallet);
   const { createdBy, address, financialDetails, details, members, Document } =
     organization;
+  const wallets = mapWallets(organization.Wallet);
+  const whitelistedWallets = wallets.filter(
+    (wallet) => wallet.walletType === WALLET_TYPE.WHITELISTED
+  );
+  const vaultWallets = wallets.filter(
+    (wallet) => wallet.walletType === WALLET_TYPE.VAULT
+  );
 
   const authprizedUsers =
     members?.filter(
@@ -93,7 +99,8 @@ export const getInitialValuesOrganization = (
       )?.documentUrl || '',
 
     // wallets
-    wallets,
+    whitelistedWallets,
+    vaultWallets,
 
     // authorized users
     authorizedPersons: mapMembers(authprizedUsers),

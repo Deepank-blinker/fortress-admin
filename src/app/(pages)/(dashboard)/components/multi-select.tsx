@@ -1,7 +1,7 @@
 import Typography from '@/components/custom/typography';
 import { Button } from '@/components/ui/button';
 import { FormOption } from '@/types';
-import { useFormikContext } from 'formik';
+import { useField, useFormikContext } from 'formik';
 import React from 'react';
 
 interface MultiSelectProps {
@@ -9,6 +9,7 @@ interface MultiSelectProps {
   name: string;
   label: string;
   required?: boolean;
+  edit?: boolean;
 }
 
 const MultiSelect: React.FC<MultiSelectProps> = ({
@@ -16,12 +17,15 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   name,
   label,
   required,
+  edit,
 }) => {
-  const { values, setFieldValue } = useFormikContext<{
+  const { setFieldValue } = useFormikContext<{
     [key: string]: string[];
   }>();
+  const [field] = useField<string[]>(name);
   const handleSelectOptions = (option: string) => {
-    const fieldvalue = values[name] ?? [];
+    if (!edit) return;
+    const fieldvalue = field?.value ?? [];
     let newValue = [...fieldvalue];
     if (fieldvalue?.includes(option)) {
       newValue = fieldvalue?.filter((item: string) => item !== option);
@@ -50,9 +54,18 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
             variant="secondary"
             key={index}
             onClick={() => handleSelectOptions(option.value)}
-            className={`${values[name]?.includes(option.value) ? 'bg-neutral-600' : ''} h-10`}
+            className={`${field?.value?.includes(option.value) ? 'bg-neutral-800 hover:bg-neutral-800' : ''} h-10`}
           >
-            <Typography variant="small">{option.label}</Typography>
+            <Typography
+              variant="small"
+              color={
+                field?.value?.includes(option.value)
+                  ? 'text-neutral-0'
+                  : 'text-neutral-900'
+              }
+            >
+              {option.label}
+            </Typography>
           </Button>
         ))}
       </div>
