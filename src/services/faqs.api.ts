@@ -13,21 +13,20 @@ export const fetchFaqs = async (): Promise<Response<fetchFaqsResponse>> => {
   return response.data;
 };
 
-export interface CretaeFaqPayload {
+export interface CreateFAQPayload {
   question: string;
   answer: string;
 }
+export interface UpdateFaqPayload extends CreateFAQPayload {
+  id: string;
+}
 
 export const createFaq = async (
-  payload: CretaeFaqPayload
+  payload: CreateFAQPayload
 ): Promise<Response<fetchFaqsResponse>> => {
   const response = await http.post(`${API_ROUTES.faqs.createFaq.url}`, payload);
   return response.data;
 };
-
-export interface UpdateFaqPayload extends CretaeFaqPayload {
-  id: string;
-}
 
 export const updateFaq = async (
   payload: UpdateFaqPayload

@@ -3,7 +3,12 @@ import ModalLayout from '@/components/custom/modal-layout';
 import TextEditor from '@/components/custom/text-editor';
 import Typography from '@/components/custom/typography';
 import { Button } from '@/components/ui/button';
-import { createFaq, updateFaq, UpdateFaqPayload } from '@/services/faqs.api';
+import {
+  createFaq,
+  CreateFAQPayload,
+  updateFaq,
+  UpdateFaqPayload,
+} from '@/services/faqs.api';
 import { getErrorMessage, unescapeHtml } from '@/utils';
 import {
   ArrowLeftIcon,
@@ -48,16 +53,21 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
     answer: Yup.string().required('Answer is required'),
   });
 
-  const initialValues: UpdateFaqPayload = {
-    question: data?.question || '',
-    answer: data?.answer || '',
-    ...(edit && { id: data?.id || '' }),
-  };
+  const initialValues = edit
+    ? ({
+        id: data?.id || '',
+        question: data?.question || '',
+        answer: data?.answer || '',
+      } as UpdateFaqPayload)
+    : ({
+        question: data?.question || '',
+        answer: data?.answer || '',
+      } as CreateFAQPayload);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (payload: UpdateFaqPayload) => {
+    mutationFn: async (payload: UpdateFaqPayload | CreateFAQPayload) => {
       if (edit) {
-        return await updateFaq(payload);
+        return await updateFaq(payload as UpdateFaqPayload);
       }
       return await createFaq(payload);
     },
@@ -72,7 +82,7 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
     },
   });
 
-  const handleFormSubmit = (values: UpdateFaqPayload) => {
+  const handleFormSubmit = (values: UpdateFaqPayload | CreateFAQPayload) => {
     mutate(values);
   };
   return (
