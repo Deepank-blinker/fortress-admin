@@ -298,14 +298,14 @@ export interface TrelloCard {
 }
 
 export interface CustomerTicket {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   status: string;
-  userId: string;
-  ticketId: string;
-  trelloTicketId: string;
+  userId?: string;
+  ticketId?: string;
+  trelloTicketId?: string;
   createdAt: string;
   updatedAt: string;
-  user: USER;
+  user?: USER;
 }
