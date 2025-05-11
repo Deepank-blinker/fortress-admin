@@ -1,5 +1,5 @@
 import { UserStats } from '@/services/auth.api';
-import { USER_PROFILE } from '@/types';
+import { USER, USER_PROFILE } from '@/types';
 
 export interface Tokens {
   access: {
@@ -295,4 +295,25 @@ export interface TrelloCard {
   isTemplate?: boolean;
   cardRole?: string | null;
   mirrorSourceId?: string | null;
+}
+
+export interface Faqs {
+  id: string;
+  question: string;
+  answer: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CustomerTicket {
+  id?: string;
+  name: string;
+  description: string;
+  status: string;
+  userId?: string;
+  ticketId?: string;
+  trelloTicketId?: string;
+  createdAt: string;
+  updatedAt: string;
+  user?: USER;
 }

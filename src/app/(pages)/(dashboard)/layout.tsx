@@ -46,6 +46,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             title: 'Customer Tickets',
             path: ROUTES.CUSTOMER_TICKETS.path,
           },
+          {
+            title: 'FAQs',
+            path: ROUTES.FAQS.path,
+          },
         ]}
         currentSelected={currentTab}
         onTabClick={changeActiveTab}
