@@ -47,13 +47,32 @@ const TextEditor: React.FC<TextEditoProps> = ({
 }) => {
   const [linkModalOpen, setLinkModalOpen] = useState(false);
 
-  const [imageModalOpen, setImageModalOpen] = useState(false);
   const handleAddImage = (src: string) => {
-    editor?.chain().focus().setImage({ src }).run();
+    editor
+      ?.chain()
+      .focus()
+      .insertContent([
+        { type: 'paragraph' },
+        { type: 'image', attrs: { src } },
+        { type: 'paragraph' },
+      ])
+      .run();
   };
 
-  const handleOpenImageModal = () => setImageModalOpen(true);
-  const handleCloseImageModal = () => setImageModalOpen(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleImageButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      handleAddImage(url); // use your new insert logic
+      event.target.value = ''; // reset file input
+    }
+  };
 
   const handleCloseLinkModal = () => {
     setLinkModalOpen(false);
@@ -90,7 +109,8 @@ const TextEditor: React.FC<TextEditoProps> = ({
 
       Image.configure({
         HTMLAttributes: {
-          class: 'max-w-full h-auto max-h-40 object-contain',
+          class:
+            'w-full h-auto object-contain aspect-[16/9] max-h-[360px] border rounded-md',
         },
       }),
       Underline,
@@ -253,11 +273,18 @@ const TextEditor: React.FC<TextEditoProps> = ({
             type="button"
             size="sm"
             className="p-2 h-8 w-8"
-            onClick={handleOpenImageModal}
+            onClick={handleImageButtonClick}
             title="Insert Image"
           >
             <PhotoIcon className="h-4 w-4" />
           </Button>
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            className="hidden"
+          />
         </div>
       </div>
 
@@ -270,11 +297,6 @@ const TextEditor: React.FC<TextEditoProps> = ({
         open={linkModalOpen}
         onClose={handleCloseLinkModal}
         onSubmit={handleAddLink}
-      />
-      <ImageModal
-        open={imageModalOpen}
-        onClose={handleCloseImageModal}
-        onSubmit={handleAddImage}
       />
     </div>
   );
@@ -363,51 +385,6 @@ const LinkModal: React.FC<LinkModalProps> = ({ open, onClose, onSubmit }) => {
               </DialogFooter>
             </Form>
           )}
-        </Formik>
-      </DialogContent>
-    </Dialog>
-  );
-};
-
-interface ImageModalProps {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (src: string) => void;
-}
-
-const ImageModal: React.FC<ImageModalProps> = ({ open, onClose, onSubmit }) => {
-  return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="rounded-lg">
-        <DialogHeader>
-          <DialogTitle>Insert Image</DialogTitle>
-        </DialogHeader>
-
-        <Formik
-          initialValues={{ file: [] }}
-          validationSchema={Yup.object({
-            file: Yup.mixed().required('Image is required'),
-          })}
-          onSubmit={(values, { resetForm }) => {
-            console.log(values);
-            if (values.file) {
-              const url = URL.createObjectURL(values.file[0]);
-              onSubmit(url);
-              resetForm();
-              onClose();
-            }
-          }}
-        >
-          <Form className="space-y-4">
-            <FormField as="file" name="file" accept="image/*" />
-
-            <DialogFooter className="justify-end mt-4">
-              <Button type="button" variant="ghost" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button type="submit">Insert</Button>
-            </DialogFooter>
-          </Form>
         </Formik>
       </DialogContent>
     </Dialog>
