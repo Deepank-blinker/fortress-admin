@@ -59,7 +59,7 @@ export const updateCryptoTokenById = createAsyncThunk<
   try {
     const { id, ...rest } = tokenData;
     const response = await updateCryptoToken(id as string, rest);
-    console.log(response)
+    console.log(response);
     if (!response?.data) {
       throw new Error('No token data returned from API');
     }

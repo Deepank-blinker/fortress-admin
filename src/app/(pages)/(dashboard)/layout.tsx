@@ -35,6 +35,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             path: ROUTES.CRYPTO_TOKENS.path,
           },
           {
+            title: 'Individual',
+            path: ROUTES.INDIVIDUAL.path,
+          },
+          {
+            title: 'Corporate',
+            path: ROUTES.CORPORATE.path,
+          },
+          {
             title: 'Customer Tickets',
             path: ROUTES.CUSTOMER_TICKETS.path,
           },

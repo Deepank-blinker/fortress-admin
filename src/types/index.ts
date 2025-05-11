@@ -102,6 +102,7 @@ export interface ORGANIZATION {
   financialDetails: FINANCIAL_DETAILS;
   details: DETAILS;
   members?: MEMBER[];
+  createdBy?: MEMBER;
 }
 export interface DETAILS {
   id: string;
@@ -395,4 +396,30 @@ export interface EvmChains {
   name?: string;
   createdAt: string;
   updatedAt: string;
+}
+export interface FormOption {
+  value: string;
+  label: string;
+}
+export interface FormFields {
+  name: string;
+  label: string;
+  placeholder?: string;
+  type?: string;
+  as?: AsType;
+  value?: string | number;
+  options?: FormOption[];
+  min?: number;
+  required?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSelectValue?: (value: string) => void;
+  arrayFields?: FormFields[];
+  multiSelect?: boolean;
+}
+
+export interface FormFieldsSection {
+  title: string;
+  fields: FormFields[];
+  name?: string;
+  hideFields?: string[];
 }

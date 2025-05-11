@@ -28,6 +28,8 @@ interface DateInputProps {
   onChange: (_date: Date | undefined) => void;
   value?: Date | undefined;
   dateProps?: DateExtraProps;
+  disabled?: boolean;
+  className?: string;
 }
 
 const months = [
@@ -50,6 +52,8 @@ const DateInput: React.FC<DateInputProps> = ({
   onChange,
   value,
   dateProps: { disableFuture, disablePast, minSelectableAge } = {},
+  disabled,
+  className = '',
 }) => {
   // Define boundaries based on props
   const minAgeDate = minSelectableAge
@@ -119,9 +123,11 @@ const DateInput: React.FC<DateInputProps> = ({
         <Button
           variant="outline"
           className={cn(
-            'w-full justify-between bg-neutral-20 text-neutral-700 text-left font-normal',
-            !date && 'text-muted-foreground'
+            'w-full justify-between bg-neutral-20 text-neutral-700 text-left font-normal ',
+            !date && 'text-muted-foreground',
+            className
           )}
+          disabled={disabled}
         >
           {date ? (
             format(date, 'PPP')
@@ -192,6 +198,7 @@ const DateInput: React.FC<DateInputProps> = ({
             fromMonth={futureStartDate ?? pastStartDate ?? undefined}
             toMonth={disableFuture ? (minAgeDate ?? new Date()) : undefined}
             disabled={(date) => {
+              if (disabled) return true;
               // Disable dates based on conditions, including minSelectableAge and disableFuture
               if (disableFuture && minSelectableAge && date > minAgeDate!)
                 return true;

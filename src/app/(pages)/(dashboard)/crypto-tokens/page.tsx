@@ -21,7 +21,6 @@ import TokenForm from './components/TokenForm';
 import { CHAIN_COLORS, CHAINS } from '@/constants/index.constant';
 import { getChainColor } from '@/utils';
 
-
 export default function TokenPage() {
   const dispatch = useAppDispatch();
   const { tokens } = useAppSelector((state) => state.cryptoTokens);
