@@ -2,6 +2,7 @@
 import Typography from '@/components/custom/typography';
 import { FormFieldsSection } from '@/types';
 import FormField from '@/components/custom/form-field';
+import { cn } from '@/lib/utils';
 
 interface FormSectionProps {
   sections: FormFieldsSection[];
@@ -30,16 +31,17 @@ const FormSection: React.FC<FormSectionProps> = ({
           childrenSection === index &&
           childrenPosition === 'start' &&
           children}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 justify-start">
           {section.fields.map((fields, index) => (
-            <>
-              <FormField
-                key={index}
-                {...fields}
-                disabled={!edit}
-                className={`${!edit ? '!bg-neutral-0 !disabled:opacity-100  !opacity-100 !cursor-default !disabled:cursor-default' : ''}`}
-              />
-            </>
+            <FormField
+              key={index}
+              {...fields}
+              disabled={!edit}
+              className={cn({
+                '!bg-neutral-0 !disabled:opacity-100 !opacity-100 !cursor-default !disabled:cursor-default !items-start':
+                  !edit,
+              })}
+            />
           ))}
         </div>
         {children &&

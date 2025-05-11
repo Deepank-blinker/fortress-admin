@@ -17,6 +17,7 @@ import { getWalletFormFields, idFormFields } from '../../constants/form-fields';
 import { subformsIndividualCustomer } from '../constants/form-fields';
 import { IndividualFormValues } from '../constants/interface.constants';
 import { getIndividualInitialvalues } from '../helpers/map-form-values';
+import UserOrganizationDetailSkeleton from '../../components/user-organization-detail-skeleton';
 
 interface PageProps {
   params: {
@@ -112,6 +113,8 @@ const Page = ({ params }: PageProps) => {
     ],
     [tokenOptions, evmChainOptions]
   );
+  const isPending = false; // TODO: dynamic ispending
+  if (isPending) return <UserOrganizationDetailSkeleton />;
   return (
     <div className=" container mx-auto ">
       <Formik

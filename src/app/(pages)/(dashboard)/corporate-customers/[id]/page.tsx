@@ -19,6 +19,7 @@ import {
 } from '../constants/form-fields';
 import { getInitialValuesOrganization } from '../helper/map-form-values';
 import { OrganizationFormValues } from '../constants/interface.constansts';
+import UserOrganizationDetailSkeleton from '../../components/user-organization-detail-skeleton';
 
 interface PageProps {
   params: {
@@ -127,6 +128,9 @@ const Page = ({ params }: PageProps) => {
     ],
     [tokenOptions, evmChainOptions]
   );
+
+  const isPending = false; // TODO: dynamic ispending
+  if (isPending) return <UserOrganizationDetailSkeleton />;
   return (
     <div className=" container mx-auto ">
       <Formik

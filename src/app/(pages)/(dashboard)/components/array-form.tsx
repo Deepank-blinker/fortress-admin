@@ -3,6 +3,7 @@ import Typography from '@/components/custom/typography';
 import { FormFieldsSection, FormOption } from '@/types';
 import { FieldArray } from 'formik';
 import MultiSelect from './multi-select';
+import { cn } from '@/lib/utils';
 
 interface ArrayFormProps<T> {
   sections: FormFieldsSection[];
@@ -25,10 +26,6 @@ const ArrayForm = <T,>({
       <FieldArray name={section.name || ''}>
         {({ form }) => {
           const fielArrayvalues = form.values[section.name || ''] as T[];
-          // console.log('field array values', section.name, fielArrayvalues);
-          // const sectionArray =
-          //   (values as Record<string, T[]>)?.[section.name || ''] || [];
-          // console.log(section.name, values, sectionArray);
           const valueArray = Array.from({
             length: count || fielArrayvalues?.length || 0,
           });
@@ -37,7 +34,7 @@ const ArrayForm = <T,>({
             return (
               <Typography
                 variant="small"
-                className="text-sm text-neutral-900 italic p-4 border rounded-xl bg-neutral-50"
+                className="text-sm italic text-muted-foreground p-4 border rounded-xl bg-neutral-40"
               >
                 No entries yet for{' '}
                 <strong>{section.title || 'this section'}</strong>.
@@ -63,7 +60,7 @@ const ArrayForm = <T,>({
                     return (
                       <div
                         key={field.name}
-                        className={`flex flex-col ${field.arrayFields ? 'md:col-span-2 ' : ''}`}
+                        className={`flex flex-col  ${field.arrayFields ? 'md:col-span-2 ' : ''}`}
                       >
                         {field.arrayFields ? (
                           <ArrayForm
@@ -95,7 +92,10 @@ const ArrayForm = <T,>({
                             hideLabel={false}
                             name={`${section.name}.${groupIndex}.${field.name}`}
                             disabled={!edit}
-                            className={`${!edit ? '!bg-neutral-0 !disabled:opacity-100  !opacity-100 !cursor-default !disabled:cursor-default' : ''}`}
+                            className={cn({
+                              '!bg-neutral-0 !disabled:opacity-100 !opacity-100 !cursor-default !disabled:cursor-default !items-start !justify-start !flex-row':
+                                !edit,
+                            })}
                           />
                         )}
                       </div>

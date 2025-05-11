@@ -143,34 +143,85 @@ export const PERMISSIONS_OPTIONS = [
 }));
 
 export const KYC_STATUS_OPTIONS = [
-  KYC_STATUS.PENDING,
-  KYC_STATUS.APPROVED,
-  KYC_STATUS.REJECTED,
-].map((status) => ({
-  label: toSentenceCase(status, true),
-  value: status,
-}));
+  {
+    value: KYC_STATUS.PENDING,
+    label: toSentenceCase(KYC_STATUS.PENDING, true),
+    className: '!text-[#3B3B3B]',
+    buttonClassName: '!bg-[#F6C953]', // Golden Amber
+  },
+  {
+    value: KYC_STATUS.APPROVED,
+    label: toSentenceCase(KYC_STATUS.APPROVED, true),
+    className: '!text-white',
+    buttonClassName: '!bg-[#4CAF50]', // Emerald Green
+  },
+  {
+    value: KYC_STATUS.REJECTED,
+    label: toSentenceCase(KYC_STATUS.REJECTED, true),
+    className: '!text-white',
+    buttonClassName: '!bg-[#F44336]', // Bright Red
+  },
+];
 
 export const ACCOUNT_STATUS_OPTIONS = [
-  ACCOUNT_STATUS.ACTIVE,
-  ACCOUNT_STATUS.AGREEMENT_NOT_SIGNED,
-  ACCOUNT_STATUS.BLOCKED,
-  ACCOUNT_STATUS.FREEZED,
-  ACCOUNT_STATUS.PENDING,
-].map((status) => ({
-  label: toSentenceCase(status, true),
-  value: status,
-}));
+  {
+    value: ACCOUNT_STATUS.ACTIVE,
+    label: toSentenceCase(ACCOUNT_STATUS.ACTIVE, true),
+    className: '!text-white',
+    buttonClassName: '!bg-[#2E7D32]', // Deep Green
+  },
+  {
+    value: ACCOUNT_STATUS.AGREEMENT_NOT_SIGNED,
+    label: toSentenceCase(ACCOUNT_STATUS.AGREEMENT_NOT_SIGNED, true),
+    className: '!text-[#3B3B3B]',
+    buttonClassName: '!bg-[#FFC107]', // Yellow (Caution)
+  },
+  {
+    value: ACCOUNT_STATUS.BLOCKED,
+    label: toSentenceCase(ACCOUNT_STATUS.BLOCKED, true),
+    className: '!text-white',
+    buttonClassName: '!bg-[#D32F2F]', // Crimson Red
+  },
+  {
+    value: ACCOUNT_STATUS.FREEZED,
+    label: toSentenceCase(ACCOUNT_STATUS.FREEZED, true),
+    className: '!text-[#1A1A1A]',
+    buttonClassName: '!bg-[#90A4AE]', // Steel Gray (Frozen)
+  },
+  {
+    value: ACCOUNT_STATUS.PENDING,
+    label: toSentenceCase(ACCOUNT_STATUS.PENDING, true),
+    className: '!text-[#3B3B3B]',
+    buttonClassName: '!bg-[#FFEB3B]', // Bright Yellow
+  },
+];
 
 export const WALLET_STATUS_OPTIONS = [
-  WALLET_STATUS.PENDING,
-  WALLET_STATUS.VERIFIED,
-  WALLET_STATUS.REJECTED,
-  WALLET_STATUS.NOT_CREATED,
-].map((status) => ({
-  label: toSentenceCase(status, true),
-  value: status,
-}));
+  {
+    value: WALLET_STATUS.PENDING,
+    label: toSentenceCase(WALLET_STATUS.PENDING, true),
+    className: '!text-[#3B3B3B]',
+    buttonClassName: '!bg-[#FFCA28]', // Amber
+  },
+  {
+    value: WALLET_STATUS.VERIFIED,
+    label: toSentenceCase(WALLET_STATUS.VERIFIED, true),
+    className: '!text-white',
+    buttonClassName: '!bg-[#00C853]', // Bright Green
+  },
+  {
+    value: WALLET_STATUS.REJECTED,
+    label: toSentenceCase(WALLET_STATUS.REJECTED, true),
+    className: '!text-white',
+    buttonClassName: '!bg-[#E53935]', // Red
+  },
+  {
+    value: WALLET_STATUS.NOT_CREATED,
+    label: toSentenceCase(WALLET_STATUS.NOT_CREATED, true),
+    className: '!text-[#333]',
+    buttonClassName: '!bg-[#E0E0E0]', // Light Gray
+  },
+];
 
 export const WALLET_TYPE_OPTIONS = [
   WALLET_TYPE.VAULT,

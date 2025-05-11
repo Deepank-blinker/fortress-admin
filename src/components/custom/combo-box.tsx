@@ -16,6 +16,8 @@ import { Input } from '../ui/input';
 interface Option {
   value: string;
   label: string;
+  className?: string;
+  buttonClassName?: string;
 }
 
 interface SelectProps {
@@ -76,9 +78,7 @@ export const ComboBox: React.FC<SelectProps> = ({
     ? buttonRef.current.offsetWidth
     : 'auto';
 
-  const selectedLabel = options?.find(
-    (option) => option?.value === value
-  )?.label;
+  const selectedOption = options?.find((option) => option?.value === value);
 
   // Filter options based on search input
   React.useEffect(() => {
@@ -117,8 +117,9 @@ export const ComboBox: React.FC<SelectProps> = ({
           aria-expanded={open}
           disabled={disabled}
           className={cn(
-            'w-full justify-between gap-2.5 bg-neutral-20 border border-neutral-40 text-left font-normal',
-            className
+            'w-full justify-between gap-2.5 bg-neutral-20 border border-neutral-40 text-left font-normal ',
+            className,
+            selectedOption?.buttonClassName
           )}
         >
           {icon && icon}
@@ -126,10 +127,15 @@ export const ComboBox: React.FC<SelectProps> = ({
           <Typography
             variant="small"
             weight="regular"
-            color={selectedLabel ? 'text-neutral-900' : 'text-neutral-100'}
-            className="flex-1 truncate text-ellipsis overflow-hidden whitespace-nowrap w-10"
+            color={
+              selectedOption?.label ? 'text-neutral-900' : 'text-neutral-100'
+            }
+            className={cn(
+              ' truncate text-ellipsis overflow-hidden whitespace-nowrap ',
+              selectedOption?.className
+            )}
           >
-            {selectedLabel || placeholder}
+            {selectedOption?.label || placeholder}
           </Typography>
 
           <ChevronsUpDown className="opacity-50" />
@@ -183,7 +189,9 @@ export const ComboBox: React.FC<SelectProps> = ({
                 <Typography
                   variant="small"
                   weight="regular"
-                  color={selectedLabel ? 'text-neutral-900' : 'text-black'}
+                  color={
+                    selectedOption?.label ? 'text-neutral-900' : 'text-black'
+                  }
                   className="flex-1 truncate text-ellipsis overflow-hidden whitespace-nowrap w-10"
                 >
                   {option.label}
