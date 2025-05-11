@@ -174,7 +174,7 @@ export const documentsFormFields: FormFields[] = [
   },
 ];
 
-export const subformsIndividualCustomer: FormFieldsSection[] = [
+export const subFormsIndividualCustomer: FormFieldsSection[] = [
   {
     title: 'User Details',
     fields: userDetailsFormFields,

@@ -5,37 +5,32 @@ import Typography from '@/components/custom/typography';
 import { UserAvatar } from '@/components/custom/user-avatar';
 import { fetchIndividualCustomerThunk } from '@/store/slices/individualCustomers.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import { FormFieldsSection, FormOption } from '@/types';
+import { FormFieldsSection, FormOption, USER_PROFILE } from '@/types';
 import { getFullName, getUserInitials } from '@/utils';
 import { Form, Formik } from 'formik';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import ArrayForm from '../../components/array-form';
 import ProfileImageFormField from '../../components/profile-image-form-field';
-import { getWalletFormFields, idFormFields } from '../../constants/form-fields';
-import { subformsIndividualCustomer } from '../constants/form-fields';
-import { IndividualFormValues } from '../constants/interface.constants';
-import { getIndividualInitialvalues } from '../helpers/map-form-values';
 import UserOrganizationDetailSkeleton from '../../components/user-organization-detail-skeleton';
+import { getWalletFormFields, idFormFields } from '../../constants/form-fields';
+import { subFormsIndividualCustomer } from '../constants/form-fields';
+import { IndividualFormValues } from '../constants/interface.constants';
+import { getIndividualInitialValues } from '../helpers/map-form-values';
+import { useGetUserById } from '../hooks/http.hooks';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-const Page = ({ params }: PageProps) => {
-  const { id } = params;
+const Page = () => {
+  const { id } = useParams<{ id: string }>();
   console.log(id);
   const searchParams = useSearchParams();
-  const { customers } = useAppSelector((state) => state.individualCustomer);
+  const [editing, setEditing] = useState<boolean>(false);
   const { tokens } = useAppSelector((state) => state.cryptoTokens);
   const { evmChains } = useAppSelector((state) => state.evmChains);
-  const customer = customers[0]; //TODO: dynamic by id
-  const router = useRouter();
-  const [editing, setEditing] = useState<boolean>(false);
 
+  const router = useRouter();
+  const { data: customer, isPending } = useGetUserById(id as string);
+  console.log(customer);
   useEffect(() => {
     const isEditing = searchParams.get('edit') === 'true';
     setEditing(isEditing);
@@ -69,7 +64,7 @@ const Page = ({ params }: PageProps) => {
     handleToggleEdit(false);
   };
   const initialValues = useMemo(
-    () => getIndividualInitialvalues(customer),
+    () => getIndividualInitialValues(customer as USER_PROFILE),
     [customer]
   );
 
@@ -113,7 +108,7 @@ const Page = ({ params }: PageProps) => {
     ],
     [tokenOptions, evmChainOptions]
   );
-  const isPending = false; // TODO: dynamic ispending
+  console.log(initialValues,"INITITAL VALUES");
   if (isPending) return <UserOrganizationDetailSkeleton />;
   return (
     <div className=" container mx-auto ">
@@ -147,7 +142,7 @@ const Page = ({ params }: PageProps) => {
             </div>
 
             <FormSection
-              sections={subformsIndividualCustomer}
+              sections={subFormsIndividualCustomer}
               edit={editing}
               childrenPosition="start"
               childrenSection={0}

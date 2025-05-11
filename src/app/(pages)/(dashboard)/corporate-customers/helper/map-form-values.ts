@@ -7,12 +7,13 @@ import { mapDocumentsToIds, mapWallets } from '../../utils';
 import {
   OrganizationFormValues,
   OrganizationMemberFormValues,
-} from '../constants/interface.constansts';
+} from '../constants/interface.constants';
 import { AddressFormValues } from '../../constants/interface.constants';
 
 export const getInitialValuesOrganization = (
   organization: ORGANIZATION
-): OrganizationFormValues => {
+): OrganizationFormValues | null => {
+  if(!organization) return null;
   const { createdBy, address, financialDetails, details, members, Document } =
     organization;
   const wallets = mapWallets(organization.Wallet);
@@ -22,8 +23,8 @@ export const getInitialValuesOrganization = (
   const vaultWallets = wallets.filter(
     (wallet) => wallet.walletType === WALLET_TYPE.VAULT
   );
-
-  const authprizedUsers =
+  console.log(members,"MEMBERS")
+  const authorizedUsers =
     members?.filter(
       (member) =>
         member.primaryUserType === ORGANIZATION_MEMBER_TYPE.AUTHORISED_PERSON ||
@@ -103,7 +104,7 @@ export const getInitialValuesOrganization = (
     vaultWallets,
 
     // authorized users
-    authorizedPersons: mapMembers(authprizedUsers),
+    authorizedPersons: mapMembers(authorizedUsers),
     beneficiaries: mapMembers(beneficiaryUsers),
     members: mapMembers(memberUsers),
   };

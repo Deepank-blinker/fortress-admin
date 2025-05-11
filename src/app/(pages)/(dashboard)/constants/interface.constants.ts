@@ -1,4 +1,4 @@
-export interface WalletFormvalues {
+export interface WalletFormValues {
   walletId: string;
   walletName: string;
   walletAddress: string;

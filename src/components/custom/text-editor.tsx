@@ -1,7 +1,6 @@
 'use client';
 import BulletList from '@tiptap/extension-bullet-list';
 import Heading from '@tiptap/extension-heading';
-import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import ListItem from '@tiptap/extension-list-item';
 import OrderedList from '@tiptap/extension-ordered-list';
@@ -25,8 +24,7 @@ import {
   LinkIcon,
   ListBulletIcon,
   NumberedListIcon,
-  PhotoIcon,
-  UnderlineIcon,
+  UnderlineIcon
 } from '@heroicons/react/24/solid';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { Form, Formik } from 'formik';
@@ -52,8 +50,25 @@ const TextEditor: React.FC<TextEditoProps> = ({
     editor?.chain().focus().setImage({ src }).run();
   };
 
+<<<<<<< Updated upstream
   const handleOpenImageModal = () => setImageModalOpen(true);
   const handleCloseImageModal = () => setImageModalOpen(false);
+=======
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  // const handleImageButtonClick = () => {
+  //   fileInputRef.current?.click();
+  // };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      handleAddImage(url); // use your new insert logic
+      event.target.value = ''; // reset file input
+    }
+  };
+>>>>>>> Stashed changes
 
   const handleCloseLinkModal = () => {
     setLinkModalOpen(false);
@@ -88,11 +103,20 @@ const TextEditor: React.FC<TextEditoProps> = ({
         },
       }),
 
+<<<<<<< Updated upstream
       Image.configure({
         HTMLAttributes: {
           class: 'max-w-full h-auto max-h-40 object-contain',
         },
       }),
+=======
+      // Image.configure({
+      //   HTMLAttributes: {
+      //     class:
+      //       'w-full h-auto object-contain aspect-[16/9] max-h-[360px] border rounded-md',
+      //   },
+      // }),
+>>>>>>> Stashed changes
       Underline,
       TextStyle,
       Heading,
@@ -248,16 +272,27 @@ const TextEditor: React.FC<TextEditoProps> = ({
           >
             <LinkIcon className="h-4 w-4" />
           </Button>
-          <Button
+          {/* <Button
             variant="ghost"
             type="button"
             size="sm"
             className="p-2 h-8 w-8"
             onClick={handleOpenImageModal}
             title="Insert Image"
-          >
+          >∏
             <PhotoIcon className="h-4 w-4" />
+<<<<<<< Updated upstream
           </Button>
+=======
+          </Button> */}
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            className="hidden"
+          />
+>>>>>>> Stashed changes
         </div>
       </div>
 

@@ -24,6 +24,9 @@ export interface ADDRESS_DETAILS {
   state: string;
   zipCode: string;
   country: string;
+  kycAddressDetails: {
+    address_id: string;
+  };
 }
 export interface FINANCIAL_DETAILS {
   id: string;
@@ -118,7 +121,7 @@ export interface DETAILS {
   isDashboardUnlocked?: boolean;
   kycDetails?: {
     applicant_id: string;
-    recordId: string;
+    record_Id: string;
     verification_id: string;
   };
   kycResult: Record<string, unknown>;
@@ -409,6 +412,7 @@ export interface FormFields {
   as?: AsType;
   value?: string | number;
   options?: FormOption[];
+  showUploadedUrlPreview?: boolean;
   min?: number;
   required?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

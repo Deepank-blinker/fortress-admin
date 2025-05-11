@@ -29,7 +29,7 @@ const TableHeaderItems = [
 ];
 
 const Page = () => {
-  const { customers: individiualCustomers } = useAppSelector(
+  const { customers: individualCustomers } = useAppSelector(
     (state) => state.individualCustomer
   );
   const router = useRouter();
@@ -39,6 +39,7 @@ const Page = () => {
   useEffect(() => {
     dispatch(fetchIndividualCustomerThunk());
   }, []);
+
   return (
     <div>
       <TableWrapper>
@@ -59,8 +60,8 @@ const Page = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {individiualCustomers.length > 0 ? (
-              individiualCustomers.map((customer) => (
+            {individualCustomers.length > 0 ? (
+              individualCustomers.map((customer) => (
                 <TableRow key={customer.id} className="whitespace-nowrap">
                   <TableCell className="w-40">
                     <UserAvatar

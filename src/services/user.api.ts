@@ -1,8 +1,5 @@
-
 import { API_ROUTES } from '@/constants/api.routes';
-import {
-  PERMISSIONS
-} from '@/constants/interface.constant';
+import { PERMISSIONS } from '@/constants/interface.constant';
 import http from '@/services/http';
 import {
   ADDRESS_DETAILS,
@@ -11,7 +8,7 @@ import {
   FINANCIAL_DETAILS,
   ORGANIZATION,
   USER,
-  WALLET
+  WALLET,
 } from '@/types';
 
 export interface updateUserPayload {
@@ -26,8 +23,6 @@ export interface updateUserPayload {
   role?: string; //change to role
   permission?: PERMISSIONS;
 }
-
-
 
 export interface updateAddressPayload {
   line1?: string;
@@ -49,13 +44,11 @@ export const getAccessToken = async (): Promise<string> => {
   return response.data;
 };
 
-
 export interface OrganizationBusinessActivityApiResponse {
   organization: ORGANIZATION;
   wallets: WALLET[];
   financialDetails: FINANCIAL_DETAILS;
 }
-
 
 export interface OrganizationMembersDetailsApiResponse {
   user: USER;
@@ -65,20 +58,15 @@ export interface OrganizationMembersDetailsApiResponse {
   uploadedDocuments: DOCUMENT_DETAILS[];
 }
 
-
-
 // forgot password
 export interface ForgotPasswordPayload {
   email: string;
 }
 
-
 export interface ForgotPasswordResetPayload {
   token: string;
   password: string;
 }
-
-
 
 // invite user
 export interface InviteUserPayload {
@@ -88,3 +76,14 @@ export interface InviteUserPayload {
   permission: string;
 }
 
+export const getAllIndividualCustomers = async (): Promise<USER[]> => {
+  const response = await http.get(
+    API_ROUTES.user.getAllIndividualCustomers.url
+  );
+  return response.data;
+};
+
+export const getUserById = async (id: string): Promise<USER> => {
+  const response = await http.get(`${API_ROUTES.user.getUserById.url}/${id}`);
+  return response.data.data;
+};

@@ -2,7 +2,7 @@ import { USER_PROFILE, WALLET_TYPE } from '@/types';
 import { mapDocumentsToIds, mapDocumentsToKeys, mapWallets } from '../../utils';
 import { IndividualFormValues } from '../constants/interface.constants';
 
-export const getIndividualInitialvalues = (
+export const getIndividualInitialValues = (
   customer: USER_PROFILE
 ): IndividualFormValues => {
   const {

@@ -1,6 +1,6 @@
 'use client';
 
-import { getUserProfile } from '@/services/auth.api';
+import { getAllOrganizations } from '@/services/organization.api';
 import { ORGANIZATION } from '@/types';
 import { getErrorMessage } from '@/utils';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
@@ -720,13 +720,14 @@ const initialState: OrganizationState = {
 
 // **🔹 Async Thunks for API Calls**
 export const fetchOrganizationThunk = createAsyncThunk<
-  ORGANIZATION, //TODO: ORGANIZATION to ORGANIZATION[]
+  ORGANIZATION[],
   void,
   { rejectValue: string }
 >('organizations/fetchOrganizationThunk', async (_, { rejectWithValue }) => {
   try {
-    const response = await getUserProfile(); //TODO: udpate api
-    return response?.data?.organization as ORGANIZATION;
+    const response = await getAllOrganizations();
+    console.log(response.data)
+    return response?.data;
   } catch (error) {
     return rejectWithValue(getErrorMessage(error as Error) as string);
   }
@@ -745,12 +746,11 @@ const organizationsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchOrganizationThunk.fulfilled, (state, action) => {
-        state.organizations = [action.payload];
+        state.organizations = action.payload;
         state.loading = false;
       })
-      .addCase(fetchOrganizationThunk.rejected, (state, action) => {
+      .addCase(fetchOrganizationThunk.rejected, (state, _action) => {
         state.loading = false;
-        state.error = action.payload || 'Failed to fetch evmChains';
       });
   },
 });

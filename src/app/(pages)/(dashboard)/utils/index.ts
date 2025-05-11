@@ -2,7 +2,7 @@ import { DOCUMENTS_TYPE } from '@/constants/interface.constant';
 import { DOCUMENT_DETAILS, WALLET } from '@/types';
 import {
   IdFormValues,
-  WalletFormvalues,
+  WalletFormValues,
 } from '../constants/interface.constants';
 import { IndividualDocumentFormValues } from '../individual-customers/constants/interface.constants';
 
@@ -72,7 +72,7 @@ export const mapDocumentsToIds = (documents: DOCUMENT_DETAILS[]) => {
   return Object.values(groupedByDocumentId);
 };
 
-export const mapWallets = (wallets?: WALLET[]): WalletFormvalues[] => {
+export const mapWallets = (wallets?: WALLET[]): WalletFormValues[] => {
   if (!wallets || wallets.length === 0) return [];
   return wallets?.map((wallet) => ({
     walletId: wallet.id || '',

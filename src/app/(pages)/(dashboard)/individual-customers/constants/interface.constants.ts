@@ -1,7 +1,7 @@
 import {
   AddressFormValues,
   IdFormValues,
-  WalletFormvalues,
+  WalletFormValues,
 } from '../../constants/interface.constants';
 
 export interface IndividualDocumentFormValues {
@@ -39,6 +39,6 @@ export interface IndividualFormValues extends AddressFormValues {
   kycSelfie: string;
 
   ids: IdFormValues[];
-  whitelistedWallets: WalletFormvalues[];
-  vaultWallets: WalletFormvalues[];
+  whitelistedWallets: WalletFormValues[];
+  vaultWallets: WalletFormValues[];
 }

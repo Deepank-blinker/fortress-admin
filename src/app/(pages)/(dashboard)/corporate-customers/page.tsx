@@ -25,7 +25,6 @@ const Page = () => {
 
   const router = useRouter();
 
-  // TODO: pagination
 
   useEffect(() => {
     dispatch(fetchOrganizationThunk());
