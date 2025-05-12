@@ -34,6 +34,14 @@ export const API_ROUTES = {
       url: '/user/profile',
       queryKey: 'get-user-profile',
     },
+    getAllIndividualCustomers: {
+      url: '/user/all/individual-customers',
+      queryKey: 'get-all-individual-customers',
+    },
+    getUserById: {
+      url: '/user',
+      queryKey: 'get-user-by-id',
+    },
   },
   cryptoToken: {
     getCryptoTokenList: {
@@ -95,6 +103,16 @@ export const API_ROUTES = {
     updateFaq: {
       url: '/faqs',
       queryKey: 'update-faq',
+    },
+  },
+  organization: {
+    getAllOrganizations: {
+      url: '/organization/all',
+      queryKey: 'get-all-organizations',
+    },
+    getOrganizationById: {
+      url: '/organization',
+      queryKey: 'get-organization-by-id',
     },
   },
 };

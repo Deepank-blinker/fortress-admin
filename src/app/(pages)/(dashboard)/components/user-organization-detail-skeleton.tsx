@@ -2,8 +2,13 @@
 import React from 'react';
 
 import { Skeleton } from '@/components/ui/skeleton';
+interface UserOrganizationDetailSkeletonProps {
+  profilePicture?: boolean;
+}
 
-const UserOrganizationDetailSkeleton = () => {
+const UserOrganizationDetailSkeleton: React.FC<
+  UserOrganizationDetailSkeletonProps
+> = ({ profilePicture = false }) => {
   return (
     <div className="container mx-auto px-4 md:px-8 py-6 space-y-6">
       {/* Header section: avatar and name */}
@@ -19,9 +24,11 @@ const UserOrganizationDetailSkeleton = () => {
       </div>
 
       {/* Profile image section */}
-      <div className="p-4 rounded-lg bg-neutral-0 flex justify-center">
-        <Skeleton className="h-32 w-32 rounded-full" />
-      </div>
+      {profilePicture && (
+        <div className="p-4 rounded-lg bg-neutral-0 flex justify-center">
+          <Skeleton className="h-32 w-32 rounded-full" />
+        </div>
+      )}
 
       {/* Static FormSection Skeleton */}
       {[1, 2, 3, 3, 4].map((_, index) => (

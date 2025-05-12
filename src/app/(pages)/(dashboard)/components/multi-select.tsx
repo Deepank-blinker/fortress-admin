@@ -47,7 +47,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
       >
         {label}
       </Typography>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 flex-wrap">
         {options.map((option, index) => (
           <Button
             type="button"

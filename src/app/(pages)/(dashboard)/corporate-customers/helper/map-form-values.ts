@@ -7,12 +7,13 @@ import { mapDocumentsToIds, mapWallets } from '../../utils';
 import {
   OrganizationFormValues,
   OrganizationMemberFormValues,
-} from '../constants/interface.constansts';
+} from '../constants/interface.constants';
 import { AddressFormValues } from '../../constants/interface.constants';
 
 export const getInitialValuesOrganization = (
   organization: ORGANIZATION
-): OrganizationFormValues => {
+): OrganizationFormValues | null => {
+  if (!organization) return {} as OrganizationFormValues;
   const { createdBy, address, financialDetails, details, members, Document } =
     organization;
   const wallets = mapWallets(organization.Wallet);
@@ -22,24 +23,19 @@ export const getInitialValuesOrganization = (
   const vaultWallets = wallets.filter(
     (wallet) => wallet.walletType === WALLET_TYPE.VAULT
   );
-
-  const authprizedUsers =
+  const authorizedUsers =
     members?.filter(
       (member) =>
-        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.AUTHORISED_PERSON ||
-        member?.userTypes?.includes(ORGANIZATION_MEMBER_TYPE.AUTHORISED_PERSON)
+        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.AUTHORISED_PERSON
     ) ?? [];
   const beneficiaryUsers =
     members?.filter(
       (member) =>
-        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.BENEFICIARY ||
-        member?.userTypes?.includes(ORGANIZATION_MEMBER_TYPE.BENEFICIARY)
+        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.BENEFICIARY
     ) ?? [];
   const memberUsers =
     members?.filter(
-      (member) =>
-        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.MEMBER ||
-        member?.userTypes?.includes(ORGANIZATION_MEMBER_TYPE.MEMBER)
+      (member) => member.primaryUserType === ORGANIZATION_MEMBER_TYPE.MEMBER
     ) ?? [];
   return {
     // created by
@@ -103,7 +99,7 @@ export const getInitialValuesOrganization = (
     vaultWallets,
 
     // authorized users
-    authorizedPersons: mapMembers(authprizedUsers),
+    authorizedPersons: mapMembers(authorizedUsers),
     beneficiaries: mapMembers(beneficiaryUsers),
     members: mapMembers(memberUsers),
   };

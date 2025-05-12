@@ -3,49 +3,79 @@ import FormSection from '@/app/(pages)/(dashboard)/components/form-section';
 import ActionButtons from '@/components/custom/action-buttons';
 import Typography from '@/components/custom/typography';
 import { UserAvatar } from '@/components/custom/user-avatar';
-import { fetchIndividualCustomerThunk } from '@/store/slices/individualCustomers.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppSelector } from '@/store/store';
 import { FormFieldsSection, FormOption } from '@/types';
 import { getFullName, getUserInitials } from '@/utils';
 import { Form, Formik } from 'formik';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useMemo, useState } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import ArrayForm from '../../components/array-form';
+import UserOrganizationDetailSkeleton from '../../components/user-organization-detail-skeleton';
 import { getWalletFormFields } from '../../constants/form-fields';
 import {
   organizationMembersFields,
   subFormFieldsOrganization,
 } from '../constants/form-fields';
+import { OrganizationFormValues } from '../constants/interface.constants';
 import { getInitialValuesOrganization } from '../helper/map-form-values';
-import { OrganizationFormValues } from '../constants/interface.constansts';
-import UserOrganizationDetailSkeleton from '../../components/user-organization-detail-skeleton';
+import { useGetOrganizationById } from '../hooks/http.hook';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
+const initialValuesOrganization: OrganizationFormValues = {
+  createdByFirstName: '',
+  createdByLastName: '',
+  createdByEmail: '',
+  createdByUserId: '',
+  organizationName: '',
+  organizationEmail: '',
+  phoneNumber: '',
+  registrationNumber: '',
+  registrationDate: '',
+  countryOfRegistration: '',
+  countryOfRegulation: '',
+  regulator: '',
+  companyRegulateAs: '',
+  companyRegulateAsDetails: '',
+  otherRegulationDetails: '',
+  natureOfActivity: '',
+  taxRegistrationNumber: '',
+  taxRegistrationCountry: '',
+  valueOfAssetsUnderCustody: '',
+  numberOfAssetsUnderCustody: 0,
+  accountStatus: '',
+  kycStatus: '',
+  proofOfAddress: '',
+  proofOfRegistration: '',
+  organizationConstitution: '',
+  listOfDirectors: '',
+  shareholdersStructure: '',
+  whitelistedWallets: [],
+  vaultWallets: [],
+  authorizedPersons: [],
+  beneficiaries: [],
+  members: [],
+  line1: '', // Add the missing properties
+  city: '',
+  state: '',
+  zipCode: '',
+  country: '',
+};
 
-const Page = ({ params }: PageProps) => {
-  const { id } = params;
-  console.log(id);
+const Page = () => {
+  const [editing, setEditing] = useState<boolean>(false);
+  const { id } = useParams<{ id: string }>();
   const searchParams = useSearchParams();
-  const { organizations } = useAppSelector((state) => state.organizations);
   const { tokens } = useAppSelector((state) => state.cryptoTokens);
   const { evmChains } = useAppSelector((state) => state.evmChains);
-  const orgaization = organizations[0]; //TODO: dynamic by id
+
   const router = useRouter();
-  const [editing, setEditing] = useState<boolean>(false);
+  const { data: organization, isPending } = useGetOrganizationById(
+    id as string
+  );
 
   useEffect(() => {
     const isEditing = searchParams.get('edit') === 'true';
     setEditing(isEditing);
-  }, []);
-
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchIndividualCustomerThunk());
   }, []);
 
   const handleToggleEdit = (newEditState: boolean) => {
@@ -65,15 +95,17 @@ const Page = ({ params }: PageProps) => {
     toast.success('Deleted successfully');
   };
 
-  const handleSubmit = (values: OrganizationFormValues) => {
+  const handleSubmit = (_values: OrganizationFormValues | null) => {
+    if (!_values) return;
     toast.success('Saved successfully');
-    console.log(values);
     handleToggleEdit(false);
   };
-  const initialValues = useMemo(
-    () => getInitialValuesOrganization(orgaization),
-    [orgaization]
-  );
+
+  const initialValues =
+    useMemo(() => {
+      if (!organization) return null;
+      return getInitialValuesOrganization(organization);
+    }, [organization]) || initialValuesOrganization;
 
   const tokenOptions = useMemo(() => {
     return tokens.map((token) => ({
@@ -128,25 +160,25 @@ const Page = ({ params }: PageProps) => {
     ],
     [tokenOptions, evmChainOptions]
   );
-
-  const isPending = false; // TODO: dynamic ispending
   if (isPending) return <UserOrganizationDetailSkeleton />;
   return (
     <div className=" container mx-auto ">
-      <Formik
+      <Formik<OrganizationFormValues>
         initialValues={initialValues}
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({}) => {
+        {({ values }) => {
           return (
             <Form className="[&>*]:p-4 [&>*]:rounded-lg [&>*]:bg-neutral-0 space-y-4">
               <div className=" flex items-center justify-between ">
                 {/* name and profile picture */}
                 <div className="flex items-center gap-2">
-                  <UserAvatar name={getUserInitials(orgaization?.name)} />
+                  <UserAvatar
+                    name={getUserInitials(values?.organizationName)}
+                  />
                   <Typography variant="base" weight="bold">
-                    {getFullName(orgaization?.name)}
+                    {getFullName(values?.organizationName)}
                   </Typography>
                 </div>
                 <ActionButtons

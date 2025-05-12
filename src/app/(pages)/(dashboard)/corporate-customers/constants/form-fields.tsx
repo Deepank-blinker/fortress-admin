@@ -289,7 +289,6 @@ export const organizationMembersFields: FormFields[] = [
     placeholder: 'Select place of birth',
     options: COUNTRY_OPTIONS,
   },
-  ,
   {
     name: 'primaryUserType',
     label: 'Primary User Type',

@@ -33,7 +33,6 @@ export const useAddCountryToWhitelist = () => {
 
 export const useRemoveCountryFromWhitelist = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (country: string) => removeCountryFromWhitelist(country),
     onSuccess: () => {

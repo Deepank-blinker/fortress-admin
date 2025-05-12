@@ -53,7 +53,6 @@ export default function TokenPage() {
     if (!values.symbol || !values.chain) return;
 
     if (editToken) {
-      console.log(editToken, formState);
       const payload = {
         id: editToken?.id as string,
         ...values,
@@ -69,7 +68,6 @@ export default function TokenPage() {
   };
 
   const handleSetFormState = (newState: Partial<CryptoToken>) => {
-    console.log(newState);
     setFormState({ ...formState, ...newState });
   };
 

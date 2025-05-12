@@ -16,16 +16,17 @@ import { useEffect } from 'react';
 import ActionButtons from '@/components/custom/action-buttons';
 import { ROUTES } from '@/constants/route';
 import { useRouter } from 'next/navigation';
+import TableListLoader from '../components/table-list-loader';
 
 const TableHeaderItems = ['Name', 'Email', 'Contact', 'Actions'];
 
 const Page = () => {
-  const { organizations } = useAppSelector((state) => state.organizations);
+  const { organizations, loading } = useAppSelector(
+    (state) => state.organizations
+  );
   const dispatch = useAppDispatch();
 
   const router = useRouter();
-
-  // TODO: pagination
 
   useEffect(() => {
     dispatch(fetchOrganizationThunk());
@@ -50,7 +51,9 @@ const Page = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {organizations?.length > 0 ? (
+            {loading ? (
+              <TableListLoader cellCount={4} />
+            ) : organizations?.length > 0 ? (
               organizations.map((organization) => (
                 <TableRow key={organization.id} className="whitespace-nowrap">
                   <TableCell>

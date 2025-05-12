@@ -11,6 +11,7 @@ interface ArrayFormProps<T> {
   values?: T;
   count?: number;
 }
+type FieldGroup = Record<string, unknown[]>;
 
 const ArrayForm = <T,>({
   sections,
@@ -25,9 +26,9 @@ const ArrayForm = <T,>({
 
       <FieldArray name={section.name || ''}>
         {({ form }) => {
-          const fielArrayvalues = form.values[section.name || ''] as T[];
+          const fileArrayValues = form.values[section.name || ''] as T[];
           const valueArray = Array.from({
-            length: count || fielArrayvalues?.length || 0,
+            length: count || fileArrayValues?.length || 0,
           });
 
           if (valueArray?.length === 0) {
@@ -74,8 +75,9 @@ const ArrayForm = <T,>({
                             edit={edit}
                             key={index}
                             count={
-                              fielArrayvalues[groupIndex]?.[field.name]
-                                ?.length || 0
+                              (fileArrayValues[groupIndex] as FieldGroup)[
+                                field.name
+                              ]?.length || 0
                             }
                           />
                         ) : field.multiSelect ? (
