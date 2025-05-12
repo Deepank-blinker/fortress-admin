@@ -27,6 +27,14 @@ export const ROUTES: Routes = {
     path: '/crypto-tokens',
     isProtectedRoute: true,
   },
+  INDIVIDUAL: {
+    path: '/individual-customers',
+    isProtectedRoute: true,
+  },
+  CORPORATE: {
+    path: '/corporate-customers',
+    isProtectedRoute: true,
+  },
   CUSTOMER_TICKETS: {
     path: '/customer-tickets',
     isProtectedRoute: true,

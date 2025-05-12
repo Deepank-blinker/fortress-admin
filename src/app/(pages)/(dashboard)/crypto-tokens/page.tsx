@@ -21,7 +21,6 @@ import TokenForm from './components/TokenForm';
 import { CHAIN_COLORS, CHAINS } from '@/constants/index.constant';
 import { getChainColor } from '@/utils';
 
-
 export default function TokenPage() {
   const dispatch = useAppDispatch();
   const { tokens } = useAppSelector((state) => state.cryptoTokens);
@@ -54,7 +53,6 @@ export default function TokenPage() {
     if (!values.symbol || !values.chain) return;
 
     if (editToken) {
-      console.log(editToken, formState);
       const payload = {
         id: editToken?.id as string,
         ...values,
@@ -70,7 +68,6 @@ export default function TokenPage() {
   };
 
   const handleSetFormState = (newState: Partial<CryptoToken>) => {
-    console.log(newState);
     setFormState({ ...formState, ...newState });
   };
 

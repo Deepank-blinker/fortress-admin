@@ -312,15 +312,10 @@ interface LinkModalProps {
 const LinkModal: React.FC<LinkModalProps> = ({ open, onClose, onSubmit }) => {
   const [linkPreview, setLinkPreview] = useState<string | null>(null);
   const checkLinkPreview = async (url: string) => {
-    try {
-      // Simple validation to check if it's a valid URL
-      if (url.startsWith('http://') || url.startsWith('https://')) {
-        setLinkPreview(url);
-      } else {
-        setLinkPreview(null);
-      }
-    } catch (error: unknown) {
-      console.log(error);
+    // Simple validation to check if it's a valid URL
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      setLinkPreview(url);
+    } else {
       setLinkPreview(null);
     }
   };

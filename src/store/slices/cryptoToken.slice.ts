@@ -59,7 +59,6 @@ export const updateCryptoTokenById = createAsyncThunk<
   try {
     const { id, ...rest } = tokenData;
     const response = await updateCryptoToken(id as string, rest);
-    console.log(response)
     if (!response?.data) {
       throw new Error('No token data returned from API');
     }
@@ -115,7 +114,6 @@ const cryptoTokenSlice = createSlice({
 
       // Update Token
       .addCase(updateCryptoTokenById.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.tokens = state.tokens.map((token) =>
           token.id === action.payload.id ? action.payload : token
         );

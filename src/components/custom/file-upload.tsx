@@ -73,6 +73,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [fileType, setFileType] = useState<string>('');
   const [fileName, setFileName] = useState<string>('');
+  const [hasImageError, setHasImageError] = useState(false);
 
   const validateImageResolution = (file: File): Promise<boolean> => {
     return new Promise((resolve) => {
@@ -347,15 +348,27 @@ const FileUpload: React.FC<FileUploadProps> = ({
           className={`lg:w-3/5 flex flex-col items-center gap-2 w-full  bg-neutral-20 rounded border border-neutral-30 ${previewClassName}`}
         >
           <div className="relative w-full h-48 aspect-auto overflow-hidden">
-            {fileType.startsWith('image/') ||
-            (uploadedFileUrl && showUploadedUrlPreview && !isPdfUrl) ? (
+            {(fileType.startsWith('image/') ||
+              (uploadedFileUrl && showUploadedUrlPreview && !isPdfUrl)) &&
+            !hasImageError ? (
               <Image
                 src={preview || (uploadedFileUrl as string)}
                 alt="Preview"
                 fill
                 sizes="899"
                 className="aspect-auto "
+                onError={() => setHasImageError(true)}
               />
+            ) : hasImageError ? (
+              <div className="flex flex-col items-center justify-center h-full text-center p-4">
+                <DocumentIcon className="h-12 w-12 text-neutral-60" />
+                <Typography variant="small" color="text-error-300">
+                  Failed to load image preview.
+                </Typography>
+                <Typography variant="small" className="text-neutral-100">
+                  Please check the file format or try uploading again.
+                </Typography>
+              </div>
             ) : fileType === 'application/pdf' ||
               (uploadedFileUrl && showUploadedUrlPreview && isPdfUrl) ? (
               <iframe

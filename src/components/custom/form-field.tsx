@@ -53,6 +53,7 @@ type FormFieldProps = {
   order?: 'asc' | 'desc';
   noOptionsMessage?: string;
   noOptionSearchPlaceholder?: string;
+  hideLabel?: boolean;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -79,6 +80,7 @@ const FormField: React.FC<FormFieldProps> = ({
   order,
   noOptionsMessage,
   noOptionSearchPlaceholder,
+  hideLabel = false,
   ...props
 }) => {
   const [passwordVisible, setPasswordVisible] = React.useState(false);
@@ -88,19 +90,21 @@ const FormField: React.FC<FormFieldProps> = ({
   return (
     <div className="flex flex-col">
       {/* Label */}
-      {as !== 'checkbox' && (
-        <Typography
-          variant="base"
-          weight="bold"
-          color="text-neutral-900"
-          className="mb-2"
-          as="label"
-          htmlFor={name}
-          required={required}
-        >
-          {label}
-        </Typography>
-      )}
+      {as !== 'checkbox'
+        ? !hideLabel && (
+            <Typography
+              variant="base"
+              weight="bold"
+              color="text-neutral-900"
+              className="mb-2"
+              as="label"
+              htmlFor={name}
+              required={required}
+            >
+              {label}
+            </Typography>
+          )
+        : null}
 
       {/* scroll to error */}
       <ConnectedFocusError />
@@ -157,6 +161,7 @@ const FormField: React.FC<FormFieldProps> = ({
                 icon={icon}
                 onCreate={onCreate}
                 isPending={isPending}
+                disabled={props.disabled}
                 noOptionSearchPlaceholder={noOptionSearchPlaceholder}
                 noOptionsMessage={noOptionsMessage}
                 onSelect={(value) => {
@@ -166,7 +171,7 @@ const FormField: React.FC<FormFieldProps> = ({
                     form.setFieldValue(name, value); // Otherwise, update the form value
                   }
                 }}
-                className="p-2 border rounded capitalize"
+                className={`p-2 border rounded capitalize ${props.className}`}
               />
             );
           }
@@ -178,6 +183,7 @@ const FormField: React.FC<FormFieldProps> = ({
                 {...(props as React.FC<SelectProps>)}
                 defaultValue={field.value ? String(field.value) : undefined}
                 value={field.value ? String(field.value) : undefined}
+                disabled={props.disabled}
                 onValueChange={(value) => {
                   if (onSelectValue) {
                     onSelectValue(value); // Use custom onChange if provided
@@ -278,17 +284,28 @@ const FormField: React.FC<FormFieldProps> = ({
                   }}
                   value={field.value}
                   dateProps={dateProps}
+                  disabled={props.disabled}
+                  className={props.className}
                 />
               </div>
             );
           }
 
           if (as === 'file') {
+            const uploadedFileProps =
+              typeof field.value === 'string'
+                ? {
+                    uploadedFileUrl: field.value,
+                    showUploadedUrlPreview: true,
+                  }
+                : {};
             return (
               <>
                 <FileUpload
                   files={field.value}
                   {...fileProps}
+                  {...uploadedFileProps}
+                  className={`${props.className}`}
                   onFileDrop={(file: File[]) => form.setFieldValue(name, file)}
                   onFileRemove={() => form.setFieldValue(name, null)}
                   disabled={props.disabled}
@@ -345,7 +362,6 @@ const FormField: React.FC<FormFieldProps> = ({
               </InputOTP>
             );
           }
-          // phone number
 
           // Add other cases for different input types if needed
           return null;

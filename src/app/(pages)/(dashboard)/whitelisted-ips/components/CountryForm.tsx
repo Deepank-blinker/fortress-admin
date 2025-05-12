@@ -40,7 +40,7 @@ export const CountryForm = () => {
   const { data: whitelistedCountries, isLoading } = useWhitelistedCountries();
   const { mutate: addWhitelistedCountry } = useAddCountryToWhitelist();
   const { mutate: removeWhitelistedCountry } = useRemoveCountryFromWhitelist();
-  console.log(whitelistedCountries);
+
   const [errorMessage, setErrorMessage] = useState<string>('');
   const validationSchema = Yup.object({
     country: Yup.string().required('Country is required'),
@@ -68,7 +68,6 @@ export const CountryForm = () => {
     id,
     country,
   }: Pick<WhitelistedCountries, 'id' | 'country'>) => {
-    console.log(country);
     if (country === MAIN_COUNTRY.name) {
       setErrorMessage(
         `Cannot remove ${MAIN_COUNTRY.name} from whitelist countries`

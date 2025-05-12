@@ -4,6 +4,8 @@ import { ROUTES } from '@/constants/route';
 import { fetchUserProfile } from '@/store/slices/auth.slice';
 import { fetchTokens } from '@/store/slices/cryptoToken.slice';
 import { fetchEvmChainsThunk } from '@/store/slices/evmChains.slice';
+import { fetchIndividualCustomerThunk } from '@/store/slices/individualCustomers.slice';
+import { fetchOrganizationThunk } from '@/store/slices/organizations.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { ReactNode, Suspense, useEffect } from 'react';
@@ -35,6 +37,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     dispatch(fetchEvmChainsThunk());
     if (isAuthenticated) {
       dispatch(fetchUserProfile());
+      dispatch(fetchIndividualCustomerThunk());
+      dispatch(fetchOrganizationThunk());
     }
   }, []);
 

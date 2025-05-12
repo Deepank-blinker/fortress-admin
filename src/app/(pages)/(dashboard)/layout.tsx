@@ -1,10 +1,10 @@
 'use client';
+import Spinner from '@/components/custom/spinner';
+import { TAB_LINKS_DATA } from '@/constants/index.constant';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { ReactNode, Suspense, useEffect, useState } from 'react';
 import Header from './components/header';
 import Tab from './components/tabs';
-import Spinner from '@/components/custom/spinner';
-import { ROUTES } from '@/constants/route';
 interface LayoutProps {
   children: ReactNode;
 }
@@ -25,24 +25,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Header />
       {/* Tabs */}
       <Tab
-        linkData={[
-          {
-            title: 'Whitelisted IPs',
-            path: ROUTES.WHITELISTED_IPS.path,
-          },
-          {
-            title: 'Crypto Tokens',
-            path: ROUTES.CRYPTO_TOKENS.path,
-          },
-          {
-            title: 'Customer Tickets',
-            path: ROUTES.CUSTOMER_TICKETS.path,
-          },
-          {
-            title: 'FAQs',
-            path: ROUTES.FAQS.path,
-          },
-        ]}
+        linkData={TAB_LINKS_DATA}
         currentSelected={currentTab}
         onTabClick={changeActiveTab}
       />

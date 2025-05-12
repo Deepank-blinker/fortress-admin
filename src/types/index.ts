@@ -24,6 +24,9 @@ export interface ADDRESS_DETAILS {
   state: string;
   zipCode: string;
   country: string;
+  kycAddressDetails: {
+    address_id: string;
+  };
 }
 export interface FINANCIAL_DETAILS {
   id: string;
@@ -102,6 +105,7 @@ export interface ORGANIZATION {
   financialDetails: FINANCIAL_DETAILS;
   details: DETAILS;
   members?: MEMBER[];
+  createdBy?: MEMBER;
 }
 export interface DETAILS {
   id: string;
@@ -117,7 +121,7 @@ export interface DETAILS {
   isDashboardUnlocked?: boolean;
   kycDetails?: {
     applicant_id: string;
-    recordId: string;
+    record_Id: string;
     verification_id: string;
   };
   kycResult: Record<string, unknown>;
@@ -156,6 +160,7 @@ export interface USER {
   requestedById?: string;
   hasLoginAccess?: boolean;
   isMFAEnabled?: boolean;
+  username?: string;
 }
 
 export interface FORM_FIELD {
@@ -395,4 +400,31 @@ export interface EvmChains {
   name?: string;
   createdAt: string;
   updatedAt: string;
+}
+export interface FormOption {
+  value: string;
+  label: string;
+}
+export interface FormFields {
+  name: string;
+  label: string;
+  placeholder?: string;
+  type?: string;
+  as?: AsType;
+  value?: string | number;
+  options?: FormOption[];
+  showUploadedUrlPreview?: boolean;
+  min?: number;
+  required?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSelectValue?: (value: string) => void;
+  arrayFields?: FormFields[];
+  multiSelect?: boolean;
+}
+
+export interface FormFieldsSection {
+  title: string;
+  fields: FormFields[];
+  name?: string;
+  hideFields?: string[];
 }
