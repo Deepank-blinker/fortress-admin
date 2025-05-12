@@ -36,6 +36,7 @@ const ProfileImageFormField: React.FC<ProfilePictureForFieldProps> = ({
         uploadedFileUrl: previewUrl,
         showUploadedUrlPreview: showUploadedUrlPreview,
         onRemoveFilePreview,
+        hideRemoveButton: true,
       }}
       disabled={!edit}
     />

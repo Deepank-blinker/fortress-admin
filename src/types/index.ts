@@ -420,6 +420,8 @@ export interface FormFields {
   onSelectValue?: (value: string) => void;
   arrayFields?: FormFields[];
   multiSelect?: boolean;
+  editable?: boolean;
+  hidden?: boolean;
 }
 
 export interface FormFieldsSection {

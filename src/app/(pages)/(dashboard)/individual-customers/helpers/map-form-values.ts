@@ -18,6 +18,7 @@ export const getIndividualInitialValues = (
   return {
     firstName: customer?.firstName || '',
     lastName: customer?.lastName || '',
+    username: customer?.username || '',
     email: customer?.email || '',
     gender: customer?.gender || '',
     phoneNumber: customer?.phoneNumber || '',

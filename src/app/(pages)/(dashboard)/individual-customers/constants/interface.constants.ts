@@ -12,6 +12,7 @@ export interface IndividualDocumentFormValues {
 export interface IndividualFormValues extends AddressFormValues {
   firstName: string;
   lastName: string;
+  username: string;
   email: string;
   gender: string;
   phoneNumber: string;

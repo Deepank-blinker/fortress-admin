@@ -50,6 +50,7 @@ const organizationDetailsFormFields: FormFields[] = [
     required: true,
     type: 'text',
   },
+
   {
     name: 'countryOfRegistration',
     label: 'Country of Registration',
@@ -167,6 +168,7 @@ const organizationDetailsFormFields: FormFields[] = [
     as: 'comboBox',
     required: true,
     options: KYC_STATUS_OPTIONS,
+    editable: true,
   },
   {
     name: 'accountStatus',
@@ -174,6 +176,7 @@ const organizationDetailsFormFields: FormFields[] = [
     as: 'comboBox',
     required: true,
     options: ACCOUNT_STATUS_OPTIONS,
+    editable: true,
   },
 ];
 
@@ -229,6 +232,12 @@ export const organizationMembersFields: FormFields[] = [
     type: 'text',
     required: true,
     placeholder: 'Enter your last name',
+  },
+  {
+    name: 'username',
+    label: 'Username',
+    type: 'text',
+    placeholder: '@username',
   },
   {
     name: 'email',
@@ -304,7 +313,7 @@ export const organizationMembersFields: FormFields[] = [
     multiSelect: true,
     options: ORGANIZATION_MEMBER_TYPE_OPTIONS,
   },
-
+  ...addressFormFields,
   {
     name: 'proofOfAddress',
     label: 'Proof Of Address',

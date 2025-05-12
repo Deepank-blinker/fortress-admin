@@ -1,6 +1,5 @@
 'use client';
 import FormSection from '@/app/(pages)/(dashboard)/components/form-section';
-import ActionButtons from '@/components/custom/action-buttons';
 import Typography from '@/components/custom/typography';
 import { UserAvatar } from '@/components/custom/user-avatar';
 import { useAppSelector } from '@/store/store';
@@ -9,7 +8,6 @@ import { getFullName, getUserInitials } from '@/utils';
 import { Form, Formik } from 'formik';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import { toast } from 'sonner';
 import ArrayForm from '../../components/array-form';
 import ProfileImageFormField from '../../components/profile-image-form-field';
 import UserOrganizationDetailSkeleton from '../../components/user-organization-detail-skeleton';
@@ -44,11 +42,11 @@ const Page = () => {
     setEditing(newEditState);
   };
 
-  const handleDelete = () => {
-    // TODO: delete
-    handleToggleEdit(false);
-    toast.success('Deleted successfully');
-  };
+  // const handleDelete = () => {
+  //   // TODO: delete
+  //   handleToggleEdit(false);
+  //   toast.success('Deleted successfully');
+  // };
 
   const handleSubmit = (_values: IndividualFormValues) => {
     handleToggleEdit(false);
@@ -61,7 +59,7 @@ const Page = () => {
 
   const tokenOptions = useMemo(() => {
     return tokens.map((token) => ({
-      label: token.name,
+      label: token.symbol,
       value: token.id,
     }));
   }, [tokens]);
@@ -119,13 +117,13 @@ const Page = () => {
                   {getFullName(values?.firstName, values?.lastName)}
                 </Typography>
               </div>
-              <ActionButtons
+              {/* <ActionButtons
                 deleteButton
                 onDelete={handleDelete}
                 editButton={!editing}
                 onEdit={() => handleToggleEdit(true)}
                 saveButton={editing}
-              />
+              /> */}
             </div>
 
             <FormSection
