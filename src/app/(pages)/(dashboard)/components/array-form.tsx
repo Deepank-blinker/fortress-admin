@@ -1,9 +1,10 @@
 import FormField from '@/components/custom/form-field';
 import Typography from '@/components/custom/typography';
 import { FormFieldsSection, FormOption } from '@/types';
-import { FieldArray } from 'formik';
+import { FieldArray, useFormikContext } from 'formik';
 import MultiSelect from './multi-select';
 import { cn } from '@/lib/utils';
+import { commonClassName } from './form-section';
 
 interface ArrayFormProps<T> {
   sections: FormFieldsSection[];
@@ -18,6 +19,7 @@ const ArrayForm = <T,>({
   edit = false,
   count,
 }: ArrayFormProps<T>) => {
+  const { values } = useFormikContext<{ [key: string]: string[] }>();
   return sections.map((section, sectionIndex) => (
     <div key={sectionIndex} className="flex flex-col gap-6">
       <Typography variant="large" weight="bold" className="mb-4">
@@ -61,7 +63,10 @@ const ArrayForm = <T,>({
                     return (
                       <div
                         key={field.name}
-                        className={`flex flex-col  ${field.arrayFields ? 'md:col-span-2 ' : ''}`}
+                        className={cn(
+                          'flex flex-col',
+                          field.arrayFields ? 'md:col-span-2' : ''
+                        )}
                       >
                         {field.arrayFields ? (
                           <ArrayForm
@@ -86,18 +91,24 @@ const ArrayForm = <T,>({
                             name={`${section.name}.${groupIndex}.${field.name}`}
                             label={field.label}
                             required={field.required}
-                            edit={edit}
+                            edit={edit || field.editable}
                           />
-                        ) : (
+                        ) : field.as === 'file' &&
+                          !values[field.name] ? null : (
                           <FormField
                             {...field}
                             hideLabel={false}
                             name={`${section.name}.${groupIndex}.${field.name}`}
-                            disabled={!edit}
-                            className={cn({
-                              '!bg-neutral-0 !disabled:opacity-100 !opacity-100 !cursor-default !disabled:cursor-default !items-start !justify-start !flex-row':
-                                !edit,
-                            })}
+                            disabled={!edit || !field.editable}
+                            className={cn(
+                              (field.as === 'file' ||
+                                (edit && field.editable)) &&
+                                commonClassName.edit,
+                              field.as === 'file' && '!justify-start !flex-row'
+                            )}
+                            fileProps={{
+                              hideRemoveButton: field.as === 'file',
+                            }}
                           />
                         )}
                       </div>

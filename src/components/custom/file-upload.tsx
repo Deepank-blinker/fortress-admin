@@ -39,6 +39,7 @@ export interface FileUploadProps {
   previewClassName?: string;
   onlyIcon?: boolean;
   disabled?: boolean;
+  hideRemoveButton?: boolean;
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({
@@ -63,6 +64,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
   previewClassName = '',
   onlyIcon = false,
   disabled = false,
+  hideRemoveButton = false,
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
@@ -393,7 +395,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 </Typography>
               </div>
             )}
-            {!disabled && (
+            {!disabled && !hideRemoveButton ? (
               <Button
                 type="button"
                 onClick={removeImage}
@@ -401,7 +403,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
               >
                 <XCircleIcon className="h-6 w-6 text-red-500" />
               </Button>
-            )}
+            ) : null}
           </div>
         </div>
       ) : null}

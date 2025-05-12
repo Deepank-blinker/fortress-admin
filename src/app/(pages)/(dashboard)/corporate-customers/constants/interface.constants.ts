@@ -4,7 +4,7 @@ import {
   WalletFormValues,
 } from '../../constants/interface.constants';
 
-export interface OrganizationMemberFormValues {
+export interface OrganizationMemberFormValues extends AddressFormValues {
   title?: string;
   percentageShareInCompany?: number;
   firstName: string;
@@ -17,7 +17,6 @@ export interface OrganizationMemberFormValues {
   nationality: string;
   primaryUserType: string;
   otherTypes: string[];
-  address: AddressFormValues;
   permission: string;
   proofOfAddress: string;
   ids: IdFormValues[];

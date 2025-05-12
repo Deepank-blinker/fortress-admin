@@ -47,7 +47,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   onDelete,
   children = '',
 }) => {
-  if (!viewButton && !deleteButton) return null;
   return (
     <div className="flex gap-2 items-center">
       {viewButton && (

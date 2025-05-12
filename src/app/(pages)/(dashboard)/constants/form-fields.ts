@@ -6,6 +6,7 @@ import {
   WALLET_TYPE_OPTIONS,
 } from '@/constants/form.constant';
 import { FormFields, FormOption } from '@/types';
+import { toSentenceCase } from '@/utils';
 
 export const addressFormFields: FormFields[] = [
   {
@@ -58,18 +59,12 @@ export const getWalletFormFields = (
 ): FormFields[] => {
   return [
     {
-      name: 'walletId',
-      label: 'Wallet ID',
-      type: 'string',
-      required: true,
-      placeholder: 'A12345678',
-    },
-    {
       name: 'walletName',
       label: 'Wallet Name',
       type: 'string',
       required: true,
       placeholder: 'Wallet Name',
+      editable: true,
     },
     {
       name: 'walletAddress',
@@ -77,6 +72,7 @@ export const getWalletFormFields = (
       type: 'string',
       required: true,
       placeholder: '0x5dcd7d85ac0eb27a12e8b458e7d2c8c7bf637862',
+      editable: true,
     },
     {
       name: 'walletType',
@@ -91,6 +87,7 @@ export const getWalletFormFields = (
       as: 'comboBox',
       options: WALLET_STATUS_OPTIONS,
       required: true,
+      editable: true,
     },
     {
       name: 'chain',
@@ -103,7 +100,10 @@ export const getWalletFormFields = (
       name: 'evmChainId',
       label: 'EVM Chain',
       as: 'comboBox',
-      options: evmChainOptions,
+      options: evmChainOptions?.map((evmChain) => ({
+        ...evmChain,
+        label: toSentenceCase(evmChain.label, true),
+      })),
     },
     {
       name: 'tokenId',
@@ -117,12 +117,14 @@ export const getWalletFormFields = (
       label: 'Vault ID',
       type: 'string',
       placeholder: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+      editable: true,
     },
     {
       name: 'accountId',
       label: 'Account ID',
       type: 'string',
       placeholder: 'XXX',
+      editable: true,
     },
     {
       name: 'riskScore',

@@ -3,6 +3,7 @@ import Typography from '@/components/custom/typography';
 import { FormFieldsSection } from '@/types';
 import FormField from '@/components/custom/form-field';
 import { cn } from '@/lib/utils';
+import { useFormikContext } from 'formik';
 
 interface FormSectionProps {
   sections: FormFieldsSection[];
@@ -12,6 +13,9 @@ interface FormSectionProps {
   childrenSection?: number;
 }
 
+export const commonClassName = {
+  edit: '!bg-neutral-0 !opacity-100 !cursor-default !items-start !disabled:opacity-100 !disabled:cursor-not-allowed',
+};
 const FormSection: React.FC<FormSectionProps> = ({
   sections,
   edit,
@@ -19,6 +23,7 @@ const FormSection: React.FC<FormSectionProps> = ({
   childrenPosition = 'start',
   childrenSection = 0,
 }) => {
+  const { values } = useFormikContext<{ [key: string]: string[] }>();
   if (!sections || sections.length === 0) return null;
 
   return sections.map((section, index) => (
@@ -32,17 +37,25 @@ const FormSection: React.FC<FormSectionProps> = ({
           childrenPosition === 'start' &&
           children}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 justify-start">
-          {section.fields.map((fields, index) => (
-            <FormField
-              key={index}
-              {...fields}
-              disabled={!edit}
-              className={cn({
-                '!bg-neutral-0 !disabled:opacity-100 !opacity-100 !cursor-default !disabled:cursor-default !items-start':
-                  !edit,
-              })}
-            />
-          ))}
+          {section.fields.map((fields, index) => {
+            if (fields.as === 'file' && !values[fields.name]) return null;
+
+            return (
+              <FormField
+                key={index}
+                {...fields}
+                disabled={!edit || !fields.editable}
+                className={cn(
+                  (fields.as === 'file' || (fields.editable && edit)) &&
+                    commonClassName.edit,
+                  fields.as === 'file' ? 'md:col-start-1' : ''
+                )}
+                fileProps={{
+                  hideRemoveButton: fields.as === 'file',
+                }}
+              />
+            );
+          })}
         </div>
         {children &&
           childrenSection === index &&

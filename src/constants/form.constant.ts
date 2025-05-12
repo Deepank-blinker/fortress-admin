@@ -146,20 +146,20 @@ export const KYC_STATUS_OPTIONS = [
   {
     value: KYC_STATUS.PENDING,
     label: toSentenceCase(KYC_STATUS.PENDING, true),
-    className: '!text-[#3B3B3B]',
-    buttonClassName: '!bg-[#F6C953]', // Golden Amber
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-yellow-400', // Amber
   },
   {
     value: KYC_STATUS.APPROVED,
     label: toSentenceCase(KYC_STATUS.APPROVED, true),
-    className: '!text-white',
-    buttonClassName: '!bg-[#4CAF50]', // Emerald Green
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-green-600', // Emerald
   },
   {
     value: KYC_STATUS.REJECTED,
     label: toSentenceCase(KYC_STATUS.REJECTED, true),
-    className: '!text-white',
-    buttonClassName: '!bg-[#F44336]', // Bright Red
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-red-500', // Red
   },
 ];
 
@@ -167,32 +167,32 @@ export const ACCOUNT_STATUS_OPTIONS = [
   {
     value: ACCOUNT_STATUS.ACTIVE,
     label: toSentenceCase(ACCOUNT_STATUS.ACTIVE, true),
-    className: '!text-white',
-    buttonClassName: '!bg-[#2E7D32]', // Deep Green
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-green-700', // Dark Green
   },
   {
     value: ACCOUNT_STATUS.AGREEMENT_NOT_SIGNED,
     label: toSentenceCase(ACCOUNT_STATUS.AGREEMENT_NOT_SIGNED, true),
-    className: '!text-[#3B3B3B]',
-    buttonClassName: '!bg-[#FFC107]', // Yellow (Caution)
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-yellow-500', // Caution Yellow
   },
   {
     value: ACCOUNT_STATUS.BLOCKED,
     label: toSentenceCase(ACCOUNT_STATUS.BLOCKED, true),
-    className: '!text-white',
-    buttonClassName: '!bg-[#D32F2F]', // Crimson Red
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-red-700', // Crimson
   },
   {
     value: ACCOUNT_STATUS.FREEZED,
     label: toSentenceCase(ACCOUNT_STATUS.FREEZED, true),
-    className: '!text-[#1A1A1A]',
-    buttonClassName: '!bg-[#90A4AE]', // Steel Gray (Frozen)
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-slate-400', // Frozen Gray
   },
   {
     value: ACCOUNT_STATUS.PENDING,
     label: toSentenceCase(ACCOUNT_STATUS.PENDING, true),
-    className: '!text-[#3B3B3B]',
-    buttonClassName: '!bg-[#FFEB3B]', // Bright Yellow
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-yellow-300', // Bright Yellow
   },
 ];
 
@@ -200,26 +200,26 @@ export const WALLET_STATUS_OPTIONS = [
   {
     value: WALLET_STATUS.PENDING,
     label: toSentenceCase(WALLET_STATUS.PENDING, true),
-    className: '!text-[#3B3B3B]',
-    buttonClassName: '!bg-[#FFCA28]', // Amber
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-amber-400', // Amber
   },
   {
     value: WALLET_STATUS.VERIFIED,
     label: toSentenceCase(WALLET_STATUS.VERIFIED, true),
-    className: '!text-white',
-    buttonClassName: '!bg-[#00C853]', // Bright Green
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-green-500', // Bright Green
   },
   {
     value: WALLET_STATUS.REJECTED,
     label: toSentenceCase(WALLET_STATUS.REJECTED, true),
-    className: '!text-white',
-    buttonClassName: '!bg-[#E53935]', // Red
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-red-600', // Red
   },
   {
     value: WALLET_STATUS.NOT_CREATED,
     label: toSentenceCase(WALLET_STATUS.NOT_CREATED, true),
-    className: '!text-[#333]',
-    buttonClassName: '!bg-[#E0E0E0]', // Light Gray
+    className: '!text-neutral-0',
+    buttonClassName: '!bg-gray-300', // Light Gray
   },
 ];
 

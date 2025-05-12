@@ -27,6 +27,12 @@ const userDetailsFormFields: FormFields[] = [
     placeholder: 'Enter your last name',
   },
   {
+    name: 'username',
+    label: 'Username',
+    type: 'text',
+    placeholder: '@username',
+  },
+  {
     name: 'email',
     label: 'Email',
     type: 'email',
@@ -78,6 +84,7 @@ const userDetailsFormFields: FormFields[] = [
     as: 'comboBox',
     required: true,
     options: KYC_STATUS_OPTIONS,
+    editable: true,
   },
   {
     name: 'accountStatus',
@@ -85,6 +92,7 @@ const userDetailsFormFields: FormFields[] = [
     as: 'comboBox',
     required: true,
     options: ACCOUNT_STATUS_OPTIONS,
+    editable: true,
   },
   {
     name: 'gender',

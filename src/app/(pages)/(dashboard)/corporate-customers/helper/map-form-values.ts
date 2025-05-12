@@ -8,7 +8,6 @@ import {
   OrganizationFormValues,
   OrganizationMemberFormValues,
 } from '../constants/interface.constants';
-import { AddressFormValues } from '../../constants/interface.constants';
 
 export const getInitialValuesOrganization = (
   organization: ORGANIZATION
@@ -123,6 +122,7 @@ const mapMembers = (
         : {}),
       firstName: member?.firstName || '',
       lastName: member?.lastName || '',
+      username: member?.username || '',
       email: member?.email || '',
       phoneNumber: member?.phoneNumber || '',
       gender: member?.gender || '',
@@ -131,7 +131,12 @@ const mapMembers = (
       nationality: member?.nationality || '',
       primaryUserType: primaryUserType || '',
       otherTypes: (member.userTypes || []) as string[],
-      address: member?.address as AddressFormValues,
+      line1: member?.address?.line1 || '',
+      line2: member?.address?.line2 || '',
+      city: member?.address?.city || '',
+      state: member?.address?.state || '',
+      zipCode: member?.address?.zipCode || '',
+      country: member?.address?.country || '',
       permission: member?.permission || '',
       proofOfAddress:
         member.Document?.find(
