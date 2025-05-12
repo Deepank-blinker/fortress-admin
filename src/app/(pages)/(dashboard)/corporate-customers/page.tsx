@@ -72,7 +72,7 @@ const Page = () => {
                   <TableCell>
                     <ActionButtons
                       viewButton
-                      deleteButton
+                      // deleteButton
                       onView={() =>
                         router.push(
                           `${ROUTES.CORPORATE.path}/${organization.id}`
