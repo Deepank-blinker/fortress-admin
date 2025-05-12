@@ -23,6 +23,7 @@ const Page = () => {
     queryKey: [API_ROUTES.faqs.fetchFaqs.queryKey],
     queryFn: fetchFaqs,
   });
+
   return (
     <div className="bg-neutral-0 rounded-lg pb-10 ">
       <div className=" py-4 px-5 flex justify-between items-center border-b border-b-neutral-40 ">
