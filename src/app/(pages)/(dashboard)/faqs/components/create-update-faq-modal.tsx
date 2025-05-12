@@ -3,20 +3,19 @@ import ModalLayout from '@/components/custom/modal-layout';
 import TextEditor from '@/components/custom/text-editor';
 import Typography from '@/components/custom/typography';
 import { Button } from '@/components/ui/button';
+import { API_ROUTES } from '@/constants/api.routes';
+import { Faqs } from '@/constants/interface.constant';
 import {
   createFaq,
   CreateFAQPayload,
+  deleteFaq,
   updateFaq,
   UpdateFaqPayload,
 } from '@/services/faqs.api';
+import { PaginationResponse, Response } from '@/types';
 import { getErrorMessage, unescapeHtml } from '@/utils';
-import {
-  ArrowLeftIcon,
-  PencilIcon,
-  PlusIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/solid';
-import { useMutation } from '@tanstack/react-query';
+import { ArrowLeftIcon, PencilIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { toast } from 'sonner';
@@ -46,6 +45,7 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const queryClient = useQueryClient();
 
   const validationSchema = Yup.object().shape({
     ...(edit && { id: Yup.string().required('Id is required') }),
@@ -66,14 +66,38 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: UpdateFaqPayload | CreateFAQPayload) => {
-      if (edit) {
-        return await updateFaq(payload as UpdateFaqPayload);
-      }
-      return await createFaq(payload);
+      return edit
+        ? await updateFaq(payload as UpdateFaqPayload)
+        : await createFaq(payload);
     },
-    onSuccess: () => {
+    onSuccess: (response) => {
+      const newFaq = response.data;
       toast.success(
-        edit ? 'Faq updated successfully' : 'Faq created successfully'
+        edit ? 'FAQ updated successfully' : 'FAQ created successfully'
+      );
+
+      queryClient.setQueryData(
+        [API_ROUTES.faqs.fetchFaqs.queryKey],
+        (oldData?: Response<PaginationResponse<Faqs[]>>) => {
+          const oldFaqs = oldData?.data?.data || [];
+          const updatedFaqs = edit
+            ? oldFaqs?.map((faq) => (faq.id === newFaq?.id ? newFaq : faq))
+            : [newFaq, ...oldFaqs];
+
+          return {
+            ...oldData,
+            data: {
+              ...oldData?.data,
+              data: updatedFaqs,
+              // pagination: {
+              //   ...oldData.data.pagination,
+              //   total: edit
+              //     ? oldData.data.pagination.total
+              //     : oldData.data.pagination.total + 1,
+              // },
+            },
+          };
+        }
       );
       handleClose();
     },
@@ -84,6 +108,49 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
 
   const handleFormSubmit = (values: UpdateFaqPayload | CreateFAQPayload) => {
     mutate(values);
+  };
+
+  const { mutate: deleteFaqMutate, isPending: isDeleting } = useMutation({
+    mutationFn: async (id: string) => {
+      return await deleteFaq(id);
+    },
+    onSuccess: (response, deletedId) => {
+      toast.success('FAQ deleted successfully');
+
+      queryClient.setQueryData(
+        [API_ROUTES.faqs.fetchFaqs.queryKey],
+        (oldData?: Response<PaginationResponse<Faqs[]>>) => {
+          const updatedFaqs = oldData?.data?.data.filter(
+            (faq) => faq.id !== deletedId
+          );
+          const updatedTotal = (oldData?.data?.pagination?.total || 1) - 1;
+          const updatedTotalPages = Math.ceil(
+            updatedTotal / (oldData?.data?.pagination?.limit || 1)
+          );
+
+          return {
+            ...oldData,
+            data: {
+              ...oldData?.data,
+              data: updatedFaqs,
+              pagination: {
+                ...oldData?.data?.pagination,
+                total: updatedTotal,
+                totalPages: updatedTotalPages,
+              },
+            },
+          };
+        }
+      );
+      handleClose();
+    },
+    onError: (err) => {
+      toast.error(getErrorMessage(err));
+    },
+  });
+  const handleDelete = () => {
+    if (!data?.id) return toast.error('FAQ id is required');
+    deleteFaqMutate(data?.id);
   };
   return (
     <>
@@ -101,16 +168,22 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
       </Button>
       <ModalLayout isOpen={open} close={handleClose}>
         <div className="space-y-4 relative">
-          <Button
-            variant="text"
-            className="absolute top-4 right-0 sm:hidden "
-            onClick={handleClose}
-          >
-            <XMarkIcon className="w-6 h-6 text-neutral-900" />
-          </Button>
-          <Typography variant="h3" weight="bold" color="text-neutral-900">
-            {edit ? 'Update FAQ' : 'Create FAQ'}
-          </Typography>
+          <div className="flex justify-between items-center gap-2">
+            <Typography variant="h3" weight="bold" color="text-neutral-900">
+              {edit ? 'Update FAQ' : 'Create FAQ'}
+            </Typography>
+            {edit && (
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                className="w-fit"
+              >
+                {isDeleting ? 'Deleteng...' : 'Delete'}
+              </Button>
+            )}
+          </div>
           <div className="h-5 w-full self-stretch" />
 
           <Formik
