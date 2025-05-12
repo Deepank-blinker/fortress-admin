@@ -89,7 +89,7 @@ const Page = () => {
                   <TableCell>
                     <ActionButtons
                       viewButton
-                      deleteButton
+                      // deleteButton
                       onView={() =>
                         router.push(`${ROUTES.INDIVIDUAL.path}/${customer.id}`)
                       }

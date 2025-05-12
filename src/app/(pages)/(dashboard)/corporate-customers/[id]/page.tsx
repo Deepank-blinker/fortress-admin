@@ -19,6 +19,7 @@ import {
 import { OrganizationFormValues } from '../constants/interface.constants';
 import { getInitialValuesOrganization } from '../helper/map-form-values';
 import { useGetOrganizationById } from '../hooks/http.hook';
+import ActionButtons from '@/components/custom/action-buttons';
 
 const initialValuesOrganization: OrganizationFormValues = {
   createdByFirstName: '',
@@ -88,11 +89,11 @@ const Page = () => {
     setEditing(newEditState);
   };
 
-  // const handleDelete = () => {
-  //   // TODO: delete
-  //   handleToggleEdit(false);
-  //   toast.success('Deleted successfully');
-  // };
+  const handleDelete = () => {
+    // TODO: delete
+    handleToggleEdit(false);
+    toast.success('Deleted successfully');
+  };
 
   const handleSubmit = (_values: OrganizationFormValues | null) => {
     if (!_values) return;
@@ -180,13 +181,13 @@ const Page = () => {
                     {getFullName(values?.organizationName)}
                   </Typography>
                 </div>
-                {/* <ActionButtons
-                  deleteButton
+                <ActionButtons
+                  // deleteButton
                   onDelete={handleDelete}
-                  editButton={!editing}
+                  // editButton={!editing}
                   onEdit={() => handleToggleEdit(true)}
-                  saveButton={editing}
-                /> */}
+                  // saveButton={editing}
+                />
               </div>
 
               <FormSection
