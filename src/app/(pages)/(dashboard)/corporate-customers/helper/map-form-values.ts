@@ -26,20 +26,16 @@ export const getInitialValuesOrganization = (
   const authorizedUsers =
     members?.filter(
       (member) =>
-        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.AUTHORISED_PERSON ||
-        member?.userTypes?.includes(ORGANIZATION_MEMBER_TYPE.AUTHORISED_PERSON)
+        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.AUTHORISED_PERSON
     ) ?? [];
   const beneficiaryUsers =
     members?.filter(
       (member) =>
-        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.BENEFICIARY ||
-        member?.userTypes?.includes(ORGANIZATION_MEMBER_TYPE.BENEFICIARY)
+        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.BENEFICIARY
     ) ?? [];
   const memberUsers =
     members?.filter(
-      (member) =>
-        member.primaryUserType === ORGANIZATION_MEMBER_TYPE.MEMBER ||
-        member?.userTypes?.includes(ORGANIZATION_MEMBER_TYPE.MEMBER)
+      (member) => member.primaryUserType === ORGANIZATION_MEMBER_TYPE.MEMBER
     ) ?? [];
   return {
     // created by
