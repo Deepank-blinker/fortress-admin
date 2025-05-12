@@ -160,6 +160,7 @@ export interface USER {
   requestedById?: string;
   hasLoginAccess?: boolean;
   isMFAEnabled?: boolean;
+  username?: string;
 }
 
 export interface FORM_FIELD {

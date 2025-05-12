@@ -5,23 +5,7 @@ import { IndividualFormValues } from '../constants/interface.constants';
 export const getIndividualInitialValues = (
   customer: USER_PROFILE
 ): IndividualFormValues => {
-  const {
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-    dateOfBirth,
-    nationality,
-    placeOfBirth,
-    residenceCountry,
-    details,
-    gender,
-    address,
-    financialDetails,
-    Wallet,
-    Document,
-    profilePicture,
-  } = customer;
+  const { details, address, financialDetails, Document, Wallet } = customer;
 
   const wallets = mapWallets(Wallet);
   const whitelistedWallets = wallets.filter(
@@ -32,16 +16,16 @@ export const getIndividualInitialValues = (
   );
 
   return {
-    firstName: firstName || '',
-    lastName: lastName || '',
-    email: email || '',
-    gender: gender || '',
-    phoneNumber: phoneNumber || '',
-    dateOfBirth: dateOfBirth || '',
-    nationality: nationality || '',
-    placeOfBirth: placeOfBirth || '',
-    residenceCountry: residenceCountry || '',
-    profilePicture: profilePicture || '',
+    firstName: customer?.firstName || '',
+    lastName: customer?.lastName || '',
+    email: customer?.email || '',
+    gender: customer?.gender || '',
+    phoneNumber: customer?.phoneNumber || '',
+    dateOfBirth: customer?.dateOfBirth || '',
+    nationality: customer?.nationality || '',
+    placeOfBirth: customer?.placeOfBirth || '',
+    residenceCountry: customer?.residenceCountry || '',
+    profilePicture: customer?.profilePicture || '',
     accountStatus: details?.accountStatus || '',
     kycStatus: details?.kycStatus || '',
 

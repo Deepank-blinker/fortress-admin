@@ -1,6 +1,8 @@
 'use client';
+import ActionButtons from '@/components/custom/action-buttons';
 import TableWrapper from '@/components/custom/table-wrapper';
 import Typography from '@/components/custom/typography';
+import { UserAvatar } from '@/components/custom/user-avatar';
 import {
   EmptyTableMessage,
   Table,
@@ -10,14 +12,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { ROUTES } from '@/constants/route';
 import { fetchIndividualCustomerThunk } from '@/store/slices/individualCustomers.slice';
 import { useAppDispatch, useAppSelector } from '@/store/store';
-import React, { useEffect } from 'react';
-import ActionButtons from '@/components/custom/action-buttons';
-import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/constants/route';
-import { UserAvatar } from '@/components/custom/user-avatar';
 import { getUserInitials } from '@/utils';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import TableListLoader from '../components/table-list-loader';
 
 const TableHeaderItems = [
   'Profile Picture',
@@ -29,11 +30,11 @@ const TableHeaderItems = [
 ];
 
 const Page = () => {
-  const { customers: individualCustomers } = useAppSelector(
+  const { customers: individualCustomers, loading } = useAppSelector(
     (state) => state.individualCustomer
   );
   const router = useRouter();
-  // TODO: pagination
+  // TODO: paginationo
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -60,7 +61,9 @@ const Page = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {individualCustomers.length > 0 ? (
+            {loading ? (
+              <TableListLoader />
+            ) : individualCustomers.length > 0 ? (
               individualCustomers.map((customer) => (
                 <TableRow key={customer.id} className="whitespace-nowrap">
                   <TableCell className="w-40">

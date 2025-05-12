@@ -3,8 +3,7 @@ import FormSection from '@/app/(pages)/(dashboard)/components/form-section';
 import ActionButtons from '@/components/custom/action-buttons';
 import Typography from '@/components/custom/typography';
 import { UserAvatar } from '@/components/custom/user-avatar';
-import { fetchIndividualCustomerThunk } from '@/store/slices/individualCustomers.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppSelector } from '@/store/store';
 import { FormFieldsSection, FormOption } from '@/types';
 import { getFullName, getUserInitials } from '@/utils';
 import { Form, Formik } from 'formik';
@@ -62,11 +61,9 @@ const initialValuesOrganization: OrganizationFormValues = {
   country: '',
 };
 
-
 const Page = () => {
   const [editing, setEditing] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
-  console.log(id);
   const searchParams = useSearchParams();
   const { tokens } = useAppSelector((state) => state.cryptoTokens);
   const { evmChains } = useAppSelector((state) => state.evmChains);
@@ -79,11 +76,6 @@ const Page = () => {
   useEffect(() => {
     const isEditing = searchParams.get('edit') === 'true';
     setEditing(isEditing);
-  }, []);
-
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchIndividualCustomerThunk());
   }, []);
 
   const handleToggleEdit = (newEditState: boolean) => {
@@ -103,10 +95,9 @@ const Page = () => {
     toast.success('Deleted successfully');
   };
 
-  const handleSubmit = (values: OrganizationFormValues | null) => {
-    if (!values) return;
+  const handleSubmit = (_values: OrganizationFormValues | null) => {
+    if (!_values) return;
     toast.success('Saved successfully');
-    console.log(values);
     handleToggleEdit(false);
   };
 
@@ -169,7 +160,6 @@ const Page = () => {
     ],
     [tokenOptions, evmChainOptions]
   );
-  console.log(organization,"ORGNIZATION @000")
   if (isPending) return <UserOrganizationDetailSkeleton />;
   return (
     <div className=" container mx-auto ">
@@ -178,15 +168,17 @@ const Page = () => {
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({}) => {
+        {({ values }) => {
           return (
             <Form className="[&>*]:p-4 [&>*]:rounded-lg [&>*]:bg-neutral-0 space-y-4">
               <div className=" flex items-center justify-between ">
                 {/* name and profile picture */}
                 <div className="flex items-center gap-2">
-                  <UserAvatar name={getUserInitials(organization?.name)} />
+                  <UserAvatar
+                    name={getUserInitials(values?.organizationName)}
+                  />
                   <Typography variant="base" weight="bold">
-                    {getFullName(organization?.name)}
+                    {getFullName(values?.organizationName)}
                   </Typography>
                 </div>
                 <ActionButtons

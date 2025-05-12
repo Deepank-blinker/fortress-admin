@@ -29,9 +29,9 @@ const ProfileImageFormField: React.FC<ProfilePictureForFieldProps> = ({
         dropzoneText: '',
         onlyIcon: true,
         className:
-          'w-[10rem] h-[10rem] flex justify-center items-center overflow-hidden !opacity-100',
+          '!w-[10rem] !h-[10rem] flex justify-center items-center overflow-hidden !opacity-100',
         previewClassName:
-          'rounded-full w-[10rem] h-[10rem] overflow-hidden lg:w-[10rem] lg:h-[10rem] !mb-0 lg:!mb-0 ',
+          'rounded-full !w-[10rem] !h-[10rem] overflow-hidden lg:w-[10rem] lg:h-[10rem] !mb-0 lg:!mb-0 !opacity-100 ',
 
         uploadedFileUrl: previewUrl,
         showUploadedUrlPreview: showUploadedUrlPreview,

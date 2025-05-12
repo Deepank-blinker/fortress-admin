@@ -1,4 +1,5 @@
 import { Pagination } from './interface.constant';
+import { ROUTES } from './route';
 
 export const MIN_SELECTABLE_AGE = 18;
 
@@ -105,3 +106,30 @@ export const CHAIN_COLORS = {
   TEZOS: 'bg-indigo-50 border-indigo-200 text-indigo-700',
   USDT: 'bg-green-50 border-green-200 text-green-700',
 };
+
+export const TAB_LINKS_DATA = [
+  {
+    title: 'Whitelisted IPs',
+    path: ROUTES.WHITELISTED_IPS.path,
+  },
+  {
+    title: 'Crypto Tokens',
+    path: ROUTES.CRYPTO_TOKENS.path,
+  },
+  {
+    title: 'Individual',
+    path: ROUTES.INDIVIDUAL.path,
+  },
+  {
+    title: 'Corporate',
+    path: ROUTES.CORPORATE.path,
+  },
+  {
+    title: 'Customer Tickets',
+    path: ROUTES.CUSTOMER_TICKETS.path,
+  },
+  {
+    title: 'FAQs',
+    path: ROUTES.FAQS.path,
+  },
+];

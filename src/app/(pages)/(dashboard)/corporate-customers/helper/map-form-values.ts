@@ -13,7 +13,7 @@ import { AddressFormValues } from '../../constants/interface.constants';
 export const getInitialValuesOrganization = (
   organization: ORGANIZATION
 ): OrganizationFormValues | null => {
-  if(!organization) return null;
+  if (!organization) return {} as OrganizationFormValues;
   const { createdBy, address, financialDetails, details, members, Document } =
     organization;
   const wallets = mapWallets(organization.Wallet);
@@ -23,7 +23,6 @@ export const getInitialValuesOrganization = (
   const vaultWallets = wallets.filter(
     (wallet) => wallet.walletType === WALLET_TYPE.VAULT
   );
-  console.log(members,"MEMBERS")
   const authorizedUsers =
     members?.filter(
       (member) =>

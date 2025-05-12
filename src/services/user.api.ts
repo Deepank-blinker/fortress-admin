@@ -7,7 +7,9 @@ import {
   DOCUMENT_DETAILS,
   FINANCIAL_DETAILS,
   ORGANIZATION,
+  Response,
   USER,
+  USER_PROFILE,
   WALLET,
 } from '@/types';
 
@@ -76,14 +78,18 @@ export interface InviteUserPayload {
   permission: string;
 }
 
-export const getAllIndividualCustomers = async (): Promise<USER[]> => {
+export const getAllIndividualCustomers = async (): Promise<
+  Response<USER[]>
+> => {
   const response = await http.get(
     API_ROUTES.user.getAllIndividualCustomers.url
   );
   return response.data;
 };
 
-export const getUserById = async (id: string): Promise<USER> => {
+export const getUserById = async (
+  id: string
+): Promise<Response<USER_PROFILE>> => {
   const response = await http.get(`${API_ROUTES.user.getUserById.url}/${id}`);
   return response.data.data;
 };

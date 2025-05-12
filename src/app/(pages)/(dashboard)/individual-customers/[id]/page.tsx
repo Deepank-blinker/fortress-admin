@@ -3,8 +3,7 @@ import FormSection from '@/app/(pages)/(dashboard)/components/form-section';
 import ActionButtons from '@/components/custom/action-buttons';
 import Typography from '@/components/custom/typography';
 import { UserAvatar } from '@/components/custom/user-avatar';
-import { fetchIndividualCustomerThunk } from '@/store/slices/individualCustomers.slice';
-import { useAppDispatch, useAppSelector } from '@/store/store';
+import { useAppSelector } from '@/store/store';
 import { FormFieldsSection, FormOption, USER_PROFILE } from '@/types';
 import { getFullName, getUserInitials } from '@/utils';
 import { Form, Formik } from 'formik';
@@ -22,7 +21,6 @@ import { useGetUserById } from '../hooks/http.hooks';
 
 const Page = () => {
   const { id } = useParams<{ id: string }>();
-  console.log(id);
   const searchParams = useSearchParams();
   const [editing, setEditing] = useState<boolean>(false);
   const { tokens } = useAppSelector((state) => state.cryptoTokens);
@@ -30,15 +28,9 @@ const Page = () => {
 
   const router = useRouter();
   const { data: customer, isPending } = useGetUserById(id as string);
-  console.log(customer);
   useEffect(() => {
     const isEditing = searchParams.get('edit') === 'true';
     setEditing(isEditing);
-  }, []);
-
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fetchIndividualCustomerThunk());
   }, []);
 
   const handleToggleEdit = (newEditState: boolean) => {
@@ -58,15 +50,14 @@ const Page = () => {
     toast.success('Deleted successfully');
   };
 
-  const handleSubmit = (values: IndividualFormValues) => {
-    toast.success('Saved successfully');
-    console.log(values);
+  const handleSubmit = (_values: IndividualFormValues) => {
     handleToggleEdit(false);
   };
-  const initialValues = useMemo(
-    () => getIndividualInitialValues(customer as USER_PROFILE),
-    [customer]
-  );
+  const initialValues = useMemo(() => {
+    if (isPending) return {} as IndividualFormValues;
+    return getIndividualInitialValues(customer as USER_PROFILE);
+  }, [customer, isPending]);
+  // const initialValues = {};
 
   const tokenOptions = useMemo(() => {
     return tokens.map((token) => ({
@@ -108,8 +99,7 @@ const Page = () => {
     ],
     [tokenOptions, evmChainOptions]
   );
-  console.log(initialValues,"INITITAL VALUES");
-  if (isPending) return <UserOrganizationDetailSkeleton />;
+  if (isPending) return <UserOrganizationDetailSkeleton profilePicture />;
   return (
     <div className=" container mx-auto ">
       <Formik
@@ -117,19 +107,16 @@ const Page = () => {
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({}) => (
+        {({ values }) => (
           <Form className="[&>*]:p-4 [&>*]:rounded-lg [&>*]:bg-neutral-0 space-y-4">
             <div className=" flex items-center justify-between ">
               {/* name and profile picture */}
               <div className="flex items-center gap-2">
                 <UserAvatar
-                  name={getUserInitials(
-                    customer?.firstName,
-                    customer?.lastName
-                  )}
+                  name={getUserInitials(values?.firstName, values?.lastName)}
                 />
                 <Typography variant="base" weight="bold">
-                  {getFullName(customer?.firstName, customer?.lastName)}
+                  {getFullName(values?.firstName, values?.lastName)}
                 </Typography>
               </div>
               <ActionButtons
@@ -149,7 +136,7 @@ const Page = () => {
             >
               <div className="p-4 w-full flex items-center justify-center">
                 <ProfileImageFormField
-                  previewUrl={initialValues.profilePicture}
+                  previewUrl={values.profilePicture}
                   edit={editing}
                 />
               </div>
