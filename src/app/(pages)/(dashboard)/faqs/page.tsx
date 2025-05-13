@@ -90,9 +90,9 @@ const Page = () => {
                       />
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="bg-neutral-20 p-2 rounded-md">
+                  <AccordionContent className="bg-neutral-20 px-6 py-3 rounded-md">
                     <div
-                      className="prose prose-sm text-neutral-400 text-xl leading-[1.4rem] pt-3"
+                      className="prose prose-sm !text-neutral-700 text-xl leading-[1.4rem] pt-3 faq"
                       dangerouslySetInnerHTML={{
                         __html: decodeHtml(item.answer),
                       }}

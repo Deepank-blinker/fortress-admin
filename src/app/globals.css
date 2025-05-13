@@ -210,3 +210,117 @@ input[type='number'] {
   outline: none !important;
   border: none !important;
 }
+
+.faq {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: #a3a3a3; /* text-neutral-400 */
+  max-width: 65ch;
+}
+
+.faq h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.faq h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.faq h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.faq p {
+  margin-bottom: 0.75rem;
+}
+
+.faq strong,
+.faq b {
+  font-weight: bold;
+}
+
+.faq em,
+.faq i {
+  font-style: italic;
+}
+
+.faq u {
+  text-decoration: underline;
+}
+
+.faq a {
+  color: #60a5fa; /* blue-400 */
+  text-decoration: underline;
+}
+
+.faq a:hover {
+  color: #93c5fd; /* blue-300 */
+}
+
+.faq ol,
+.faq ul {
+  margin-bottom: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.faq ol {
+  list-style-type: decimal;
+}
+
+.faq ul {
+  list-style-type: disc;
+}
+
+.faq li {
+  margin-bottom: 0.25rem;
+}
+
+.faq img,
+.faq video {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  max-width: 100%;
+  border-radius: 0.5rem;
+  max-height: 30rem;
+}
+
+.faq blockquote {
+  border-left: 4px solid #525252;
+  padding-left: 1rem;
+  font-style: italic;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.faq hr {
+  border-top: 1px solid #404040;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.faq code {
+  background-color: #27272a;
+  color: #f472b6; /* pink-400 */
+  font-size: 0.875rem;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+}
+
+.faq pre {
+  background-color: #171717;
+  padding: 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
