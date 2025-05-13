@@ -39,6 +39,10 @@ export const ROUTES: Routes = {
     path: '/customer-tickets',
     isProtectedRoute: true,
   },
+  RECENT_ACTIVITY: {
+    path: '/recent-activity',
+    isProtectedRoute: true,
+  },
   FAQS: {
     path: '/faqs',
     isProtectedRoute: true,

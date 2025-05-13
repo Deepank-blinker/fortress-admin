@@ -430,3 +430,16 @@ export interface FormFieldsSection {
   name?: string;
   hideFields?: string[];
 }
+
+export interface EngagementMonitor {
+  id: string;
+  type?: string | null;
+  title?: string | null;
+  message?: string | null;
+  userId?: string | null;
+  user?: USER | null;
+  organizationId?: string | null;
+  organization?: USER | null;
+  createdAt: Date;
+  updatedAt: Date;
+}

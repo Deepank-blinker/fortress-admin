@@ -13,6 +13,7 @@ import { useAppSelector } from '@/store/store';
 import {
   Bars3Icon,
   BuildingOffice2Icon,
+  ClockIcon,
   CubeTransparentIcon,
   QuestionMarkCircleIcon,
   ShieldCheckIcon,
@@ -30,6 +31,7 @@ export const TAB_ICONS = {
   Corporate: <BuildingOffice2Icon className="w-5 h-5" />,
   'Customer Tickets': <TicketIcon className="w-5 h-5" />,
   FAQs: <QuestionMarkCircleIcon className="w-5 h-5" />,
+  'Recent Activity': <ClockIcon className="w-5 h-5" />,
 };
 
 interface HeaderSidebarProps {

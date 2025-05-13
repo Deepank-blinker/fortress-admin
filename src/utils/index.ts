@@ -8,6 +8,7 @@ import {
 import { CHAIN_COLORS, CHAINS } from '@/constants/index.constant';
 
 import { StaticImageData } from 'next/image';
+import moment from 'moment';
 
 // export const CAROUSEL_ITEMS = [Carousel1, Carousel2, Carousel3, Carousel4];
 export interface CAROUSEL {
@@ -180,3 +181,23 @@ export function toSentenceCase(
   // Capitalize only the first letter and return the result
   return spaced.charAt(0)?.toUpperCase() + spaced?.slice(1);
 }
+
+export const formatDate = (
+  date: string | Date,
+  type?: 'TIME' | 'DATE' | 'RELATIVE',
+  format?: string
+) => {
+  if (!date) return 'N/A';
+  const momentDate = moment(date);
+
+  switch (type) {
+    case 'TIME':
+      return momentDate.format(format || 'h:mm A');
+    case 'DATE':
+      return momentDate.format(format || 'MMM D, YYYY');
+    case 'RELATIVE':
+      return momentDate.fromNow();
+    default:
+      return momentDate.format(format || 'MMM D, h:mm A');
+  }
+};
