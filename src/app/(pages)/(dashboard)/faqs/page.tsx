@@ -11,6 +11,7 @@ import { API_ROUTES } from '@/constants/api.routes';
 import { fetchFaqs } from '@/services/faqs.api';
 import { useQuery } from '@tanstack/react-query';
 import CreateUpdateFaqModal from './components/create-update-faq-modal';
+import 'react-quill-new/dist/quill.snow.css';
 
 function decodeHtml(html: string) {
   const txt = document.createElement('textarea');
@@ -92,7 +93,7 @@ const Page = () => {
                   </AccordionTrigger>
                   <AccordionContent className="bg-neutral-20 px-6 py-3 rounded-md">
                     <div
-                      className="prose prose-sm !text-neutral-700 text-xl leading-[1.4rem] pt-3 faq"
+                      className="prose prose-sm !text-neutral-700 text-xl leading-[1.4rem] pt-3 ql-editor"
                       dangerouslySetInnerHTML={{
                         __html: decodeHtml(item.answer),
                       }}
