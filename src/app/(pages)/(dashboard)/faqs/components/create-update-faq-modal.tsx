@@ -89,12 +89,6 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
             data: {
               ...oldData?.data,
               data: updatedFaqs,
-              // pagination: {
-              //   ...oldData.data.pagination,
-              //   total: edit
-              //     ? oldData.data.pagination.total
-              //     : oldData.data.pagination.total + 1,
-              // },
             },
           };
         }
@@ -114,7 +108,7 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
     mutationFn: async (id: string) => {
       return await deleteFaq(id);
     },
-    onSuccess: (response, deletedId) => {
+    onSuccess: (_, deletedId) => {
       toast.success('FAQ deleted successfully');
 
       queryClient.setQueryData(
@@ -123,21 +117,12 @@ const CreateUpdateFaqModal: React.FC<CreateUpdateFaqModalProps> = ({
           const updatedFaqs = oldData?.data?.data.filter(
             (faq) => faq.id !== deletedId
           );
-          const updatedTotal = (oldData?.data?.pagination?.total || 1) - 1;
-          const updatedTotalPages = Math.ceil(
-            updatedTotal / (oldData?.data?.pagination?.limit || 1)
-          );
 
           return {
             ...oldData,
             data: {
               ...oldData?.data,
               data: updatedFaqs,
-              pagination: {
-                ...oldData?.data?.pagination,
-                total: updatedTotal,
-                totalPages: updatedTotalPages,
-              },
             },
           };
         }
