@@ -129,6 +129,10 @@ export const TAB_LINKS_DATA = [
     path: ROUTES.CUSTOMER_TICKETS.path,
   },
   {
+    title: 'Customer Support',
+    path: ROUTES.CUSTOMER_SUPPORT.path,
+  },
+  {
     title: 'FAQs',
     path: ROUTES.FAQS.path,
   },
