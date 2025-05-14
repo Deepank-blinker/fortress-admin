@@ -430,3 +430,16 @@ export interface FormFieldsSection {
   name?: string;
   hideFields?: string[];
 }
+
+export interface StakeAsset {
+  id: string;
+  assetName: string;
+  assetType: string;
+  rewardRate: number | null;
+  activationPeriod: string | null;
+  unBoundingPeriod: string | null;
+  minimumStakingAmount: string | null;
+  createdAt: string;
+  updatedAt: string;
+  minimumStake: number | null;
+}

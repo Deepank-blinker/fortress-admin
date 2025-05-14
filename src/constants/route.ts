@@ -43,4 +43,8 @@ export const ROUTES: Routes = {
     path: '/faqs',
     isProtectedRoute: true,
   },
+  STAKE: {
+    path: '/stake',
+    isProtectedRoute: true,
+  },
 };

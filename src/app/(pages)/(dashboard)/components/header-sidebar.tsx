@@ -13,6 +13,7 @@ import { useAppSelector } from '@/store/store';
 import {
   Bars3Icon,
   BuildingOffice2Icon,
+  CircleStackIcon,
   CubeTransparentIcon,
   QuestionMarkCircleIcon,
   ShieldCheckIcon,
@@ -26,6 +27,7 @@ import { useState } from 'react';
 export const TAB_ICONS = {
   'Whitelisted IPs': <ShieldCheckIcon className="w-5 h-5" />,
   'Crypto Tokens': <CubeTransparentIcon className="w-5 h-5" />,
+  Stake: <CircleStackIcon className="w-5 h-5" />,
   Individual: <UserIcon className="w-5 h-5" />,
   Corporate: <BuildingOffice2Icon className="w-5 h-5" />,
   'Customer Tickets': <TicketIcon className="w-5 h-5" />,

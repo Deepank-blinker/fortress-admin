@@ -107,6 +107,20 @@ export const CHAIN_COLORS = {
   USDT: 'bg-green-50 border-green-200 text-green-700',
 };
 
+export const CARD_COLORS = [
+  'bg-rose-50', // soft pink
+  'bg-emerald-50', // mint green
+  'bg-indigo-50', // light purple
+  'bg-amber-50', // warm yellow
+];
+
+export const HEADER_COLORS = [
+  'bg-rose-300', // dark pink for header
+  'bg-emerald-300', // dark green for header
+  'bg-indigo-300', // dark purple for header
+  'bg-amber-300', // dark yellow for header
+];
+
 export const TAB_LINKS_DATA = [
   {
     title: 'Whitelisted IPs',
@@ -115,6 +129,10 @@ export const TAB_LINKS_DATA = [
   {
     title: 'Crypto Tokens',
     path: ROUTES.CRYPTO_TOKENS.path,
+  },
+  {
+    title: 'Stake',
+    path: ROUTES.STAKE.path,
   },
   {
     title: 'Individual',

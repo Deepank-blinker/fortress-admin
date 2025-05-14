@@ -8,6 +8,7 @@ import individualCustomerReducer from './slices/individualCustomers.slice';
 import organizationsReducer from './slices/organizations.slice';
 
 import evmChainsReducer from './slices/evmChains.slice';
+import stakeAssetReducer from './slices/stakeAsset.slice';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     evmChains: evmChainsReducer,
     individualCustomer: individualCustomerReducer,
     organizations: organizationsReducer,
+    stakeAssets: stakeAssetReducer,
   },
 });
 
