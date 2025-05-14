@@ -1,88 +1,127 @@
 'use client';
 
-import FormField from '@/components/custom/form-field';
-import Typography from '@/components/custom/typography';
-import { UserAvatar } from '@/components/custom/user-avatar';
-import { Button } from '@/components/ui/button';
 import {
+  ArrowLeftIcon,
   ChatBubbleLeftIcon,
   ChatBubbleOvalLeftEllipsisIcon,
   PaperAirplaneIcon,
 } from '@heroicons/react/24/solid';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { Form, Formik } from 'formik';
-import { ArrowLeft } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
-const users = [
-  {
-    id: 1,
-    name: 'Alice',
-    lastMessage:
-      'I need help with my order and are you okay sbfsbdfbsbdjfbjsbdjgbjkdbnfjkgn',
-  },
-  {
-    id: 2,
-    name: 'Bob',
-    lastMessage:
-      'Payment issue here and are you okay sbfsbdfbsbdjfbjsbdjgbjkdbnfjkgn',
-  },
-  {
-    id: 3,
-    name: 'Charlie',
-    lastMessage:
-      'Thanks for the update and are you okay sbfsbdfbsbdjfbjsbdjgbjkdbnfjkgn',
-  },
-];
+import TextEditor from '@/components/custom/text-editor';
+import Typography from '@/components/custom/typography';
+import { UserAvatar } from '@/components/custom/user-avatar';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { decodeHtml, unescapeHtml } from '@/utils';
+import 'react-quill-new/dist/quill.snow.css';
 
-const messages: Record<number, { sender: string; text: string }[]> = {
-  1: [
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-    { sender: 'user', text: 'I need help with my order' },
-    { sender: 'admin', text: 'Sure, what seems to be the issue?' },
-  ],
-  2: [
-    { sender: 'user', text: 'Payment issue here' },
-    { sender: 'admin', text: 'Can you elaborate more?' },
-  ],
-  3: [
-    { sender: 'user', text: 'Thanks for the update' },
-    { sender: 'admin', text: "You're welcome!" },
-  ],
+// Dummy users and messages
+const users = new Array(10).fill(null).map((_, i) => ({
+  id: i + 1,
+  name: `User ${i + 1}`,
+  lastMessage: `Sample message from user ${i + 1}`,
+}));
+
+const messages: Record<number, { sender: string; text: string }[]> = {};
+users.forEach((user) => {
+  messages[user.id] = new Array(40).fill(null).map((_, i) => ({
+    sender: i % 2 === 0 ? 'user' : 'admin',
+    text: `${i % 2 === 0 ? 'User' : 'Admin'} message ${i + 1}`,
+  }));
+});
+
+// Simulated API fetch with latency
+const fetchMessages = async ({
+  userId,
+  pageParam = 1,
+}: {
+  userId: number;
+  pageParam?: number;
+}) => {
+  await new Promise((res) => setTimeout(res, 1000));
+  const pageSize = 10;
+  const allMsgs = messages[userId] || [];
+  const start = allMsgs.length - pageParam * pageSize;
+  const end = start + pageSize;
+  const data = allMsgs.slice(Math.max(start, 0), end);
+  return {
+    messages: data,
+    hasMore: start > 0,
+    nextPage: pageParam + 1,
+  };
 };
+
+interface FormValues {
+  message: string;
+}
 
 const Page = () => {
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-
   const showChatView = selectedUserId !== null;
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
+  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
-  const handleBack = () => setSelectedUserId(null);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
+    useInfiniteQuery({
+      queryKey: ['messages', selectedUserId],
+      enabled: !!selectedUserId,
+      initialPageParam: 1, // ✅ Required!
+      queryFn: ({ pageParam = 1 }) =>
+        fetchMessages({ userId: selectedUserId!, pageParam }),
+      getNextPageParam: (lastPage) =>
+        lastPage.hasMore ? lastPage.nextPage : undefined,
+    });
+
+  useEffect(() => {
+    if (endOfMessagesRef.current) {
+      endOfMessagesRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [data]);
+
+  const allMessages = useMemo(() => {
+    return [...(data?.pages ?? [])]
+      .reverse() // Reverse page order so older messages come first
+      .flatMap((p) => p.messages);
+  }, [data]);
+
+  useEffect(() => {
+    if (selectedUserId) refetch();
+  }, [selectedUserId]);
+
+  useEffect(() => {
+    const el = chatContainerRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [allMessages.length]);
+
+  const handleScroll = () => {
+    const el = chatContainerRef.current;
+    if (el && el.scrollTop === 0 && hasNextPage && !isFetchingNextPage) {
+      const prevHeight = el.scrollHeight;
+      fetchNextPage().then(() => {
+        requestAnimationFrame(() => {
+          if (el) el.scrollTop = el.scrollHeight - prevHeight;
+        });
+      });
+    }
+  };
+
+  const handleSendMessage = (values: FormValues) => {
+    messages[selectedUserId!].push({ sender: 'admin', text: values.message });
+    refetch();
+  };
 
   return (
     <div className="flex max-h-[78vh] h-[78vh] bg-neutral-0 rounded-md overflow-hidden">
-      {/* Left panel: User list */}
+      {/* Sidebar */}
       <div
-        className={`w-full md:w-1/3 border-r border-neutral-20 shadow-md overflow-y-auto  ${
+        className={`w-full md:w-1/3 border-r border-neutral-20 shadow-md overflow-y-auto ${
           showChatView ? 'hidden md:block' : 'block'
         }`}
       >
-        <div className="p-4 border-b-2 flex items-center gap-3 h-16 overflow-hidden bg-neutral-40">
+        <div className="p-4 border-b-2 flex items-center gap-3 h-16 bg-neutral-40">
           <ChatBubbleOvalLeftEllipsisIcon className="w-8 h-8 text-primary-500" />
           <Typography variant="h5" weight="bold">
             User Chats
@@ -108,93 +147,102 @@ const Page = () => {
         ))}
       </div>
 
-      {/* Right panel: Chat window */}
+      {/* Chat Panel */}
       <div
-        className={`flex-1 w-full md:w-2/3 ${
-          !showChatView ? 'hidden md:flex' : 'flex'
-        } flex-col`}
+        className={`flex-1 w-full md:w-2/3 ${!showChatView ? 'hidden md:flex' : 'flex'} flex-col`}
       >
         {showChatView ? (
           <>
-            {/* Chat Header */}
-            <div className="p-4 border-b flex items-center bg-primary-300 gap-4 h-16 overflow-hidden">
-              <Button variant="text" className="md:hidden" onClick={handleBack}>
-                <ArrowLeft className="w-5 h-5" />
+            {/* Header */}
+            <div className="p-4 border-b flex items-center bg-primary-300 gap-4 h-16">
+              <Button
+                variant="text"
+                className="md:hidden"
+                onClick={() => setSelectedUserId(null)}
+              >
+                <ArrowLeftIcon className="w-5 h-5" />
               </Button>
-              {/* //TODO: onclick view detail user/organization */}
-              <div className="cursor-pointer">
-                <UserAvatar />
-              </div>
+              <UserAvatar />
               <Typography variant="h6" weight="bold">
-                John Snow
+                User Chat
               </Typography>
             </div>
 
-            {/* Chat Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-2 bg-neutral-10">
-              {messages[selectedUserId!].map((msg, idx) => (
+            {/* Messages */}
+            <div
+              ref={chatContainerRef}
+              onScroll={handleScroll}
+              className="flex-1 overflow-y-auto p-4 space-y-2 bg-neutral-10"
+            >
+              {isFetchingNextPage ||
+                (true &&
+                  [...Array(3)].map((_, idx) => (
+                    <div
+                      key={`skeleton-user-${idx}`}
+                      className="flex flex-col gap-2"
+                    >
+                      <div className="max-w-xs md:max-w-md w-fit rounded-lg self-start bg-neutral-40 p-2">
+                        <Skeleton className="h-6 w-52 bg-neutral-40 rounded-lg" />
+                      </div>
+                      <div className="max-w-xs md:max-w-md w-fit rounded-lg self-end bg-primary-100 p-2 ml-auto text-right">
+                        <Skeleton className="h-6 w-40 bg-primary-100 rounded-lg" />
+                      </div>
+                    </div>
+                  )))}
+
+              {allMessages.map((msg, idx) => (
                 <div
                   key={idx}
-                  className={`max-w-xs md:max-w-md p-3 w-fit rounded-lg text-sm ${
+                  className={`max-w-xs md:max-w-md w-fit rounded-lg text-sm ${
                     msg.sender === 'admin'
                       ? 'bg-primary-100 self-end text-right ml-auto'
                       : 'bg-neutral-40 self-start'
                   }`}
                 >
-                  <Typography variant="small">{msg.text}</Typography>
+                  <div
+                    className="prose prose-sm text-neutral-400 ql-editor"
+                    dangerouslySetInnerHTML={{ __html: decodeHtml(msg.text) }}
+                  />
+                  <div ref={endOfMessagesRef} />
                 </div>
               ))}
             </div>
 
-            {/* Input (placeholder) */}
+            {/* Input */}
             <Formik
               initialValues={{ message: '' }}
-              onSubmit={(values) => {
-                console.log(values);
+              onSubmit={(values, { resetForm }) => {
+                handleSendMessage(values);
+                resetForm();
               }}
             >
-              <Form>
-                <div className="p-4 border-t flex items-center gap-2">
-                  {/* Icons for link, image, and document upload */}
-                  {/* <Button type="button" variant="ghost" size="sm">
-                    <LinkIcon className="h-5 w-5 text-neutral-500" />
-                  </Button>
-                  <Button type="button" variant="ghost" size="icon">
-                    <PhotoIcon className="h-5 w-5 text-neutral-500" />
-                  </Button>
-                  <Button type="button" variant="ghost" size="icon">
-                    <PaperClipIcon className="h-5 w-5 text-neutral-500" />
-                  </Button> */}
-
-                  {/* Message input */}
-                  <div className="flex-1">
-                    <FormField
-                      name="message"
-                      type="text"
-                      placeholder="Type a message..."
-                      className="w-full border px-4 py-2 rounded text-sm"
-                      as="input"
-                    />
+              {({ setFieldValue, values }) => (
+                <Form>
+                  <div className="p-4 border-t flex items-center gap-2">
+                    <div className="flex-1">
+                      <TextEditor
+                        maxImageHeight="max-h-[30px]"
+                        wrapperClassName="[&_.ql-editor]:max-h-[100px] [&_.ql-editor]:overflow-y-auto [&_.ql-editor]:rounded-lg"
+                        content={unescapeHtml(values.message)}
+                        onChange={(html) => setFieldValue('message', html)}
+                      />
+                    </div>
+                    <Button type="submit" variant="ghost" size="icon">
+                      <PaperAirplaneIcon className="text-neutral-500 h-5 w-5" />
+                    </Button>
                   </div>
-
-                  {/* Send button */}
-                  <Button type="submit" variant="ghost" size="icon">
-                    <PaperAirplaneIcon className="text-neutral-500 h-5 w-5" />
-                  </Button>
-                </div>
-              </Form>
+                </Form>
+              )}
             </Formik>
           </>
         ) : (
-          // Show a message on md+ screens if no chat selected
           <div className="hidden md:flex flex-1 items-center justify-center">
             <div className="flex flex-col justify-center items-center gap-2">
               <ChatBubbleLeftIcon className="w-16 h-16 text-neutral-30" />
               <Typography
                 variant="large"
                 weight="medium"
-                color="text-neutral-100"
-                className=" text-center max-w-sm px-4"
+                className="text-center max-w-sm px-4 text-neutral-100"
               >
                 Select a user from the chat list to view and respond to their
                 messages.

@@ -11,12 +11,7 @@ import { API_ROUTES } from '@/constants/api.routes';
 import { fetchFaqs } from '@/services/faqs.api';
 import { useQuery } from '@tanstack/react-query';
 import CreateUpdateFaqModal from './components/create-update-faq-modal';
-
-function decodeHtml(html: string) {
-  const txt = document.createElement('textarea');
-  txt.innerHTML = html;
-  return txt.value;
-}
+import { decodeHtml } from '@/utils';
 
 const Page = () => {
   const { data: faqs, isPending } = useQuery({

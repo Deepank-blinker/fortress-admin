@@ -180,3 +180,9 @@ export function toSentenceCase(
   // Capitalize only the first letter and return the result
   return spaced.charAt(0)?.toUpperCase() + spaced?.slice(1);
 }
+
+export function decodeHtml(html: string) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = html;
+  return txt.value;
+}
