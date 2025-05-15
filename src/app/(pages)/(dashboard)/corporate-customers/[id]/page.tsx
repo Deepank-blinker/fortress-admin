@@ -103,7 +103,7 @@ const Page = () => {
 
   const initialValues =
     useMemo(() => {
-      if (!organization) return null;
+      if (!organization || !organization) return null;
       return getInitialValuesOrganization(organization);
     }, [organization]) || initialValuesOrganization;
 
@@ -161,6 +161,12 @@ const Page = () => {
     [tokenOptions, evmChainOptions]
   );
   if (isPending) return <UserOrganizationDetailSkeleton />;
+  if (!organization)
+    return (
+      <div className="h-40 bg-neutral-0 flex items-center justify-center">
+        Organization Not Found
+      </div>
+    );
   return (
     <div className=" container mx-auto ">
       <Formik<OrganizationFormValues>
