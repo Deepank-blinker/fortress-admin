@@ -1,4 +1,9 @@
+import {
+  TRANSACTION_REQUEST_TYPE,
+  TRANSACTION_STATUS,
+} from '@/constants/interface.constant';
 import { DOCUMENTS_FIELDS, KYC_STATUS, WALLET_TYPE } from '@/types';
+import { toSentenceCase } from '@/utils';
 import { Country } from 'country-state-city';
 import {
   ACCOUNT_STATUS,
@@ -8,7 +13,6 @@ import {
   WALLET_STATUS,
 } from './interface.constant';
 import { NATIONALITIES } from './nationality';
-import { toSentenceCase } from '@/utils';
 
 export const CODE_RESEND_TIMEOUT = 30;
 
@@ -289,4 +293,53 @@ export const COUNTRY_REGULATED_AS_OPTIONS = [
   { value: 'CASP', label: 'CASP' },
   { value: 'CREDIT_INSTITUTION', label: 'Credit Institution' },
   { value: 'OTHER', label: 'Other' },
+];
+
+export const TRANSACTION_REQUEST_TYPE_OPTIONS = [
+  {
+    value: TRANSACTION_REQUEST_TYPE.DEPOSIT,
+    label: toSentenceCase(TRANSACTION_REQUEST_TYPE.DEPOSIT, true),
+  },
+  {
+    value: TRANSACTION_REQUEST_TYPE.DEPOSIT,
+    label: toSentenceCase(TRANSACTION_REQUEST_TYPE.WITHDRAW, true),
+  },
+  {
+    value: TRANSACTION_REQUEST_TYPE.DEPOSIT,
+    label: toSentenceCase(TRANSACTION_REQUEST_TYPE.STAKE, true),
+  },
+  {
+    value: TRANSACTION_REQUEST_TYPE.DEPOSIT,
+    label: toSentenceCase(TRANSACTION_REQUEST_TYPE.UNSTAKE, true),
+  },
+];
+export const TRANSACTION_STATUS_OPTIONS = [
+  {
+    value: TRANSACTION_STATUS.APPROVED,
+    label: toSentenceCase(TRANSACTION_STATUS.APPROVED, true),
+  },
+  {
+    value: TRANSACTION_STATUS.APPROVED,
+    label: toSentenceCase(TRANSACTION_STATUS.CANCELLED, true),
+  },
+  {
+    value: TRANSACTION_STATUS.APPROVED,
+    label: toSentenceCase(TRANSACTION_STATUS.COMPLETED, true),
+  },
+  {
+    value: TRANSACTION_STATUS.APPROVED,
+    label: toSentenceCase(TRANSACTION_STATUS.EXPIRED, true),
+  },
+  {
+    value: TRANSACTION_STATUS.APPROVED,
+    label: toSentenceCase(TRANSACTION_STATUS.FAILED, true),
+  },
+  {
+    value: TRANSACTION_STATUS.APPROVED,
+    label: toSentenceCase(TRANSACTION_STATUS.PENDING, true),
+  },
+  {
+    value: TRANSACTION_STATUS.APPROVED,
+    label: toSentenceCase(TRANSACTION_STATUS.REJECTED, true),
+  },
 ];

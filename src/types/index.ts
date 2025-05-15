@@ -4,7 +4,6 @@ import { CHAINS } from '@/constants/index.constant';
 import {
   ACCOUNT_STATUS,
   ASSETS_TYPES,
-  CURRENCY_TYPE,
   DOCUMENTS_TYPE,
   ORGANIZATION_MEMBER_TYPE,
   Pagination,
@@ -161,6 +160,11 @@ export interface USER {
   hasLoginAccess?: boolean;
   isMFAEnabled?: boolean;
   username?: string;
+}
+
+export enum Currency {
+  USD = 'USD',
+  EUR = 'EUR',
 }
 
 export interface FORM_FIELD {
@@ -372,11 +376,15 @@ export interface TRANSACTION {
   requestedById: string;
   createdAt: string;
   updatedAt: string;
-  transactionCurrency: CURRENCY_TYPE;
+  transactionCurrency: TRANSACTION_AMOUNT_TYPE;
   fromWallet?: WALLET;
   toWallet?: WALLET;
   requestedBy?: REQUESTED_BY;
 }
+export enum TransactionCurrency {
+  CRYPTO = 'CRYPTO',
+}
+export type TRANSACTION_AMOUNT_TYPE = TransactionCurrency | Currency;
 
 // approval request initiated By
 export interface REQUESTED_BY {

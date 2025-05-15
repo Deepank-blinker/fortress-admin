@@ -189,19 +189,11 @@ export enum CHAINS_UNIQUE_ID {
   ZKSYNC_ERA_MAINNET = 'zksync_era_mainnet',
 }
 
-// Enum for Amount Type (for modal form)
-export enum AMOUNT_TYPE {
-  FIAT = 'FIAT',
-  CRYPTO = 'CRYPTO',
-}
-
 // form option types
 export interface FORM_OPTIONS {
   value: string;
   label: string;
 }
-
-export type CURRENCY_TYPE = 'CRYPTO' | 'USD';
 
 export interface PaginationParams {
   page?: number;

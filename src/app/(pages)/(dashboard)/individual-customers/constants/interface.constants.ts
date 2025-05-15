@@ -1,6 +1,7 @@
 import {
   AddressFormValues,
   IdFormValues,
+  TransactionFormValues,
   WalletFormValues,
 } from '../../constants/interface.constants';
 
@@ -9,6 +10,7 @@ export interface IndividualDocumentFormValues {
   proofOfIncome: string;
   proofOfAddress: string;
 }
+
 export interface IndividualFormValues extends AddressFormValues {
   firstName: string;
   lastName: string;
@@ -42,4 +44,6 @@ export interface IndividualFormValues extends AddressFormValues {
   ids: IdFormValues[];
   whitelistedWallets: WalletFormValues[];
   vaultWallets: WalletFormValues[];
+
+  transactions: TransactionFormValues[];
 }

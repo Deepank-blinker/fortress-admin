@@ -2,6 +2,8 @@ import {
   CHAIN_OPTIONS,
   COUNTRY_OPTIONS,
   DOCUMENT_TYPE_OPTIONS,
+  TRANSACTION_REQUEST_TYPE_OPTIONS,
+  TRANSACTION_STATUS_OPTIONS,
   WALLET_STATUS_OPTIONS,
   WALLET_TYPE_OPTIONS,
 } from '@/constants/form.constant';
@@ -182,5 +184,69 @@ export const idFormFields: FormFields[] = [
     as: 'file',
     placeholder: 'https://example.com/back-image.png',
     type: 'url',
+  },
+];
+
+export const getTransactionFormFields = (
+  tokenOptions: FormOption[],
+  evmChainOptions: FormOption[]
+): FormFields[] => [
+  {
+    name: 'from',
+    label: 'Form',
+    placeholder: 'From Wallet',
+  },
+  {
+    name: 'to',
+    label: 'To',
+    placeholder: 'To Wallet',
+  },
+  {
+    name: 'requestType',
+    label: 'Transaction Type',
+    as: 'comboBox',
+    required: true,
+    options: TRANSACTION_REQUEST_TYPE_OPTIONS,
+  },
+  {
+    name: 'status',
+    label: 'Status',
+    as: 'comboBox',
+    required: true,
+    options: TRANSACTION_STATUS_OPTIONS,
+  },
+  {
+    name: 'chain',
+    label: 'Chain',
+    as: 'comboBox',
+    options: CHAIN_OPTIONS,
+  },
+  {
+    name: 'evmChain',
+    label: 'EVM Chain',
+    as: 'comboBox',
+    options: evmChainOptions,
+  },
+  {
+    name: 'tokenId',
+    label: 'Token',
+    as: 'comboBox',
+    options: tokenOptions,
+  },
+  {
+    name: 'amount',
+    label: 'Amount',
+    type: 'number',
+    placeholder: '1',
+    required: true,
+  },
+  {
+    name: 'transactionCurrency',
+    label: 'Currency',
+    required: true,
+  },
+  {
+    name: 'requestedBy',
+    label: 'Requested By',
   },
 ];

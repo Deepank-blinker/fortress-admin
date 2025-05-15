@@ -1,6 +1,7 @@
-import { USER_PROFILE, WALLET_TYPE } from '@/types';
+import { TRANSACTION, USER_PROFILE, WALLET_TYPE } from '@/types';
 import { mapDocumentsToIds, mapDocumentsToKeys, mapWallets } from '../../utils';
 import { IndividualFormValues } from '../constants/interface.constants';
+import { TransactionFormValues } from '../../constants/interface.constants';
 
 export const getIndividualInitialValues = (
   customer: USER_PROFILE
@@ -14,7 +15,7 @@ export const getIndividualInitialValues = (
   const vaultWallets = wallets.filter(
     (wallet) => wallet.walletType === WALLET_TYPE.VAULT
   );
-
+  const transactions: TRANSACTION[] = []; //TODO: transaction
   return {
     firstName: customer?.firstName || '',
     lastName: customer?.lastName || '',
@@ -54,5 +55,24 @@ export const getIndividualInitialValues = (
     // wallets
     whitelistedWallets,
     vaultWallets,
+
+    transactions: mapTransactions(transactions) as TransactionFormValues[],
   };
+};
+
+const mapTransactions = (transaction: TRANSACTION[]) => {
+  if (!transaction || !transaction.length) return [];
+  return transaction.map((t) => ({
+    id: t.id,
+    from: t.fromWallet?.walletName,
+    to: t.toWallet?.walletName,
+    requestType: t.requestType,
+    status: t.status,
+    chain: t?.chain,
+    evmChain: t.fromWallet?.evmChain, //TODO: evm chain
+    tokenId: t?.tokenId,
+    amount: t?.amount || 0,
+    transactionCurrency: t.transactionCurrency,
+    requestedBy: `${t.requestedBy?.firstName} ${t.requestedBy?.lastName}`,
+  }));
 };

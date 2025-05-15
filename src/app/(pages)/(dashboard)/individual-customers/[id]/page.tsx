@@ -13,7 +13,11 @@ import { toast } from 'sonner';
 import ArrayForm from '../../components/array-form';
 import ProfileImageFormField from '../../components/profile-image-form-field';
 import UserOrganizationDetailSkeleton from '../../components/user-organization-detail-skeleton';
-import { getWalletFormFields, idFormFields } from '../../constants/form-fields';
+import {
+  getTransactionFormFields,
+  getWalletFormFields,
+  idFormFields,
+} from '../../constants/form-fields';
 import { subFormsIndividualCustomer } from '../constants/form-fields';
 import { IndividualFormValues } from '../constants/interface.constants';
 import { getIndividualInitialValues } from '../helpers/map-form-values';
@@ -92,6 +96,14 @@ const Page = () => {
         title: 'Vault Wallets',
         name: 'vaultWallets',
         fields: getWalletFormFields(
+          tokenOptions as FormOption[],
+          evmChainOptions as FormOption[]
+        ),
+      },
+      {
+        title: 'Transactions',
+        name: 'transactions',
+        fields: getTransactionFormFields(
           tokenOptions as FormOption[],
           evmChainOptions as FormOption[]
         ),

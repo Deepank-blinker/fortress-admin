@@ -1,3 +1,9 @@
+import {
+  TRANSACTION_REQUEST_TYPE,
+  TRANSACTION_STATUS,
+} from '@/constants/interface.constant';
+import { TRANSACTION_AMOUNT_TYPE } from '@/types';
+
 export interface WalletFormValues {
   walletId: string;
   walletName: string;
@@ -29,4 +35,18 @@ export interface IdFormValues {
   documentType: string;
   frontImage: string;
   backImage: string;
+}
+
+export interface TransactionFormValues {
+  id: string;
+  from?: string;
+  to?: string;
+  requestType: TRANSACTION_REQUEST_TYPE;
+  status: TRANSACTION_STATUS;
+  chain?: string;
+  evmChain?: string;
+  tokenId?: string;
+  amount: number;
+  transactionCurrency: TRANSACTION_AMOUNT_TYPE;
+  requestedBy?: string;
 }
