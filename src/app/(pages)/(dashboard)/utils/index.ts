@@ -1,5 +1,5 @@
 import { DOCUMENTS_TYPE } from '@/constants/interface.constant';
-import { DOCUMENT_DETAILS, WALLET } from '@/types';
+import { DOCUMENT_DETAILS, TRANSACTION, WALLET } from '@/types';
 import {
   IdFormValues,
   WalletFormValues,
@@ -87,5 +87,22 @@ export const mapWallets = (wallets?: WALLET[]): WalletFormValues[] => {
     accountId: wallet.accountId || '',
     riskScore: wallet.riskScore as number,
     pdfReportUrl: wallet.pdfReportUrl || '',
+  }));
+};
+
+export const mapTransactions = (transaction: TRANSACTION[]) => {
+  if (!transaction || !transaction.length) return [];
+  return transaction.map((t) => ({
+    id: t.id,
+    from: t.fromWallet?.walletName,
+    to: t.toWallet?.walletName,
+    requestType: t.requestType,
+    status: t.status,
+    chain: t?.chain,
+    evmChain: t.fromWallet?.evmChain, //TODO: evm chain
+    tokenId: t?.tokenId,
+    amount: t?.amount || 0,
+    transactionCurrency: t.transactionCurrency,
+    requestedBy: `${t.requestedBy?.firstName} ${t.requestedBy?.lastName}`,
   }));
 };

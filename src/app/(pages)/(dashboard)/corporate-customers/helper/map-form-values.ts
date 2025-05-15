@@ -2,12 +2,13 @@ import {
   DOCUMENTS_TYPE,
   ORGANIZATION_MEMBER_TYPE,
 } from '@/constants/interface.constant';
-import { ORGANIZATION, USER_PROFILE, WALLET_TYPE } from '@/types';
-import { mapDocumentsToIds, mapWallets } from '../../utils';
+import { ORGANIZATION, TRANSACTION, USER_PROFILE, WALLET_TYPE } from '@/types';
+import { mapDocumentsToIds, mapTransactions, mapWallets } from '../../utils';
 import {
   OrganizationFormValues,
   OrganizationMemberFormValues,
 } from '../constants/interface.constants';
+import { TransactionFormValues } from '../../constants/interface.constants';
 
 export const getInitialValuesOrganization = (
   organization: ORGANIZATION
@@ -15,6 +16,8 @@ export const getInitialValuesOrganization = (
   if (!organization) return {} as OrganizationFormValues;
   const { createdBy, address, financialDetails, details, members, Document } =
     organization;
+  const transactions: TRANSACTION[] = []; //TODO: transaction
+
   const wallets = mapWallets(organization.Wallet);
   const whitelistedWallets = wallets.filter(
     (wallet) => wallet.walletType === WALLET_TYPE.WHITELISTED
@@ -96,6 +99,7 @@ export const getInitialValuesOrganization = (
     // wallets
     whitelistedWallets,
     vaultWallets,
+    transactions: mapTransactions(transactions) as TransactionFormValues[],
 
     // authorized users
     authorizedPersons: mapMembers(authorizedUsers),

@@ -11,7 +11,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import ArrayForm from '../../components/array-form';
 import UserOrganizationDetailSkeleton from '../../components/user-organization-detail-skeleton';
-import { getWalletFormFields } from '../../constants/form-fields';
+import {
+  getTransactionFormFields,
+  getWalletFormFields,
+} from '../../constants/form-fields';
 import {
   organizationMembersFields,
   subFormFieldsOrganization,
@@ -54,6 +57,7 @@ const initialValuesOrganization: OrganizationFormValues = {
   authorizedPersons: [],
   beneficiaries: [],
   members: [],
+  transactions: [],
   line1: '', // Add the missing properties
   city: '',
   state: '',
@@ -153,6 +157,14 @@ const Page = () => {
         title: 'Vault Wallets',
         name: 'vaultWallets',
         fields: getWalletFormFields(
+          tokenOptions as FormOption[],
+          evmChainOptions as FormOption[]
+        ),
+      },
+      {
+        title: 'Transactions',
+        name: 'transactions',
+        fields: getTransactionFormFields(
           tokenOptions as FormOption[],
           evmChainOptions as FormOption[]
         ),

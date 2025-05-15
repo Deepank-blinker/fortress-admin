@@ -1,5 +1,10 @@
 import { TRANSACTION, USER_PROFILE, WALLET_TYPE } from '@/types';
-import { mapDocumentsToIds, mapDocumentsToKeys, mapWallets } from '../../utils';
+import {
+  mapDocumentsToIds,
+  mapDocumentsToKeys,
+  mapTransactions,
+  mapWallets,
+} from '../../utils';
 import { IndividualFormValues } from '../constants/interface.constants';
 import { TransactionFormValues } from '../../constants/interface.constants';
 
@@ -58,21 +63,4 @@ export const getIndividualInitialValues = (
 
     transactions: mapTransactions(transactions) as TransactionFormValues[],
   };
-};
-
-const mapTransactions = (transaction: TRANSACTION[]) => {
-  if (!transaction || !transaction.length) return [];
-  return transaction.map((t) => ({
-    id: t.id,
-    from: t.fromWallet?.walletName,
-    to: t.toWallet?.walletName,
-    requestType: t.requestType,
-    status: t.status,
-    chain: t?.chain,
-    evmChain: t.fromWallet?.evmChain, //TODO: evm chain
-    tokenId: t?.tokenId,
-    amount: t?.amount || 0,
-    transactionCurrency: t.transactionCurrency,
-    requestedBy: `${t.requestedBy?.firstName} ${t.requestedBy?.lastName}`,
-  }));
 };

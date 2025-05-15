@@ -1,6 +1,7 @@
 import {
   AddressFormValues,
   IdFormValues,
+  TransactionFormValues,
   WalletFormValues,
 } from '../../constants/interface.constants';
 
@@ -63,6 +64,7 @@ export interface OrganizationFormValues extends AddressFormValues {
   whitelistedWallets: WalletFormValues[];
   vaultWallets: WalletFormValues[];
 
+  transactions: TransactionFormValues[];
   // authorized users
   authorizedPersons: OrganizationMemberFormValues[];
   beneficiaries: OrganizationMemberFormValues[];
