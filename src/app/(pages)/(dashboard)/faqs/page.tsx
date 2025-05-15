@@ -68,7 +68,7 @@ const Page = () => {
                   className="p-3 gap-4"
                 >
                   <AccordionTrigger className="no-underline outline-none hover:no-underline pb-3">
-                    <div className="flxe-1 w-full text-left flex items-center gap-4">
+                    <div className="flex-1 w-full text-left flex items-center gap-4">
                       <Typography
                         variant="h4"
                         weight="bold"

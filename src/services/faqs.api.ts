@@ -7,7 +7,8 @@ import { PaginationResponse, Response } from '@/types';
 export const fetchFaqs = async (): Promise<
   Response<PaginationResponse<Faqs[]>>
 > => {
-  const response = await http.get(`${API_ROUTES.faqs.fetchFaqs.url}`);
+  const query = '?sort=createdAt,asc';
+  const response = await http.get(`${API_ROUTES.faqs.fetchFaqs.url}${query}`);
   return response.data;
 };
 
