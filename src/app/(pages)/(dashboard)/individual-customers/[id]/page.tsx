@@ -54,7 +54,7 @@ const Page = () => {
     handleToggleEdit(false);
   };
   const initialValues = useMemo(() => {
-    if (isPending) return {} as IndividualFormValues;
+    if (isPending || !customer) return {} as IndividualFormValues;
     return getIndividualInitialValues(customer as USER_PROFILE);
   }, [customer, isPending]);
   // const initialValues = {};
@@ -99,7 +99,14 @@ const Page = () => {
     ],
     [tokenOptions, evmChainOptions]
   );
+
   if (isPending) return <UserOrganizationDetailSkeleton profilePicture />;
+  if (!customer)
+    return (
+      <div className="h-40 bg-neutral-0 flex items-center justify-center">
+        User Not Found
+      </div>
+    );
   return (
     <div className=" container mx-auto ">
       <Formik
