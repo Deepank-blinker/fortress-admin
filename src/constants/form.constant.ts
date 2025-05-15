@@ -301,15 +301,15 @@ export const TRANSACTION_REQUEST_TYPE_OPTIONS = [
     label: toSentenceCase(TRANSACTION_REQUEST_TYPE.DEPOSIT, true),
   },
   {
-    value: TRANSACTION_REQUEST_TYPE.DEPOSIT,
+    value: TRANSACTION_REQUEST_TYPE.WITHDRAW,
     label: toSentenceCase(TRANSACTION_REQUEST_TYPE.WITHDRAW, true),
   },
   {
-    value: TRANSACTION_REQUEST_TYPE.DEPOSIT,
+    value: TRANSACTION_REQUEST_TYPE.STAKE,
     label: toSentenceCase(TRANSACTION_REQUEST_TYPE.STAKE, true),
   },
   {
-    value: TRANSACTION_REQUEST_TYPE.DEPOSIT,
+    value: TRANSACTION_REQUEST_TYPE.UNSTAKE,
     label: toSentenceCase(TRANSACTION_REQUEST_TYPE.UNSTAKE, true),
   },
 ];
@@ -319,27 +319,27 @@ export const TRANSACTION_STATUS_OPTIONS = [
     label: toSentenceCase(TRANSACTION_STATUS.APPROVED, true),
   },
   {
-    value: TRANSACTION_STATUS.APPROVED,
+    value: TRANSACTION_STATUS.CANCELLED,
     label: toSentenceCase(TRANSACTION_STATUS.CANCELLED, true),
   },
   {
-    value: TRANSACTION_STATUS.APPROVED,
+    value: TRANSACTION_STATUS.COMPLETED,
     label: toSentenceCase(TRANSACTION_STATUS.COMPLETED, true),
   },
   {
-    value: TRANSACTION_STATUS.APPROVED,
+    value: TRANSACTION_STATUS.EXPIRED,
     label: toSentenceCase(TRANSACTION_STATUS.EXPIRED, true),
   },
   {
-    value: TRANSACTION_STATUS.APPROVED,
+    value: TRANSACTION_STATUS.FAILED,
     label: toSentenceCase(TRANSACTION_STATUS.FAILED, true),
   },
   {
-    value: TRANSACTION_STATUS.APPROVED,
+    value: TRANSACTION_STATUS.PENDING,
     label: toSentenceCase(TRANSACTION_STATUS.PENDING, true),
   },
   {
-    value: TRANSACTION_STATUS.APPROVED,
+    value: TRANSACTION_STATUS.REJECTED,
     label: toSentenceCase(TRANSACTION_STATUS.REJECTED, true),
   },
 ];

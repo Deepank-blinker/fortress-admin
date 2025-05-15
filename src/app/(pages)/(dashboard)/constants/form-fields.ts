@@ -193,7 +193,7 @@ export const getTransactionFormFields = (
 ): FormFields[] => [
   {
     name: 'from',
-    label: 'Form',
+    label: 'From',
     placeholder: 'From Wallet',
   },
   {
