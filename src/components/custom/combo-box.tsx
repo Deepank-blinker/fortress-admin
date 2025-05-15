@@ -35,6 +35,7 @@ interface SelectProps {
   noOptionsMessage?: string;
   noOptionSearchPlaceholder?: string;
   disabled?: boolean;
+  buttonTextClassName?: string;
 }
 
 export const ComboBox: React.FC<SelectProps> = ({
@@ -52,6 +53,7 @@ export const ComboBox: React.FC<SelectProps> = ({
   noOptionsMessage = 'No options found.',
   noOptionSearchPlaceholder = 'Search...',
   disabled = false,
+  buttonTextClassName = 'text-neutral-900',
 }) => {
   const [open, setOpen] = React.useState(false);
   const [inputValue, setInputValue] = React.useState('');
@@ -132,7 +134,8 @@ export const ComboBox: React.FC<SelectProps> = ({
             }
             className={cn(
               ' truncate text-ellipsis overflow-hidden whitespace-nowrap ',
-              selectedOption?.className
+              selectedOption?.className,
+              buttonTextClassName
             )}
           >
             {selectedOption?.label || placeholder}

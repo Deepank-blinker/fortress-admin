@@ -101,14 +101,18 @@ const ArrayForm = <T,>({
                             name={`${section.name}.${groupIndex}.${field.name}`}
                             disabled={!edit || !field.editable}
                             className={cn(
+                              commonClassName.edit,
                               (field.as === 'file' ||
-                                (edit && field.editable)) &&
-                                commonClassName.edit,
+                                (field.editable && edit)) &&
+                                '!bg-neutral-0 ',
                               field.as === 'file' && '!justify-start !flex-row'
                             )}
                             fileProps={{
                               hideRemoveButton: field.as === 'file',
                             }}
+                            textClassName={cn(
+                              !(field.editable && edit) && '!text-neutral-400'
+                            )}
                           />
                         )}
                       </div>
