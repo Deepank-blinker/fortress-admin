@@ -20,7 +20,8 @@ interface StakeFormValues {
   rewardRate?: string;
   activationPeriod: string;
   unbondingPeriod: string;
-  minimumStake?: string;
+  minimumStakeAmount: string;
+  minimumStake?: number;
 }
 
 interface StakeFormProps {
@@ -75,6 +76,13 @@ const StakeFormFormFields = [
     required: true,
   },
   {
+    name: 'minimumStakeAmount',
+    label: 'Minimum Stake Amount',
+    type: 'number',
+    placeholder: '32 ETH',
+    required: true,
+  },
+  {
     name: 'minimumStake',
     label: 'Minimum Stake',
     type: 'number',
@@ -105,7 +113,8 @@ const StakeForm: FC<StakeFormProps> = ({
         rewardRate: asset?.rewardRate?.toString() || '',
         activationPeriod: asset?.activationPeriod || '',
         unbondingPeriod: asset?.unBoundingPeriod || '',
-        minimumStake: asset?.minimumStake?.toString() || '',
+        minimumStakeAmount: asset?.minimumStakingAmount || '',
+        minimumStake: asset?.minimumStake as number,
       };
     }
     return {
@@ -114,7 +123,8 @@ const StakeForm: FC<StakeFormProps> = ({
       rewardRate: '',
       activationPeriod: '',
       unbondingPeriod: '',
-      minimumStake: '',
+      minimumStakeAmount: '',
+      minimumStake: undefined,
     };
   }, [editStakeId]);
 

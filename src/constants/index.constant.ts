@@ -108,17 +108,17 @@ export const CHAIN_COLORS = {
 };
 
 export const CARD_COLORS = [
-  'bg-rose-50', // soft pink
-  'bg-emerald-50', // mint green
-  'bg-indigo-50', // light purple
-  'bg-amber-50', // warm yellow
+  'bg-gradient-to-br from-rose-50 to-white', // soft rose gradient
+  'bg-gradient-to-br from-emerald-50 to-white', // soft emerald gradient
+  'bg-gradient-to-br from-violet-50 to-white', // soft violet gradient
+  'bg-gradient-to-br from-amber-50 to-white', // soft amber gradient
 ];
 
 export const HEADER_COLORS = [
-  'bg-rose-300', // dark pink for header
-  'bg-emerald-300', // dark green for header
-  'bg-indigo-300', // dark purple for header
-  'bg-amber-300', // dark yellow for header
+  'bg-gradient-to-r from-rose-100 to-rose-50', // rose header gradient
+  'bg-gradient-to-r from-emerald-100 to-emerald-50', // emerald header gradient
+  'bg-gradient-to-r from-violet-100 to-violet-50', // violet header gradient
+  'bg-gradient-to-r from-amber-100 to-amber-50', // amber header gradient
 ];
 
 export const TAB_LINKS_DATA = [
