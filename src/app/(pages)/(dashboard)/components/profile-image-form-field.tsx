@@ -11,7 +11,7 @@ interface ProfilePictureForFieldProps {
 
 const ProfileImageFormField: React.FC<ProfilePictureForFieldProps> = ({
   name = 'profilePicture',
-  edit = false,
+  // edit = false,
   previewUrl = '',
   showUploadedUrlPreview = true,
   onRemoveFilePreview = () => {},
@@ -29,16 +29,16 @@ const ProfileImageFormField: React.FC<ProfilePictureForFieldProps> = ({
         dropzoneText: '',
         onlyIcon: true,
         className:
-          '!w-[10rem] !h-[10rem] flex justify-center items-center overflow-hidden !opacity-100',
+          '!w-[10rem] !h-[10rem] flex justify-center items-center overflow-hidden !opacity-100 !cursor-default !disabled:opacity-100 !disabled:default',
         previewClassName:
-          'rounded-full !w-[10rem] !h-[10rem] overflow-hidden lg:w-[10rem] lg:h-[10rem] !mb-0 lg:!mb-0 !opacity-100 ',
+          'rounded-full !w-[10rem] !h-[10rem] overflow-hidden lg:w-[10rem] lg:h-[10rem] !mb-0 lg:!mb-0 !opacity-100 !cursor-default !disabled:opacity-100 !disabled:default',
 
         uploadedFileUrl: previewUrl,
         showUploadedUrlPreview: showUploadedUrlPreview,
         onRemoveFilePreview,
         hideRemoveButton: true,
       }}
-      disabled={!edit}
+      // disabled={!edit}
     />
   );
 };

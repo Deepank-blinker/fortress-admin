@@ -190,7 +190,7 @@ export const ACCOUNT_STATUS_OPTIONS = [
     value: ACCOUNT_STATUS.FREEZED,
     label: toSentenceCase(ACCOUNT_STATUS.FREEZED, true),
     className: '!text-neutral-0',
-    buttonClassName: '!bg-slate-400', // Frozen Gray
+    buttonClassName: '!bg-gray-700', // Frozen Gray
   },
   {
     value: ACCOUNT_STATUS.PENDING,
@@ -223,7 +223,7 @@ export const WALLET_STATUS_OPTIONS = [
     value: WALLET_STATUS.NOT_CREATED,
     label: toSentenceCase(WALLET_STATUS.NOT_CREATED, true),
     className: '!text-neutral-0',
-    buttonClassName: '!bg-gray-300', // Light Gray
+    buttonClassName: '!bg-gray-700', // Light Gray
   },
 ];
 

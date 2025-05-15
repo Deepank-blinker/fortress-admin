@@ -14,7 +14,7 @@ interface FormSectionProps {
 }
 
 export const commonClassName = {
-  edit: '!bg-neutral-0 !opacity-100 !cursor-default !items-start !disabled:opacity-100 !disabled:cursor-not-allowed',
+  edit: '!opacity-100 !cursor-default !items-start !disabled:opacity-100 !disabled:default !text-neutral-400',
 };
 const FormSection: React.FC<FormSectionProps> = ({
   sections,
@@ -46,13 +46,17 @@ const FormSection: React.FC<FormSectionProps> = ({
                 {...fields}
                 disabled={!edit || !fields.editable}
                 className={cn(
+                  commonClassName.edit,
                   (fields.as === 'file' || (fields.editable && edit)) &&
-                    commonClassName.edit,
+                    '!bg-neutral-0 ',
                   fields.as === 'file' ? 'md:col-start-1' : ''
                 )}
                 fileProps={{
                   hideRemoveButton: fields.as === 'file',
                 }}
+                textClassName={cn(
+                  !(fields.editable && edit) && '!text-neutral-400'
+                )}
               />
             );
           })}

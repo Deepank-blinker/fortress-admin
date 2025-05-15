@@ -54,6 +54,7 @@ type FormFieldProps = {
   noOptionsMessage?: string;
   noOptionSearchPlaceholder?: string;
   hideLabel?: boolean;
+  textClassName?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -81,6 +82,7 @@ const FormField: React.FC<FormFieldProps> = ({
   noOptionsMessage,
   noOptionSearchPlaceholder,
   hideLabel = false,
+  textClassName,
   ...props
 }) => {
   const [passwordVisible, setPasswordVisible] = React.useState(false);
@@ -164,6 +166,7 @@ const FormField: React.FC<FormFieldProps> = ({
                 disabled={props.disabled}
                 noOptionSearchPlaceholder={noOptionSearchPlaceholder}
                 noOptionsMessage={noOptionsMessage}
+                buttonTextClassName={textClassName}
                 onSelect={(value) => {
                   if (onSelectValue) {
                     onSelectValue(value); // Use custom onChange if provided
@@ -213,6 +216,7 @@ const FormField: React.FC<FormFieldProps> = ({
             return (
               <RadioGroup
                 value={field.value}
+                disabled={props.disabled}
                 onValueChange={(value) => {
                   if (onSelectValue) {
                     onSelectValue(value); // Use custom onChange if provided
@@ -220,7 +224,7 @@ const FormField: React.FC<FormFieldProps> = ({
                     form.setFieldValue(name, value); // Otherwise, update the form value
                   }
                 }}
-                className="flex gap-4"
+                className={`flex gap-4 ${props.className}`}
               >
                 {options.map((option) => (
                   <div
