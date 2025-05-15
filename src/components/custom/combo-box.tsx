@@ -134,8 +134,8 @@ export const ComboBox: React.FC<SelectProps> = ({
             }
             className={cn(
               ' truncate text-ellipsis overflow-hidden whitespace-nowrap ',
-              selectedOption?.className,
-              buttonTextClassName
+              buttonTextClassName,
+              selectedOption?.className
             )}
           >
             {selectedOption?.label || placeholder}
