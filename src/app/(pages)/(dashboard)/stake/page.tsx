@@ -12,6 +12,7 @@ import type { StakeAsset } from '@/types';
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import StakeForm from './components/stake-form';
+import StakeTermsModal from './components/stake-term-modal';
 
 const transformStakeData = (reward: StakeAsset) => {
   return [
@@ -81,7 +82,7 @@ const Page = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto bg-gradient-to-b  min-h-screen">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-x-4 gap-y- mb-10">
         <div>
           <Typography
             variant="h1"
@@ -98,13 +99,17 @@ const Page = () => {
             Manage your staking assets and reward programs
           </Typography>
         </div>
-        <Button
-          onClick={openAddModal}
-          size="lg"
-          className="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-neutral-0 shadow-md hover:shadow-lg transition-all duration-300 rounded-lg"
-        >
-          <PlusIcon className="h-5 w-5 mr-2" /> Add Stake Asset
-        </Button>
+        <div className="flex items-center gap-4 flex-wrap">
+          <StakeTermsModal />
+
+          <Button
+            onClick={openAddModal}
+            size="default"
+            className="bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-neutral-0 shadow-md hover:shadow-lg transition-all duration-300 rounded-lg"
+          >
+            <PlusIcon className="h-5 w-5 mr-2" /> Add Stake Asset
+          </Button>
+        </div>
       </div>
 
       {stakeAssets.length === 0 ? (
